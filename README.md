@@ -52,18 +52,19 @@ Our application acts as a platform that allows people to adopt, sell and buy ani
 
 |              | Tasks                                                                                                 | Completed |
 |--------------|-------------------------------------------------------------------------------------------------------|-----------|
-| **Minimum**  | User registration, login and logout                                                                   |           |
-|              | User is allowed to post animal information                                                            |           |
+| **Minimum**  | User is allowed to post animal information                                                            |           |
+|              | All available animals are displayed in a list/on a map with their information                         |           |
+|              | User can view individual animal by clicking the option in the list/map                                |           |
+| **Standard** | User registration, login and logout                                                                   |           |
+|              | User can filter the animal information by various conditions (eg. city, age, category, etc)           |           |
+|              | User can search for the animal                                                                        |           |
 |              | User can make a payment for adopting or purchasing an animal                                          |           |
 |              | User can cancel the payment within 2 hours after submitting the order                                 |           |
-|              | All available animals are displayed in a list/on a map with their information                         |           |
-| **Standard** | User can filter the animal information by various conditions (eg. city, age, category, etc)           |           |
-|              | User can search for the animal                                                                        |           |
 |              | Administrator actions (add/delete users, manage transactions, verify user identity)                   |           |
 |              | User can submit documentation to confirm his/her identity                                             |           |
 |              | User can see sellers’ profiles (including basic information, recent transactions, rating and comments)|           |
 |              | Buyers can give ratings and leave comments after the payment is completed                             |           |
-| **Stretch**  |                   Chatroom(between buyer and seller)                                                  |           |
+| **Stretch**  | Chatroom(between buyer and seller)                                                                    |           |
 |              | User can make a payment for renting an animal                                                         |           |
 |              | A favorite list that store all the animal that you clicked “Like” button                              |           |
 |              | Buyers can confirm the payment after receiving the animal                                             |           |
