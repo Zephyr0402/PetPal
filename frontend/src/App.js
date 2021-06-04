@@ -1,24 +1,18 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import 'antd/dist/antd.css';
+import PostAnimalForm from "./components/PostAnimalForm";
 
 function App() {
+
+
+  const postAnimal = (newAnimal) => {
+    //TODO: replace with post animal functionality
+    console.log("postAnimal");
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <PostAnimalForm newAnimal={postAnimal} />
   );
 }
 
