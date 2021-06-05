@@ -37,13 +37,17 @@
   }
 }
 
-/* Post animal form */
-#post_animal_form_wrapper {
+/* forms */
+#post_animal_form_wrapper, #login_form_wrapper {
   width: 80%;
-  max-width: 900px;
-  margin: 2rem auto;
+  max-width: 600px;
+  margin: 3rem auto;
 }
 
-#buttons_container button:first-child {
+.form_title{
+  text-align: center;
+}
+
+#post_animal_form_wrapper button[type="submit"] {
   margin-right: 1rem;
 }

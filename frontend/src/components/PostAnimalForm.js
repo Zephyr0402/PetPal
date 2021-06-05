@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
-/*import Button from "./Button";*/
-import { Button, Form, Input, DatePicker, Select, Upload, message} from 'antd';
+import React from 'react';
+import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
-const { Option } = Select;
-const { TextArea } = Input;
 
-function PostAnimalForm({newAnimal}) {
-    let _animalName, _animalLocation, _dateFound, _animalCategory, _animalPrice, _animalImage, _animalDescription;
+function PostAnimalForm() {
+
+    const { Option } = Select;
+    const { TextArea } = Input;
+
+    const layout = {
+        labelCol: { span: 6 },
+        wrapperCol: { span: 18 },
+    };
+    const tailLayout = {
+        wrapperCol: { offset: 6, span: 18 },
+    };
 
     const handlePostAnimal = (e) => {
         e.preventDefault();
@@ -17,19 +24,14 @@ function PostAnimalForm({newAnimal}) {
         resetInput();
     };
 
-    const handleClearForm = (e) => {
+    const handleResetForm = (e) => {
         e.preventDefault();
         resetInput();
     };
 
     const resetInput = () => {
-        _animalName.value = "";
-        _animalLocation.value = "";
-        _dateFound.value = "";
-        _animalCategory.value = "undefined";
-        _animalPrice.value = "";
-        _animalImage.value = "";
-        _animalDescription.value = "";
+        //TODO: replace with clear form functionality
+        console.log("resetInput");
     };
 
     const onDateChange = (date, dateString) => {
@@ -52,8 +54,8 @@ function PostAnimalForm({newAnimal}) {
 
     return (
         <div id="post_animal_form_wrapper">
-            <h1>Post New Animal</h1>
-            <Form id="post_animal_form">
+            <h1 className="form_title">Post New Animal</h1>
+            <Form id="post_animal_form" {...layout}>
                 <Form.Item
                     label="Animal Name"
                     name="animal_name_input"
@@ -63,7 +65,21 @@ function PostAnimalForm({newAnimal}) {
                 </Form.Item>
 
                 <Form.Item
-                    label="Animal Location"
+                    label="Age"
+                    name="animal_age_input"
+                >
+                    <InputNumber
+                        placeholder="years"
+                        formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    />
+                    <InputNumber
+                        placeholder="months"
+                        formatter={value => `${value}`}
+                    />
+                </Form.Item>
+
+                <Form.Item
+                    label="Location"
                     name="animal_location_input"
                     rules={[{ required: true }]}
                 >
@@ -79,7 +95,7 @@ function PostAnimalForm({newAnimal}) {
                 </Form.Item>
 
                 <Form.Item
-                    label="Animal Category"
+                    label="Category"
                     name="animal_category_input"
                 >
                     <Select defaultValue="dog">
@@ -103,19 +119,19 @@ function PostAnimalForm({newAnimal}) {
                 </Form.Item>
 
                 <Form.Item
-                    label="Price (CAD)"
+                    label="Price"
                     name="animal_price_input"
                     rules={[{ required: true}]}
                 >
-                    <Input placeholder="Please input animal price in CAD"/>
+                    <Input prefix="$" suffix="CAD" placeholder="Please input animal price"/>
                 </Form.Item>
 
                 <Form.Item
-                    label="Animal Image"
+                    label="Image"
                     name="animal_image"
                 >
                     <Upload beforeUpload={beforeUpload} onChange={handleUpload}>
-                        <Button  icon={<UploadOutlined />}>Upload Animal Image (png or jpg only)</Button>
+                        <Button icon={<UploadOutlined />}>Upload (png or jpg only)</Button>
                     </Upload>
 
                 </Form.Item>
@@ -127,10 +143,10 @@ function PostAnimalForm({newAnimal}) {
                     <TextArea rows={4} />
                 </Form.Item>
 
-                <div id="buttons_container">
-                    <Button type="primary" htmlType="submit" onClick={(e) => handlePostAnimal(e)}>Post Animal</Button>
-                    <Button htmlType="reset" onClick={(e) => handleClearForm(e)}>Clear Form</Button>
-                </div>
+                <Form.Item {...tailLayout}>
+                    <Button type="primary" htmlType="submit" onClick={(e) => handlePostAnimal(e)}>Post</Button>
+                    <Button htmlType="reset" onClick={(e) => handleResetForm(e)}>Reset</Button>
+                </Form.Item>
             </Form>
         </div>
 

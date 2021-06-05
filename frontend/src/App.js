@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
 import PostAnimalForm from "./components/PostAnimalForm";
+import LoginForm from "./components/LoginForm";
 
 function App() {
 
@@ -12,8 +13,11 @@ function App() {
   };
 
   return (
-   <PostAnimalForm newAnimal={postAnimal} />
-  );
+      <main>
+        <PostAnimalForm />
+        <LoginForm />
+      </main>
+  )
 }
 
 export default App;
