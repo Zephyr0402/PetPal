@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
+import { Button, Form, Input, Select, Upload, message} from 'antd';
 import {UploadOutlined} from "@ant-design/icons";
 
 
