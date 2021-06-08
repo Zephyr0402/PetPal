@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button } from 'antd';
 
 function LoginForm() {
 
@@ -12,12 +12,12 @@ function LoginForm() {
     };
 
     const onFinish = (values) => {
-        //TODO: replace with onFinish functionality
+        //TODO: replace with actual onFinish functionality
         console.log('Success:', values);
     };
 
     const onFinishFailed = (errorInfo) => {
-        //TODO: replace with onFinishFailed functionality
+        //TODO: replace with actual onFinishFailed functionality
         console.log('Failed:', errorInfo);
     };
 
@@ -35,21 +35,25 @@ function LoginForm() {
                     label="Username"
                     name="username"
                     place
-                    rules={[{required: true}]}
                 >
-                    <Input placeholder="Please input your username" />
+                    <Input />
                 </Form.Item>
 
                 <Form.Item
                     label="Password"
                     name="password"
-                    rules={[{ required: true }]}
                 >
-                    <Input.Password placeholder="Please input your password"/>
+                    <Input.Password />
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">Submit</Button>
+                    <a className="login-form-forgot" href="">
+                        Forgot password
+                    </a>
+                </Form.Item>
+                <Form.Item {...tailLayout}>
+                    New User? <a href=""> Register here! </a>
                 </Form.Item>
             </Form>
         </div>
