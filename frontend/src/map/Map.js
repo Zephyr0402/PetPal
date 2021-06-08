@@ -4,10 +4,11 @@ import ReactDOM from 'react-dom';
 const mapStyles = {
   map: {
     position: 'absolute',
-    width: '100%',
-    height: '100%'
+    width: '62%',
+    height: '92%'
   }
 };
+
 export class CurrentLocation extends React.Component {
   constructor(props) {
     super(props);
@@ -24,8 +25,6 @@ export class CurrentLocation extends React.Component {
       if (navigator && navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(pos => {
           const coords = pos.coords;
-          localStorage.setItem('lat',coords.latitude);
-          localStorage.setItem('lng',coords.longitude)
           this.setState({
             currentLocation: {
               lat: coords.latitude,

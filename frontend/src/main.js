@@ -2,13 +2,15 @@ import React from 'react';
 import MapContainer from './map/MapContainer'
 import {Layout} from 'antd';
 import Header from './Header';
+import AnimalCard from './AnimalCard';
 
 const Main = (props) => {
     return(
         <Layout>
             <Header/>
             <Layout>
-                <Layout.Sider>
+                <Layout.Sider width = "38%" style = {{backgroundColor:'white'}}>
+                    <AnimalCard/>
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>
