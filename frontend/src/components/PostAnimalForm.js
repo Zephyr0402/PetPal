@@ -12,13 +12,14 @@ function PostAnimalForm() {
         labelCol: { span: 6 },
         wrapperCol: { span: 18 },
     };
+
     const tailLayout = {
         wrapperCol: { offset: 6, span: 18 },
     };
 
     const handlePostAnimal = (e) => {
         e.preventDefault();
-        //TODO: replace with post animal functionality
+        //TODO: replace with actual handlePostAnimal functionality
         console.log("handlePostAnimal");
 
         resetInput();
@@ -30,12 +31,12 @@ function PostAnimalForm() {
     };
 
     const resetInput = () => {
-        //TODO: replace with clear form functionality
+        //TODO: replace with actual resetInput functionality
         console.log("resetInput");
     };
 
     const onDateChange = (date, dateString) => {
-        //TODO: replace with onDateChange functionality
+        //TODO: replace with actual onDateChange functionality
         console.log('onDateChange', dateString);
     };
 
@@ -48,48 +49,91 @@ function PostAnimalForm() {
     };
 
     const handleUpload = (info) => {
-        //TODO: replace with handleUpload functionality
+        //TODO: replace with actual handleUpload functionality
         console.log("handleUpload");
     };
 
     return (
         <div id="post_animal_form_wrapper">
             <h1 className="form_title">Post New Animal</h1>
-            <Form id="post_animal_form" {...layout}>
+            <Form {...layout}>
                 <Form.Item
                     label="Animal Name"
                     name="animal_name_input"
-                    rules={[{ required: true}]}
                 >
-                    <Input placeholder="Please input animal name" />
+                    <Input placeholder="Please enter animal name" />
                 </Form.Item>
 
                 <Form.Item
                     label="Age"
-                    name="animal_age_input"
                 >
-                    <InputNumber
-                        placeholder="years"
-                        formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                    />
-                    <InputNumber
-                        placeholder="months"
-                        formatter={value => `${value}`}
-                    />
+                    <Input.Group compact>
+                        <Form.Item
+                            name={['age', 'years']}
+                            noStyle
+                        >
+                            <InputNumber
+                                placeholder="years"
+                                min={0}
+                                formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            />
+                        </Form.Item>
+                        <Form.Item
+                            name={['age', 'months']}
+                            noStyle
+                        >
+                            <InputNumber
+                                placeholder="months"
+                                min={0}
+                                formatter={value => `${value}`}
+                            />
+                        </Form.Item>
+                    </Input.Group>
                 </Form.Item>
 
                 <Form.Item
                     label="Location"
-                    name="animal_location_input"
-                    rules={[{ required: true }]}
+                    name="street_address_input"
                 >
-                    <Input placeholder="Where did you find this animal?"/>
+                    <Input placeholder="Please enter street address"/>
+                </Form.Item>
+
+                <Form.Item
+                    label="City"
+                >
+                    <Input.Group compact>
+                        <Form.Item
+                            name={['location', 'city']}
+                            noStyle
+                        >
+                            <Input placeholder="City" style={{ width: '50%' }} />
+                        </Form.Item>
+                        <Form.Item
+                            name={['location', 'province']}
+                            noStyle
+                        >
+                            <Select placeholder="Province">
+                                <Option value="ab">AB</Option>
+                                <Option value="bc">BC</Option>
+                                <Option value="mb">MB</Option>
+                                <Option value="nb">NB</Option>
+                                <Option value="nl">NL</Option>
+                                <Option value="nt">NT</Option>
+                                <Option value="ns">NS</Option>
+                                <Option value="nu">NU</Option>
+                                <Option value="on">ON</Option>
+                                <Option value="pe">PE</Option>
+                                <Option value="qc">QC</Option>
+                                <Option value="sk">SK</Option>
+                                <Option value="yt">YT</Option>
+                            </Select>
+                        </Form.Item>
+                    </Input.Group>
                 </Form.Item>
 
                 <Form.Item
                     label="Date Found"
                     name="date_found_input"
-                    rules={[{ required: true}]}
                 >
                     <DatePicker onChange={onDateChange} />
                 </Form.Item>
@@ -121,9 +165,8 @@ function PostAnimalForm() {
                 <Form.Item
                     label="Price"
                     name="animal_price_input"
-                    rules={[{ required: true}]}
                 >
-                    <Input prefix="$" suffix="CAD" placeholder="Please input animal price"/>
+                    <Input prefix="$" suffix="CAD" placeholder="Please enter animal price"/>
                 </Form.Item>
 
                 <Form.Item
