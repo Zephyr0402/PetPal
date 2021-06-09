@@ -5,6 +5,7 @@ import LoginForm from './components/LoginForm'
 import PostAnimalForm from './components/PostAnimalForm'
 import SignUpForm from './components/SignUpForm'
 import "antd/dist/antd.css";
+import UtilityView from './components/UtilityView';
 
 function App() {
 
