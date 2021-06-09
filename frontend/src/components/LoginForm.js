@@ -54,7 +54,7 @@ function LoginForm() {
                     </a>
                 </Form.Item>
                 <Form.Item {...tailLayout}>
-                    New user? <a href=""> Sign up here! </a>
+                    New user? <a href="/join"> Sign up here! </a>
                 </Form.Item>
             </Form>
         </div>

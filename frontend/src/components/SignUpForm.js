@@ -142,6 +142,10 @@ function SignUpForm() {
                     <Button htmlType="reset" onClick={(e) => handleResetForm(e)}>Reset</Button>
                 </Form.Item>
 
+                <Form.Item {...tailLayout}>
+                    Already have an account? <a href="/login"> Log in here! </a>
+                </Form.Item>
+
             </Form>
         </div>
     );
