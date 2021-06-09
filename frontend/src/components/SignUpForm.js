@@ -1,9 +1,10 @@
 import React from 'react';
+import '../forms.css';
 import { Button, Form, Input, Select, Upload, message} from 'antd';
 import {UploadOutlined} from "@ant-design/icons";
 
 
-function RegisterForm() {
+function SignUpForm() {
     const { Option } = Select;
     const { TextArea } = Input;
 
@@ -16,7 +17,7 @@ function RegisterForm() {
         wrapperCol: { offset: 6, span: 18 },
     };
 
-    const handleRegister = (e) => {
+    const handleSignUp = (e) => {
         e.preventDefault();
         //TODO: replace with actual handlePostAnimal functionality
         console.log("handlePostAnimal");
@@ -49,7 +50,7 @@ function RegisterForm() {
 
     return (
         <div id="register_form_wrapper">
-            <h1 className="form_title">Register</h1>
+            <h1 className="form_title">Sign Up</h1>
             <Form id="register_form" {...layout}>
                 <Form.Item
                     label="Username"
@@ -137,7 +138,7 @@ function RegisterForm() {
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit" onClick={(e) => handleRegister(e)}>Register</Button>
+                    <Button type="primary" htmlType="submit" onClick={(e) => handleSignUp(e)}>Submit</Button>
                     <Button htmlType="reset" onClick={(e) => handleResetForm(e)}>Reset</Button>
                 </Form.Item>
 
@@ -147,4 +148,4 @@ function RegisterForm() {
 
 }
 
-export default RegisterForm;
+export default SignUpForm;

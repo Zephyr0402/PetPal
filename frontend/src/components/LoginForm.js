@@ -1,4 +1,5 @@
 import React from 'react';
+import '../forms.css';
 import { Form, Input, Button } from 'antd';
 
 function LoginForm() {
@@ -53,7 +54,7 @@ function LoginForm() {
                     </a>
                 </Form.Item>
                 <Form.Item {...tailLayout}>
-                    New User? <a href=""> Register here! </a>
+                    New user? <a href=""> Sign up here! </a>
                 </Form.Item>
             </Form>
         </div>
