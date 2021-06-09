@@ -20,11 +20,10 @@ class AnimalThumbnail extends React.Component {
 
     render() {
         const { Meta } = Card;
-        const testImage = "/test_images/cat.png";
         return (
-            <Card className="AnimalCard" hoverable cover={<img alt="example" style={{ height: "100%", objectFit: 'cover', width: 100 }} src={testImage} />}>
+            <Card className="AnimalCard" hoverable cover={<img alt="example" style={{ height: "100%", objectFit: 'cover', width: 130 }} src={this.props.content.image} />}>
                 <Meta
-                    title={this.state.animalName}
+                    title={this.props.content.name}
                     description={this.state.animalDescription}
                 />
                 <br/>

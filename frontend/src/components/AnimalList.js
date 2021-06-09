@@ -4,40 +4,53 @@ import { List } from 'antd';
 import AnimalThumbnail from './AnimalThumbnail';
 
 class AnimalList extends React.Component {
-    
+    constructor(props) {
+        super(props);
+        this.state = { width: 0, height: 0 };
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+
+    componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth, height: window.innerHeight - 83 });
+    }
 
     render() {
         const data = [
             {
-                title: 'Ant Design Title 1',
+                name: 'Jerry',
+                image: '/test_images/cat.png',
             },
             {
-                title: 'Ant Design Title 2',
+                name: 'Yuki',
+                image: '/test_images/dog.png',
             },
             {
-                title: 'Ant Design Title 3',
+                name: 'Milly',
+                image: '/test_images/parrot.png',
             },
             {
-                title: 'Ant Design Title 4',
+                name: 'Ruby',
+                image: '/test_images/fish.png',
             },
-            {
-                title: 'Ant Design Title 5',
-            },
-            {
-                title: 'Ant Design Title 6',
-            },
-            {
-                title: 'Ant Design Title 7',
-            },
+            
         ];
         return (
             <div>
-                <List
+                <List style={{ width: "100%", height: this.state.height, overflowY: "scroll"}}
                     itemLayout="horizontal"
                     dataSource={data}
                     renderItem={item => (
-                        <List.Item style={{ width: "300px", padding: 0}}>
-                            <AnimalThumbnail/>
+                        <List.Item style={{ width: "100%", padding: 8}}>
+                            <AnimalThumbnail content={ item }/>
                         </List.Item>
                     )}
                 />

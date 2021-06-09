@@ -3,11 +3,11 @@
     margin-top: 16;
     padding: 0;
     display: flex;
-    align-items: stretch;   
+    align-items: stretch;
+    height: 160px;
 }
 
 Meta {
     padding: 0;
-    border: '1px solid';
     height: 'inherit';
 }
