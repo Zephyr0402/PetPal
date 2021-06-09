@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 const Header = (props) => {
     return (
         <header className = "header">
-            <img src="https://i.ibb.co/2P6p00f/Petpal-logo.png" alt="Petpal-logo" border="0" width={200}/>
+            <img src="https://i.ibb.co/k3rqzWb/Petpal-logo.png" alt="Petpal-logo" border="0" width={200}/>
             <span className = "header-btns">
                 <Link className = "header-btn">Log in</Link>
                 <Button className = "header-btn" type = 'primary'>Sign up</Button>
