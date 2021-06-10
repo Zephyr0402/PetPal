@@ -1,4 +1,8 @@
 /* forms */
+.form_container {
+    padding: 1rem;
+}
+
 #post_animal_form_wrapper,
 #login_form_wrapper,
 #register_form_wrapper {
