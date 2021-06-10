@@ -2,7 +2,8 @@ import React from 'react';
 import MapContainer from './map/MapContainer'
 import {Layout} from 'antd';
 import Header from './Header';
-import AnimalCard from './AnimalCard';
+import AnimalList from './components/AnimalList';
+import UtilityView from './components/UtilityView';
 
 const Main = (props) => {
     return(
@@ -10,7 +11,7 @@ const Main = (props) => {
             <Header/>
             <Layout>
                 <Layout.Sider width = "38%" style = {{backgroundColor:'white'}}>
-                    <AnimalCard/>
+                    <UtilityView/>
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>

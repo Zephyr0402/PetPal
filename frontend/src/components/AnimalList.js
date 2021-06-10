@@ -3,6 +3,27 @@ import 'antd/dist/antd.css';
 import { List } from 'antd';
 import AnimalThumbnail from './AnimalThumbnail';
 
+const data = [
+    {
+        name: 'Jerry',
+        image: '/test_images/cat.png',
+        age: 1,
+    },
+    {
+        name: 'Yuki',
+        image: '/test_images/dog.png',
+    },
+    {
+        name: 'Milly',
+        image: '/test_images/parrot.png',
+    },
+    {
+        name: 'Ruby',
+        image: '/test_images/fish.png',
+    },
+    
+];
+
 class AnimalList extends React.Component {
     constructor(props) {
         super(props);
@@ -24,32 +45,13 @@ class AnimalList extends React.Component {
     }
 
     render() {
-        const data = [
-            {
-                name: 'Jerry',
-                image: '/test_images/cat.png',
-            },
-            {
-                name: 'Yuki',
-                image: '/test_images/dog.png',
-            },
-            {
-                name: 'Milly',
-                image: '/test_images/parrot.png',
-            },
-            {
-                name: 'Ruby',
-                image: '/test_images/fish.png',
-            },
-            
-        ];
         return (
             <div>
-                <List style={{ width: "100%", height: this.state.height, overflowY: "scroll"}}
+                <List style={{ width: "100%", height: this.state.height}}
                     itemLayout="horizontal"
                     dataSource={data}
                     renderItem={item => (
-                        <List.Item style={{ width: "100%", padding: 8}}>
+                        <List.Item className = 'animal-list-item' id = {item.name} style={{ width: "100%", padding: 8}}>
                             <AnimalThumbnail content={ item }/>
                         </List.Item>
                     )}
@@ -59,5 +61,4 @@ class AnimalList extends React.Component {
         )
     }
 }
-
 export default AnimalList;

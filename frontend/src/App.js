@@ -1,6 +1,6 @@
 import {BrowserRouter,Redirect,Route, Switch} from 'react-router-dom'
 import './App.css';
-import Main from './main'
+import Main from './Main'
 import LoginForm from './components/LoginForm'
 import PostAnimalForm from './components/PostAnimalForm'
 import SignUpForm from './components/SignUpForm'
