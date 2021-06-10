@@ -1,5 +1,5 @@
 import React from 'react';
-import '../forms.css';
+import './forms.css';
 import { Form, Input, Button } from 'antd';
 
 function LoginForm() {

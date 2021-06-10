@@ -14,7 +14,6 @@ class UtilityView extends React.Component {
         var thumbnails = document.getElementsByClassName('animal-list-item')
         for(let thumbnail of thumbnails){
             if(thumbnail.id.toUpperCase().indexOf(filter) == -1){
-                console.log(thumbnail);
                 thumbnail.style.display = 'none';
             }
             else{
@@ -40,10 +39,9 @@ class UtilityView extends React.Component {
                         <Button className = "filter-type" shape="round">City</Button>
                         <Button className = "filter-type" shape="round">Kind</Button>
                     </div>
-                    <AnimalList style={{ width: 'inherit' }}></AnimalList>
+                    <AnimalList style={{ width: 'inherit' }} setDisplay = {this.props.setDisplay}></AnimalList>
                 </Space>
             </div>
-
         )
     }
 

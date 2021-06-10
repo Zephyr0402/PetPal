@@ -1,17 +1,23 @@
-import React from 'react';
-import MapContainer from './map/MapContainer'
+import React, { useState } from 'react';
+import MapContainer from '../Map/MapContainer'
 import {Layout} from 'antd';
 import Header from './Header';
-import AnimalList from './components/AnimalList';
-import UtilityView from './components/UtilityView';
+import UtilityView from '../AnimalList/UtilityView';
+import AnimalCard from '../AnimalCard/AnimalCard'
 
 const Main = (props) => {
+    const [display, setDisplay] = useState(-1); 
+
+    const setMyDisplay = (e) => {
+        setDisplay(e);
+    }
+
     return(
         <Layout>
             <Header/>
             <Layout>
                 <Layout.Sider width = "38%" style = {{backgroundColor:'white'}}>
-                    <UtilityView/>
+                    {  display === -1 ? <UtilityView setDisplay = {setMyDisplay}/> : <AnimalCard aid = {display} setDisplay = {setMyDisplay}/> }
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>

@@ -5,21 +5,24 @@ import AnimalThumbnail from './AnimalThumbnail';
 
 const data = [
     {
+        id : 0,
         name: 'Jerry',
-        image: '/test_images/cat.png',
-        age: 1,
+        image: '/animalImages/cat.png',
     },
     {
+        id : 1,
         name: 'Yuki',
-        image: '/test_images/dog.png',
+        image: '/animalImages/dog.png',
     },
     {
+        id : 2,
         name: 'Milly',
-        image: '/test_images/parrot.png',
+        image: '/animalImages/parrot.png',
     },
     {
+        id : 3,
         name: 'Ruby',
-        image: '/test_images/fish.png',
+        image: '/animalImages/fish.png',
     },
     
 ];
@@ -52,7 +55,7 @@ class AnimalList extends React.Component {
                     dataSource={data}
                     renderItem={item => (
                         <List.Item className = 'animal-list-item' id = {item.name} style={{ width: "100%", padding: 8}}>
-                            <AnimalThumbnail content={ item }/>
+                            <AnimalThumbnail content={ item } setDisplay = {this.props.setDisplay}/>
                         </List.Item>
                     )}
                 />

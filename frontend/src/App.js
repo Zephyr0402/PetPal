@@ -1,11 +1,10 @@
 import {BrowserRouter,Redirect,Route, Switch} from 'react-router-dom'
 import './App.css';
-import Main from './Main'
-import LoginForm from './components/LoginForm'
-import PostAnimalForm from './components/PostAnimalForm'
-import SignUpForm from './components/SignUpForm'
+import Main from './Layout/Main'
+import LoginForm from './User/LoginForm'
+import PostAnimalForm from './User/PostAnimalForm'
+import SignUpForm from './User/SignUpForm'
 import "antd/dist/antd.css";
-import UtilityView from './components/UtilityView';
 
 function App() {
 
