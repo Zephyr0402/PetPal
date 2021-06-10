@@ -23,29 +23,30 @@ function LoginForm() {
     };
 
     return (
-        <div id="login_form_wrapper">
-            <h1 className="form_title">Log in</h1>
-            <Form
-                {...layout}
-                name="basic"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-            >
-                <Form.Item
-                    label="Username"
-                    name="username"
-                    place
+        <div className="form_container">
+            <div id="login_form_wrapper">
+                <h1 className="form_title">Log in</h1>
+                <Form
+                    {...layout}
+                    name="basic"
+                    initialValues={{ remember: true }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
                 >
-                    <Input />
-                </Form.Item>
+                    <Form.Item
+                        label="Username"
+                        name="username"
+                        place
+                    >
+                        <Input />
+                    </Form.Item>
 
-                <Form.Item
-                    label="Password"
-                    name="password"
-                >
-                    <Input.Password />
-                </Form.Item>
+                    <Form.Item
+                        label="Password"
+                        name="password"
+                    >
+                        <Input.Password />
+                    </Form.Item>
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">Submit</Button>
@@ -57,6 +58,7 @@ function LoginForm() {
                     New user? <a href="/join"> Sign up here! </a>
                 </Form.Item>
             </Form>
+        </div>
         </div>
     );
 
