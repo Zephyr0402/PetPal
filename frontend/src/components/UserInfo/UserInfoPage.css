@@ -1,0 +1,10 @@
+.site-layout-background {
+    text-align: left;
+    background-color: #fff;
+    padding: 24px;
+}
+
+.avatar {
+    display: flex;
+    flex-direction: row-reverse;
+}
