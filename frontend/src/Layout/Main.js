@@ -21,7 +21,7 @@ const Main = (props) => {
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>
-                        <MapContainer/>
+                        <MapContainer aid = {display}/>
                     </Layout.Content>
                 </Layout>
             </Layout>
