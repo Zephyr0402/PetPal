@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MapContainer from '../Map/MapContainer'
+import MapContainer from '../AnimalMap/MapContainer'
 import {Layout} from 'antd';
 import Header from './Header';
 import UtilityView from '../AnimalList/UtilityView';

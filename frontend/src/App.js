@@ -4,10 +4,10 @@ import Main from './Layout/Main'
 import LoginForm from './User/LoginForm'
 import PostAnimalForm from './User/PostAnimalForm'
 import SignUpForm from './User/SignUpForm'
+import UserInfoPage from './User/UserInfoPage'
 import "antd/dist/antd.css";
 
 function App() {
-
   return (
     <BrowserRouter>
       <Switch>
@@ -25,6 +25,9 @@ function App() {
         </Route>
         <Route path = "/join">
           <SignUpForm/>
+        </Route>
+        <Route path = "/user">
+          <UserInfoPage/>
         </Route>
       </Switch>
     </BrowserRouter>
