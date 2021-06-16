@@ -6,18 +6,23 @@ const data = [
   {
     name : "Jerry",
     position:{lat:49.26127572955761, lng:-123.23869115661624},
+    address: "2725 Osoyoos Cres&#10Vancouver\nBC V6T 1X7\nCanada"
   },
   {
     name : "Yuki",
     position:{lat:49.25727572955761, lng:-123.24769115661624},
+    address:"6328 Larkin Dr, Vancouver, BC V6T 2K2, Canada"
   },
   {
     name : "Milly",
     position:{lat:49.25127572955761, lng:-123.23769115661624},
+    address: "3461 Ross Dr, Vancouver, BC V6T 1W5, Canada"
   },
   {
     name : "Ruby",
     position:{lat:49.25127572955761, lng:-123.24769115661624},
+    address: "6804 SW Marine Dr, Vancouver, BC V6T 1Z1, Canada"
+    
   }
 ]
 var aid2marker = [];
@@ -55,8 +60,11 @@ export class MapContainer extends Component {
     return (
       <div>
         <CurrentLocation
-          centerAroundCurrentLocation
           google={this.props.google}
+          center = {{
+            lat: 45.854885,
+            lng: -88.081807
+          }}
           zoom = {13}
         >
           {data.map((ele,index) => 
@@ -75,7 +83,8 @@ export class MapContainer extends Component {
             onClose={this.onClose}
           >
             <div className = "hello">
-              <p>{this.props.aid > -1 ? data[this.props.aid].name : ""}</p>
+              <h3>{this.props.aid > -1 ? data[this.props.aid].name : ""}</h3>
+              <p>{this.props.aid > -1 ? data[this.props.aid].address : ""}</p>
             </div>
           </InfoWindow>
         </CurrentLocation>

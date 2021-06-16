@@ -5,6 +5,7 @@ import LoginForm from './User/LoginForm'
 import PostAnimalForm from './User/PostAnimalForm'
 import SignUpForm from './User/SignUpForm'
 import UserInfoPage from './User/UserInfoPage'
+import TestMapContainer from './AnimalMap/TestMap';
 import "antd/dist/antd.css";
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route path = "/user">
           <UserInfoPage/>
+        </Route>
+        <Route path = "/testmap">
+          <TestMapContainer/>  
         </Route>
       </Switch>
     </BrowserRouter>
