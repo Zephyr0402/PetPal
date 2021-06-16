@@ -27,9 +27,11 @@ const data = [
   ]
 
 const mapStyles = {
-  width: '62%',
-  height: '92%'
+    position: 'absolute',
+    width: '62%',
+    height: '92%'
 };
+
 var aid2marker = [];
 export class TestMapContainer extends Component {
     constructor(props){
@@ -37,7 +39,6 @@ export class TestMapContainer extends Component {
         this.state = {
           showingInfoWindow: false,
           activeMarker: {},
-          selectedPlace: {}
         };
     }
     
@@ -61,7 +62,6 @@ export class TestMapContainer extends Component {
       if (this.state.showingInfoWindow) {
         this.setState({
           showingInfoWindow: false,
-          activeMarker: null
         });
       }
     };
@@ -77,9 +77,9 @@ export class TestMapContainer extends Component {
         console.log(this.state.activeMarker);
         return (
             <Map
+            containerStyle = {mapStyles}
             google={this.props.google}
             zoom={14}
-            style={mapStyles}
             initialCenter={{lat:49.26127572955761, lng:-123.23869115661624}}
             center = {this.state.activeMarker.position}
             >
