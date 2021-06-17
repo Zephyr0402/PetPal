@@ -1,5 +1,6 @@
 import React from 'react';
 import './forms.css';
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
@@ -93,7 +94,7 @@ function PostAnimalForm() {
                         </Input.Group>
                     </Form.Item>
 
-                    <Form.Item
+                    {/* <Form.Item
                         label="Location"
                         name="street_address_input"
                     >
@@ -131,7 +132,14 @@ function PostAnimalForm() {
                                 </Select>
                             </Form.Item>
                         </Input.Group>
+                    </Form.Item> */}
+                    
+                    <Form.Item label="Location">
+                        <GooglePlacesAutocomplete
+                        apiKey="AIzaSyC8w_bEe3IlzsbyjWJ96uOhlSADfrhh7gQ"
+                        />
                     </Form.Item>
+                    
 
                     <Form.Item
                         label="Date Found"
