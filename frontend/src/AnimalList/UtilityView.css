@@ -1,0 +1,17 @@
+.filterView {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    width: 100%;
+    height: 35px;
+    margin-left: 4px;
+}
+
+.animal-list{
+    width: 100%;
+    overflow: auto;
+}
+
+.filter-type{
+    margin: 1%;
+}

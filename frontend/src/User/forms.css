@@ -1,0 +1,27 @@
+/* forms */
+.form_container {
+    padding: 1rem;
+}
+
+#post_animal_form_wrapper,
+#login_form_wrapper,
+#register_form_wrapper {
+    width: 90%;
+    max-width: 650px;
+    margin: 3rem auto;
+    border: 1px solid lightgray;
+    padding: 2.5rem;
+    -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.form_title{
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#post_animal_form_wrapper button[type="submit"],
+#login_form_wrapper button[type="submit"],
+#register_form_wrapper button[type="submit"]{
+    margin-right: 1.5rem;
+}

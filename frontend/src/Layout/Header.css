@@ -1,0 +1,15 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+    background-color: whitesmoke;
+    width: 100%;
+}
+
+.header-btns{
+    margin-right: 10px;
+}
+
+.header-btn{
+    margin: 10px;
+    color: black;
+}
