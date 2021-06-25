@@ -5,8 +5,6 @@ import { UserOutlined } from '@ant-design/icons';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import './UserInfoPage.css'
 
-
-
 function UserInfo(){
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
@@ -45,7 +43,7 @@ function UserInfo(){
         <div className="avatar">
             <Avatar size={64} icon={<UserOutlined />} />
         </div>
-        <Card title="User Info" bordered={false} style={{ width: 800 }}>
+        <Card title="User Info" bordered={false}>
         <Descriptions title="" bordered>
             <Descriptions.Item label="User Name" span={3}>
                 Julia
@@ -65,11 +63,11 @@ function UserInfo(){
         </Descriptions>
         </Card>
         <br />
-        <Card title="Rating" bordered={false} style={{ width: 800 }}>
+        <Card title="Rating" bordered={false}>
             <Rate allowHalf disabled defaultValue={4.5} />
         </Card>
         <br />
-        <Card title="Comments" bordered={false} style={{ width: 800 }}>
+        <Card title="Comments" bordered={false}>
             <Comment
             actions={actions}
             author="Vincent"
