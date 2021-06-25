@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const cors = require("cors");
 require("dotenv").config();
-//Set environment variable STRIPE_SECRET_TEST in your OS
+//Must set environment variable STRIPE_SECRET_TEST in your OS to test this
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 
 router.post("/", cors(), async (req, res) => {
