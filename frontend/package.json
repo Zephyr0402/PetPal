@@ -4,10 +4,13 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
+    "@stripe/react-stripe-js": "^1.4.1",
+    "@stripe/stripe-js": "^1.15.1",
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "antd": "^4.16.1",
+    "axios": "^0.21.1",
     "google-maps-react": "^2.0.6",
     "kill-port": "^1.6.1",
     "react": "^17.0.1",
