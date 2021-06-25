@@ -41,7 +41,7 @@ const cardDisplay = animalInfo.map((card) =>
     <Col xs={24} md={12} lg={8} xl={6} xxl={4}>
         <Card
         hoverable
-        style={{ width: 200 }}
+        style={{ height: "96%", objectFit: 'cover', width: 200}}
         cover={<img alt={card.name} src={card.imgUrl} />}
         >
         <Meta title={card.name} description={card.description} />
@@ -56,7 +56,7 @@ function PostedAnimals(){
             <Avatar size={64} icon={<UserOutlined />} />
         </div>
         <br />
-        <Row xs={8} sm={16} md={24}>
+        <Row gutter={16}>
             {cardDisplay}
         </Row>
         </>

@@ -1,5 +1,5 @@
 import { Layout, Menu, Breadcrumb} from 'antd';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { useState } from 'react';
 import './UserInfoPage.css'
 import { UserOutlined, TransactionOutlined, SmileOutlined} from '@ant-design/icons';
 import UserInfo from './UserInfo';
@@ -11,30 +11,41 @@ import TransactionHistory from './TransactionHistory';
 const {Content, Sider } = Layout;
 
 function UserInfoPage(){
+    const [selectedKey, setSelectedKey] = useState("1")
+
+    const switchComponent = (key) => {
+        switch (key){
+            case "1":
+                return(<UserInfo />);
+            case "2":
+                return(<PostedAnimals />);
+            case "3":
+                return(<TransactionHistory />);
+            default:
+                break;
+        }
+    }
+
     return(
-        <Router>
             <Layout>
                 <Header/>
                 <Layout>
                     <Sider width={300}>
-                    {/* <Avatar size={64} icon={<UserOutlined />} /> */}
                         <Menu
                         mode="inline"
-                        defaultSelectedKeys={['1']}
+                        defaultSelectedKeys={selectedKey}
                         defaultOpenKeys={['sub1']}
                         style={{ height: '100%', borderRight: 0 }}
+                        onClick = {(e) => setSelectedKey(e.key)}
                         >
                             <Menu.Item key="1" icon={<UserOutlined />}>
                                 Basic Information
-                                <Link to="/user" />
                             </Menu.Item>
                             <Menu.Item key="2" icon={<SmileOutlined />}>
                                 Posted Animals
-                                <Link to="/postedanimals" />
                             </Menu.Item>
                             <Menu.Item key="3" icon={<TransactionOutlined />}>
                                 Transaction History
-                                <Link to="/transactions" />
                             </Menu.Item>
                         </Menu>
                     </Sider>
@@ -42,14 +53,11 @@ function UserInfoPage(){
                         <Breadcrumb style={{ margin: '16px 0' }}>
                         </Breadcrumb>
                         <Content className="site-layout-background">
-                            <Route exact path="/user" component={UserInfo} />
-                            <Route path="/postedanimals" component={PostedAnimals} />
-                            <Route path="/transactions" component={TransactionHistory} />
+                            {switchComponent(selectedKey)}
                         </Content>
                     </Layout>
                 </Layout>
             </Layout>
-        </Router>
     )
 }
 
