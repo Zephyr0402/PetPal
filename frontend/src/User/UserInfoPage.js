@@ -29,7 +29,7 @@ function UserInfoPage(){
                         </Menu.Item>
                     </Menu>
                 </Sider>
-                <Layout style={{ padding: '0 24px 24px' }}>
+                <Layout className="right-container" style={{ padding: '0 24px 24px' }}>
                     <Breadcrumb style={{ margin: '16px 0' }}>
                     </Breadcrumb>
                     <Content className="site-layout-background">

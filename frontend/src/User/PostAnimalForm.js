@@ -3,7 +3,7 @@ import './forms.css';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-
+import axios from 'axios';
 
 function PostAnimalForm() {
 
@@ -18,6 +18,8 @@ function PostAnimalForm() {
     const [price, setPrice] = useState(null);
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState(null);
+
+    const backEndURL = ""
 
     const layout = {
         labelCol: { span: 6 },
@@ -45,6 +47,8 @@ function PostAnimalForm() {
         console.log(category);
         console.log(price);
         console.log(description);
+
+        axios.post()
         
         if (canPost) {
             resetInput();
