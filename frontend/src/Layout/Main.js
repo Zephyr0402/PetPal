@@ -4,6 +4,7 @@ import {Layout} from 'antd';
 import Header from './Header';
 import UtilityView from '../AnimalList/UtilityView';
 import AnimalCard from '../AnimalCard/AnimalCard'
+import TestMapContainer from '../AnimalMap/TestMap';
 
 const Main = (props) => {
     const [display, setDisplay] = useState(-1); 
@@ -21,7 +22,7 @@ const Main = (props) => {
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>
-                        <MapContainer aid = {display}/>
+                        <TestMapContainer aid = {display} setDisplay = {setMyDisplay}/>
                     </Layout.Content>
                 </Layout>
             </Layout>

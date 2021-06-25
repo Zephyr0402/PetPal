@@ -1,0 +1,26 @@
+@url = http://localhost:9999
+@json = Content-Type: application/json
+
+###register
+post {{url}}/api/register
+{{json}}
+
+{
+    "username" : "runzw",
+    "password" : "runzw"
+}
+
+###login
+post {{url}}/api/login
+{{json}}
+
+{
+    "username" : "runzw",
+    "password" : "runzw"
+}
+
+###cookie-session
+get {{url}}/api/cookie-session
+
+###header
+get {{url}}/api/userStatus
