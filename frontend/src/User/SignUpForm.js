@@ -2,6 +2,7 @@ import React from 'react';
 import './forms.css';
 import { Button, Form, Input, Select, Upload, message} from 'antd';
 import {UploadOutlined} from "@ant-design/icons";
+import { getCookie, register, getView } from '../Services/userService';
 
 
 function SignUpForm() {
@@ -17,10 +18,15 @@ function SignUpForm() {
         wrapperCol: { offset: 6, span: 18 },
     };
 
-    const handleSignUp = (e) => {
-        e.preventDefault();
-        //TODO: replace with actual handlePostAnimal functionality
-        resetInput();
+    const onFinish = (values) => {
+        register(values.username_input, values.password_input)
+        .then(res => {
+            // if(typeof res.message === "string")
+            //     return alert(res.message);
+            console.log(res);
+        });
+        //window.location.href = "/login";
+        //getView().then();
     };
 
     const handleResetForm = (e) => {
@@ -50,7 +56,9 @@ function SignUpForm() {
         <div className="form_container">
             <div id="register_form_wrapper">
                 <h1 className="form_title">Sign Up</h1>
-                <Form id="register_form" {...layout}>
+                <Form id="register_form" {...layout}
+                    onFinish = {onFinish}
+                >
                     <Form.Item
                         label="Username"
                         name="username_input"
@@ -137,7 +145,7 @@ function SignUpForm() {
                     </Form.Item>
 
                     <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit" onClick={(e) => handleSignUp(e)}>Submit</Button>
+                        <Button type="primary" htmlType="submit">Submit</Button>
                         <Button htmlType="reset" onClick={(e) => handleResetForm(e)}>Reset</Button>
                     </Form.Item>
 
