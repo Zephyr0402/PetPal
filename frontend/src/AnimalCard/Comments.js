@@ -1,5 +1,6 @@
 import React, { createElement, useState } from 'react';
 import UserComment from './Comment'
+import './Comments.css';
 
 //grab comments by animalID from the back end here
 const data = [
@@ -39,15 +40,15 @@ const Comments = () => {
   return (
     <div className = "comments">
       {
-        data.map(e => 
-          <UserComment 
-            commentDetail={e} 
-            subComments = {e.subComments.map(sub => 
+        data.map(e =>
+          <UserComment
+            commentDetail={e}
+            subComments = {e.subComments.map(sub =>
               <UserComment commentDetail = {sub}/>
             )}
           />
         )
-      } 
+      }
     </div>
   );
 };
