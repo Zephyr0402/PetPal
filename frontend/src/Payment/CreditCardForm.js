@@ -51,7 +51,6 @@ const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
 
                 if(response.data.success) {
                     console.log("Successful payment");
-                    console.log(response);
                     setPaymentSuccess(true);
                 }
             }catch (err) {
