@@ -19,7 +19,7 @@ function PostAnimalForm() {
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState(null);
 
-    const backEndURL = "http://127.0.0.1:3001/post";
+    const backEndURL = "http://127.0.0.1:3001/animalinfo/post";
 
     const layout = {
         labelCol: { span: 6 },
@@ -55,6 +55,7 @@ function PostAnimalForm() {
             category: category,
             price: price,
             description: description,
+            userAvatar: "testuser",
         }
 
         axios.post(backEndURL, animalInfo)

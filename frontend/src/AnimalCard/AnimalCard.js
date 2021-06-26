@@ -50,6 +50,7 @@ const data = [
 
 const AnimalCard = (props) => {
     const thisCard = data[props.aid];
+    console.log(thisCard);
     return(
         <div>
             <div style = {{height:'100%', overflow:'auto', position:'absolute'}}>
