@@ -16,23 +16,7 @@ var corsOptions = {
     credentials: true
 }
 
-
 router.use(cors(corsOptions));
-
-// router.all('*', function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-//     res.header("Access-Control-Allow-Credentials", true);
-//     res.header("Access-Control-Allow-Headers", "X-Requested-with, Content-Type, application/json");
-//     res.header("Access-Control-Allow-Methods","*");
-//     console.log(res.header);
-//     next();
-// });
-
-// router.use(cors({
-//     allowedOrigins: [
-//         'http://localhost:3000'
-//     ]
-// }))
 
 router.use(session({
     name: "sid",
@@ -96,11 +80,6 @@ router.post('/api/login',  async (req, res) => {
           message : "incorrect password!"
       });
     }
-  
-    // req.session.Logged = 1;
-    // res.cookie({signed: true});
-    // thisUser.sessionID = req.sessionID
-    console.log(req.session);
     
     res.send({
         username: thisUser.username,

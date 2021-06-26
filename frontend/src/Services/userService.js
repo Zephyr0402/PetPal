@@ -3,18 +3,12 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 export const login = async (username, password) => {
-    // return await axios.post('http://localhost:9999/api/login',{
-    //     username: username,
-    //     password: password
-    // }).then(res => res.data);
     fetch('http://localhost:9999/api/login', {
         method: 'POST',
         body: JSON.stringify({
             "username":username,
             "password":password
         }),
-        mode: 'cors',
-        //credentials: 'include',
         headers: new Headers({
             'Accept': 'application/json',
             "Content-Type": "application/json",
@@ -28,18 +22,12 @@ export const logout = async (username, password) => {
 }
 
 export const register = async (username, password) => {
-    // return await axios.post('http://localhost:9999/api/register',{
-    //     username: username,
-    //     password: password
-    // }).then(res => res.data);
     return fetch('http://localhost:9999/api/register', {
         method: 'POST',
         body: JSON.stringify({
             "username":username,
             "password":password
         }),
-        //mode: 'cors',
-        //credentials: 'include',
         headers: {
             "Content-Type": "application/json",
         }
