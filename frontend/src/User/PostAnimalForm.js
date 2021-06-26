@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './forms.css';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, WindowsFilled } from '@ant-design/icons';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
@@ -71,8 +71,8 @@ function PostAnimalForm() {
         
         if (canPost) {
             resetInput();
+            window.location.href = '/'
         }
-        
     };
 
     const handleResetForm = (e) => {
