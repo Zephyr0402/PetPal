@@ -1,7 +1,7 @@
 import React from 'react';
 import './forms.css';
 import { Form, Input, Button } from 'antd';
-import { getCookie, getHeader, login , getView} from '../Services/userService';
+import { getCookie, getHeader, login , getView, testPost} from '../Services/userService';
 import { LogContext } from '../Layout/HeaderContext';
 import { stringify } from 'css';
 import {cookies} from 'react-cookie'
@@ -22,32 +22,36 @@ const LoginForm = (props) => {
         // .then(res => console.log(res));
         await login(values.username, values.password)
         .then(
-            // if(typeof user.message === "string")
-            //     return alert(user.message);
-            
-            
+            getHeader("runzw")
+            .then(res => {
+                console.log(res);
+        })
         );
         getHeader("runzw")
             .then(res => {
                 console.log(res);
         })
-        // getHeader("_none_")
-        //     .then(res => {
-        //         console.log(res);
-        // })
+        getHeader("_none_")
+            .then(res => {
+                console.log(res);
+        })
         // getView().then(res=>console.log(res));
         // getView().then(res=>console.log(res));
         // getView().then(res=>console.log(res));
         // getView().then(res=>console.log(res));
         
-        //window.location.href = '/';
+        window.location.href = '/';
     };
 
-    const onClick = () => {
+    const onClick1 = () => {
         getHeader("_none_")
             .then(res => {
                 console.log(res);
         })
+    }
+
+    const onClick2 = () => {
+        testPost().then(res => console.log(res));
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -89,7 +93,8 @@ const LoginForm = (props) => {
                     <Form.Item {...tailLayout}>
                         New user? <a href="/register"> Sign up here! </a>
                     </Form.Item>
-                    <Button onClick = {onClick}>check status</Button>
+                    <Button onClick = {onClick1}>check status</Button>
+                    <Button onClick = {onClick2}>post</Button>
                 </Form>
             </div>
         </div>

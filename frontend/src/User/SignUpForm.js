@@ -25,7 +25,7 @@ function SignUpForm() {
             //     return alert(res.message);
             console.log(res);
         });
-        //window.location.href = "/login";
+        window.location.href = "/login";
         //getView().then();
     };
 

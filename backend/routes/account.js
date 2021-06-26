@@ -2,21 +2,31 @@ var express = require('express');
 var bcypt = require('bcrypt');
 var router = express.Router();
 var session = require('express-session');
-var cors = require('express-cors');
+//var cors = require('express-cors');
+var cors = require('cors');
 var flatted = require('flatted/cjs');
 var formidable = require("formidable");
 fs = require("fs");
 
 var users = [];
+var corsOptions = {
+    origin: 'http://localhost:3000',
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: 'Content-type',
+    credentials: true
+}
 
-router.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header("Access-Control-Allow-Headers", "X-Requested-with, Content-Type, application/json");
-    res.header("Access-Control-Allow-Methods","*");
-    console.log(res.header);
-    next();
-});
+
+router.use(cors(corsOptions));
+
+// router.all('*', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+//     res.header("Access-Control-Allow-Credentials", true);
+//     res.header("Access-Control-Allow-Headers", "X-Requested-with, Content-Type, application/json");
+//     res.header("Access-Control-Allow-Methods","*");
+//     console.log(res.header);
+//     next();
+// });
 
 // router.use(cors({
 //     allowedOrigins: [
@@ -29,7 +39,8 @@ router.use(session({
     secret: 'whxn', // 建议使用 128 个字符的随机字符串
     resave: true,
     saveUninitialized: true,
-    cookie: {maxAge:5*1000, secure:false}
+    rolling: true,
+    cookie: {maxAge:10*1000, secure:false}
 }));
 
 const encryptPWD = async (req, res, next) => {
@@ -97,6 +108,22 @@ router.post('/api/login',  async (req, res) => {
     });
   });
 
+router.post('/api/testPost', async(req, res) => {
+    res.send("hello");
+})
+
+router.get('/api/logout', async(req, res) => {
+    req.session.Logged = 0;
+    for(let user of users){
+        if(user.sessionID === req.sessionID){
+            user.sessionID = "";
+            return res.send({
+                Logged: 0
+            })
+        }
+    }
+})
+
 router.get('/api/userStatus/:username', async (req,res) => {
     username = req.params.username;
     if(username === "_none_"){
@@ -106,7 +133,7 @@ router.get('/api/userStatus/:username', async (req,res) => {
                 if(user.sessionID === req.sessionID){
                     return res.send({
                         Logged: 1,
-                        username: user.name,
+                        username: user.username,
                         avatar: user.avatar
                     })
                 }
@@ -139,16 +166,12 @@ router.get('/api/userStatus/:username', async (req,res) => {
 
 router.get('/api/cookie-session',  async(req,res) => {
     if(req.session.isFirst || req.cookies.isFirst) {
-        
         res.send({
             session : req.session,
             cookie: req.cookies,
             sessionID: req.sessionID
         });
     } else {
-        console.log(req.session);
-        console.log(req.sessionID);
-        console.log(req.cookies);
         req.session.isFirst = 1;
         res.cookie({signed: true});
         res.send("helo");

@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import {Button, Tooltip, Avatar, Typography} from 'antd';
+import {Button, Tooltip, Avatar, Typography, Result} from 'antd';
 import './Header.css';
 import {Link} from 'react-router-dom';
 import { FormOutlined } from '@ant-design/icons';
-import {LogContext} from './HeaderContext';
-import { getHeader } from '../Services/userService';
+import { getHeader, logout } from '../Services/userService';
 
 const Header = (props) => {
-    const [header, setHeader] = useState("");
+    const [header, setHeader] = useState({Logged:0});
 
     useEffect(()=>{
-        console.log("hello");
-        getHeader()
+        getHeader("_none_")
             .then(res => {
-                console.log(res);
+                console.log(res)
                 setHeader(res);
             })
     },[]);
+
+    const onLogout = async () => {
+        await logout().then(
+            res => console.log(res)
+        )
+        window.location.href = "/"
+    }
 
     return (
         <header className = "header">
@@ -24,9 +29,9 @@ const Header = (props) => {
             {
                 header.Logged ? 
                     <span className = "header-btns">
-                        <Button className = "header-btn" type = 'primary' danger href = "/logout">Log out</Button>
+                        <Button className = "header-btn" type = 'primary' danger onClick = {onLogout}>Log out</Button>
                         <Avatar style = {{marginRight:"8px"}} src = {header.avatar}/>
-                        <Typography.Text strong>{header.name}</Typography.Text>
+                        <Typography.Text strong>{header.username}</Typography.Text>
                     </span>
                 :
                     <span className = "header-btns">

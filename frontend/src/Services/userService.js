@@ -22,6 +22,11 @@ export const login = async (username, password) => {
     }).then(res => res.json());
 }
 
+export const logout = async (username, password) => {
+    return await axios.get('http://localhost:9999/api/logout')
+    .then(res => res.data);
+}
+
 export const register = async (username, password) => {
     // return await axios.post('http://localhost:9999/api/register',{
     //     username: username,
@@ -35,10 +40,9 @@ export const register = async (username, password) => {
         }),
         //mode: 'cors',
         //credentials: 'include',
-        headers: new Headers({
-            'Accept': 'application/json',
+        headers: {
             "Content-Type": "application/json",
-        })
+        }
     }).then(res => res.json());
 }
 
@@ -55,4 +59,8 @@ export const getCookie = async () => {
 export const getView = async () => {
     return await axios.get('http://localhost:9999/api/test')
         .then(res => res);
+}
+
+export const testPost = async() => {
+    return await axios.post('http://localhost:9999/api/testPost').then(res => res.data)
 }

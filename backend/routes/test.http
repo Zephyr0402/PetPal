@@ -19,8 +19,13 @@ post {{url}}/api/login
     "password" : "runzw"
 }
 
+###login
+get {{url}}/api/logout
+
 ###cookie-session
 get {{url}}/api/cookie-session
 
 ###header
-get {{url}}/api/userStatus
+get {{url}}/api/userStatus/runzw
+###header
+get {{url}}/api/userStatus/_none_
