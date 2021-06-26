@@ -1,0 +1,50 @@
+.card-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0.8rem 0.8rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: white;
+    -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-header button svg[data-icon="arrow-left"] {
+    width: 1.2em;
+    height: 1.2em;
+}
+
+.ant-card-meta {
+    display: flex;
+    align-items: center;
+}
+
+
+.shopping-cart-wrapper {
+    position: fixed;
+    bottom: 30px;
+    width: 36%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+svg[data-icon="shopping-cart"] {
+    width: 2em;
+    height: 2em;
+    color: white;
+    margin-left: -2px;
+}
+
+.cta-button-round {
+    height: 50px;
+    width: 50px;
+    background-color: #1890ff;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
