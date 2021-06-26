@@ -9,7 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var accountRouter = require('./routes/account');
 var paymentRouter = require('./routes/payment');
-var postRouter = require('./routes/post');
+var postRouter = require('./routes/animalinfo');
 
 var app = express();
 
@@ -29,7 +29,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/', accountRouter);
 app.use('/payment', paymentRouter);
-app.use('/post', postRouter);
+app.use('/animalinfo', postRouter);
 
 // app.post('/postAnimal', function (req, res) {
 //   console.log('Get post');
