@@ -1,0 +1,14 @@
+.ant-input-number{
+    width:60px
+}
+
+.filter-border{
+    padding: 10px;
+    border:2px solid rgb(35, 106, 212);
+    border-radius: 10px;
+}
+
+.kind-filter-option{
+    margin-top: 10px;
+    margin-right: 3px;
+}
