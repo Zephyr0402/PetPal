@@ -1,1 +1,48 @@
-{"animalInfos":[{"id":0,"name":"Jerry","image":"/animalImages/cat.png","age":"1.5","price":"200","user":"Julia","userAvatar":"userAvatars/julia.jpg","kind":"cat","description":"A cute cat!!!"},{"id":1,"name":"Yuki","image":"/animalImages/dog.png","age":"3","price":"200","user":"Nawa","userAvatar":"userAvatars/nawa.png","kind":"dog","description":"A cute dog!!!"},{"id":2,"name":"Milly","image":"/animalImages/parrot.png","age":"6 month","price":100,"user":"Runze","userAvatar":"userAvatars/tsuki.jpg","kind":"bird","description":"A cute bird!!!"},{"id":3,"name":"Ruby","image":"/animalImages/fish.png","age":"3","price":"30","user":"Shijun","userAvatar":"userAvatars/shijun.jpg","kind":"Fish","description":"A cute fish!!!"},{"id":4,"name":"111","location":"3333 Broadway, New York, NY, USA","animalAgeYear":4,"animalAgeMonth":null,"dateFound":"2021-06-01","kind":"chicken","price":"111","description":"Description","userAvatar":"userAvatars/shijun.jpg","image":"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/chipmunk-nature-photos-1537973822.jpg"},{"id":4,"name":"111","location":"3333 Broadway, New York, NY, USA","animalAgeYear":111,"animalAgeMonth":null,"dateFound":"2021-06-01","kind":"bird","price":"1111","description":"111111","userAvatar":"userAvatars/shijun.jpg","image":"https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/chipmunk-nature-photos-1537973822.jpg"}]}
+{
+    "animalInfos": [
+        {
+            "id": 0,
+            "name": "Jerry",
+            "image": "/animalImages/cat.png",
+            "age": "1.5",
+            "price": "200",
+            "user": "Julia",
+            "userAvatar": "userAvatars/julia.jpg",
+            "kind": "cat",
+            "description": "A cute cat!!!"
+        },
+        {
+            "id": 1,
+            "name": "Yuki",
+            "image": "/animalImages/dog.png",
+            "age": "3",
+            "price": "200",
+            "user": "Nawa",
+            "userAvatar": "userAvatars/nawa.png",
+            "kind": "dog",
+            "description": "A cute dog!!!"
+        },
+        {
+            "id": 2,
+            "name": "Milly",
+            "image": "/animalImages/parrot.png",
+            "age": "6 month",
+            "price": 100,
+            "user": "Runze",
+            "userAvatar": "userAvatars/tsuki.jpg",
+            "kind": "bird",
+            "description": "A cute bird!!!"
+        },
+        {
+            "id": 3,
+            "name": "Ruby",
+            "image": "/animalImages/fish.png",
+            "age": "3",
+            "price": "30",
+            "user": "Shijun",
+            "userAvatar": "userAvatars/shijun.jpg",
+            "kind": "Fish",
+            "description": "A cute fish!!!"
+        }
+    ]
+}
