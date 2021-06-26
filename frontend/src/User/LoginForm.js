@@ -22,25 +22,25 @@ const LoginForm = (props) => {
         // .then(res => console.log(res));
         await login(values.username, values.password)
         .then(
-            // if(typeof user.message === "string")
-            //     return alert(user.message);
-            
-            
+            getHeader("runzw")
+            .then(res => {
+                console.log(res);
+        })
         );
         getHeader("runzw")
             .then(res => {
                 console.log(res);
         })
-        // getHeader("_none_")
-        //     .then(res => {
-        //         console.log(res);
-        // })
+        getHeader("_none_")
+            .then(res => {
+                console.log(res);
+        })
         // getView().then(res=>console.log(res));
         // getView().then(res=>console.log(res));
         // getView().then(res=>console.log(res));
         // getView().then(res=>console.log(res));
         
-        //window.location.href = '/';
+        window.location.href = '/';
     };
 
     const onClick1 = () => {

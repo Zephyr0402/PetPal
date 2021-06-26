@@ -22,6 +22,11 @@ export const login = async (username, password) => {
     }).then(res => res.json());
 }
 
+export const logout = async (username, password) => {
+    return await axios.get('http://localhost:9999/api/logout')
+    .then(res => res.data);
+}
+
 export const register = async (username, password) => {
     // return await axios.post('http://localhost:9999/api/register',{
     //     username: username,

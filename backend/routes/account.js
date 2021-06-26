@@ -40,7 +40,7 @@ router.use(session({
     resave: true,
     saveUninitialized: true,
     rolling: true,
-    cookie: {maxAge:5*1000, secure:false}
+    cookie: {maxAge:10*1000, secure:false}
 }));
 
 const encryptPWD = async (req, res, next) => {
@@ -112,6 +112,18 @@ router.post('/api/testPost', async(req, res) => {
     res.send("hello");
 })
 
+router.get('/api/logout', async(req, res) => {
+    req.session.Logged = 0;
+    for(let user of users){
+        if(user.sessionID === req.sessionID){
+            user.sessionID = "";
+            return res.send({
+                Logged: 0
+            })
+        }
+    }
+})
+
 router.get('/api/userStatus/:username', async (req,res) => {
     username = req.params.username;
     if(username === "_none_"){
@@ -121,7 +133,7 @@ router.get('/api/userStatus/:username', async (req,res) => {
                 if(user.sessionID === req.sessionID){
                     return res.send({
                         Logged: 1,
-                        username: user.name,
+                        username: user.username,
                         avatar: user.avatar
                     })
                 }
