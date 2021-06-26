@@ -161,11 +161,11 @@ router.use('/public', express.static('public'));
 
 router.post('/api/upload', async (req,res) => {
     var form = new formidable.IncomingForm();
-    //console.log("about to parse");
+    console.log("about to parse");
     form.parse(req, function(error, fields, files) {
-        // console.log("parsing done");
-        // console.log(files.file.path);
-        fs.writeFileSync("public/images/test.png", fs.readFileSync(files.file.path));
+        console.log("parsing done");
+        console.log(files.file);
+        fs.writeFileSync("public/images/"+files.file.name, fs.readFileSync(files.file.path));
     });
     res.send("hello");
 })
