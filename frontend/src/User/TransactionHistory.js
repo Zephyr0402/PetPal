@@ -1,5 +1,5 @@
-import { Avatar, Table, Tag, Space } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Table, Tag, Dropdown, Space } from 'antd';
+import { UserOutlined, DownOutlined } from '@ant-design/icons';
 import './UserInfoPage.css';
 
 const { Column, ColumnGroup } = Table;
@@ -10,40 +10,69 @@ const data = [
         time:'21/01/2021',
         from: 'Julia',
         to: 'Samuel',
+        total: 'CAD15.99',
         status: 'Complete',
         tags: ['kitten'],
+        tid: 'dsfjkbjerkl',
     },
     {
         key: '2',
         time:'08/01/2021',
         from: 'Vincent',
-        to: 'Nawa',
+        to: 'Julia',
+        total: 'CAD12.33',
         status: 'Complete',
         tags: ['goldfish'],
+        tid: 'kjshehjflk',
     },
     {
-        key: '2',
+        key: '3',
         time:'11/02/2021',
-        from: 'Bevis',
+        from: 'Julia',
         to: 'Runze',
+        total: 'CAD9.11',
         status: 'Waiting for payment',
         tags: ['bird'],
+        tid: 'dflgkiejrlfjklas'
     },
   ];
 
 function TransactionHistory(){
+
+    // const expandedRowRender = () => {
+    //     // const columns = [
+    //     //   { title: 'Transaction ID', dataIndex: 'tid', key: 'tid' },
+    //     // ];
+    //     // return <Table columns={columns} dataSource={data} pagination={false} />;
+    //     return(
+    //         <Table dataSource={data}>
+    //             <Column 
+    //             title='Transaction ID' 
+    //             dataIndex='tid' 
+    //             key='tid' 
+    //             render={ tid =>(
+    //                 <p>{data.tid}</p>
+    //             )
+    //             }
+    //             />
+    //         </Table>
+    //     );
+    //   };
+
+
     return(
         <>
         <div className="avatar">
             <Avatar size={64} icon={<UserOutlined />} />
         </div>
         <br />
-        <Table dataSource={data}>
-            <Column title="ID" dataIndex="key" key="key" />
-            <Column title="TRANSACTION TIME" dataIndex="time" key="time" />
-            <Column title="FROM" dataIndex="from" key="from" />
-            <Column title="TO" dataIndex="to" key="to" />
-            <Column title="STATUS" dataIndex="status" key="status" />
+        <Table rowKey={record => record.key} expandable={{expandedRowRender: record =><p>Transaction ID: {record.tid}</p>}} dataSource={data}>
+            <Column title="" dataIndex="key" key="key" />
+            <Column title="Order Placed" dataIndex="time" key="time" />
+            <Column title="From" dataIndex="from" key="from" />
+            <Column title="Ship to" dataIndex="to" key="to" />
+            <Column title="Total" dataIndex="total" key="total" />
+            <Column title="Status" dataIndex="status" key="status" />
             <Column
             title="TAGS"
             dataIndex="tags"
@@ -51,7 +80,7 @@ function TransactionHistory(){
             render={tags => (
                 <>
                 {tags.map(tag => (
-                    <Tag color="blue" key={tag}>
+                    <Tag color="green" key={tag}>
                     {tag}
                     </Tag>
                 ))}

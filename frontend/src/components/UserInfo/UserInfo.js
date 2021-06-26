@@ -1,16 +1,15 @@
-import { Comment, Tooltip, Avatar, Descriptions, Rate, Card } from 'antd';
+import { Comment, Tooltip, Avatar, Descriptions, Rate, Card, Button, Input } from 'antd';
 import React, { createElement, useState } from 'react';
 import moment from 'moment';
 import { UserOutlined } from '@ant-design/icons';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import './UserInfoPage.css'
 
-
-
 function UserInfo(){
     const [likes, setLikes] = useState(0);
     const [dislikes, setDislikes] = useState(0);
     const [action, setAction] = useState(null);
+    const [edit, setEdit] = useState(false);
     
     const like = () => {
       setLikes(1);
@@ -48,7 +47,9 @@ function UserInfo(){
         <Card title="User Info" bordered={false} style={{ width: 800 }}>
         <Descriptions title="" bordered>
             <Descriptions.Item label="User Name" span={3}>
-                Julia
+
+                {/* {edit ? <input> : julia <>} */}
+                <Button> Edit </Button>
             </Descriptions.Item>
             <Descriptions.Item label="Phone Number" span={3}>
                 604-xxx-xxxx
@@ -76,7 +77,7 @@ function UserInfo(){
             avatar={
                 <Avatar
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9r3ogaSmpwNYSaEKRifVaHjwmYsKSW7fC6Q&usqp=CAU"
-                alt="Vincent"
+                alt="Vincentt"
                 />
             }
             content={
@@ -91,7 +92,6 @@ function UserInfo(){
             }
             />
         </Card>
-
         
         </>
 
