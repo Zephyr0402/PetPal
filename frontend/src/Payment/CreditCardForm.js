@@ -43,7 +43,8 @@ const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
             try {
                 setIsProcessing(true);
                 const {id} = paymentMethod;
-                const response = await axios.post("http://localhost:9999/api/payment", {
+
+                /*const response = await axios.post("http://localhost:9999/api/payment", {
                     //stripe amount is in cent
                     amount: amount * 100,
                     id
@@ -52,7 +53,25 @@ const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
                 if(response.data.success) {
                     console.log("Successful payment");
                     setPaymentSuccess(true);
-                }
+                }*/
+
+                const payment = {
+                    amount: amount * 100,
+                    id
+                };
+
+                fetch("http://localhost:9999/api/payment", {
+                    method: "POST",
+                    headers: {"Content-Type":"application/json"},
+                    body: JSON.stringify(payment)
+                }).then(res => {
+                    if(res.status === 200) {
+                        setPaymentSuccess(true);
+                    }else if(res.status >= 400){
+                        res.text().then(text => setErrorMsg(text));
+                    }
+                });
+
             }catch (err) {
                 setErrorMsg(err.message);
                 console.log("Error", err);
