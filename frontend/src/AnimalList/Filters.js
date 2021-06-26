@@ -18,7 +18,12 @@ export const KindFilter = (props) => {
 
     const onKindChange = (e) => {
         var thumbnails = document.getElementsByClassName('animal-list-item')
-        for(let thumbnail of thumbnails){
+        
+        for (let thumbnail of thumbnails) {
+            if (data[thumbnail.id] === undefined) {
+                thumbnail.style.display = 'none';
+                continue;
+            }
             if(data[thumbnail.id].kind.toUpperCase() === e.target.innerText.toUpperCase())
                 thumbnail.style.display = 'block';
             else 
@@ -74,7 +79,11 @@ export const PriceFilter = (props) => {
     const onSliderChange = ([min, max]) => {
         var thumbnails = document.getElementsByClassName('animal-list-item')
 
-        for(let thumbnail of thumbnails){
+        for (let thumbnail of thumbnails) {
+            if (data[thumbnail.id] === undefined) {
+                thumbnail.style.display = 'none';
+                continue;
+            }
             if(data[thumbnail.id].price >= min && data[thumbnail.id].price <= max)
                 thumbnail.style.display = 'block';
             else 

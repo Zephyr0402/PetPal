@@ -24,7 +24,7 @@ class AnimalThumbnail extends React.Component {
             <Card className="animal-thumbnail" hoverable cover={<img alt="example" style={{ height: "100%", objectFit: 'cover', width: 300}} src={this.props.content.image} />} onClick = {() => this.props.setDisplay(this.props.content.id)}>
                 <Meta
                     title={this.props.content.name}
-                    description={this.state.animalDescription}
+                    description={this.props.content.description}
                 />
                 <br/>
                 <Button type="primary" >View Info</Button>

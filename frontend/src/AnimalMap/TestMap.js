@@ -23,6 +23,12 @@ const data = [
       position:{lat:49.25127572955761, lng:-123.24769115661624},
       address: "6804 SW Marine Dr\nVancouver\nBC V6T 1Z1\nCanada"
       
+    },
+    {
+      name: "Test Marker",
+      position: { lat: 49.26895685710785, lng: -123.2481998864374 },
+      address: "ExChange Student Residence"
+
     }
   ]
 
