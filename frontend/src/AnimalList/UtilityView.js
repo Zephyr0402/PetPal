@@ -4,6 +4,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import AnimalList from './AnimalList';
 import { PriceFilter, KindFilter} from './Filters';
 import './UtilityView.css';
+import axios from 'axios';
 
 export const data = [
     {
@@ -43,8 +44,11 @@ class UtilityView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter: -1//-1 means no change, i>=0 means filter[i] is on
+            filter: -1,//-1 means no change, i>=0 means filter[i] is on
+            animalInfos: data,
         }
+        console.log(this.state.animalInfos);
+        this.getAnimalInfos();
     }
 
     ascPrice = (x,y) => {
@@ -55,11 +59,18 @@ class UtilityView extends React.Component {
         return JSON.parse(JSON.stringify(JSONarray)).sort(this.ascPrice);
     }
 
-    onSearch(e){
+    onSearch(e) {
+        console.log(this.state.animalInfos);
         var filter = e.target.value.toUpperCase();
+        console.log("filter:", filter);
         var thumbnails = document.getElementsByClassName('animal-list-item')
-        for(let thumbnail of thumbnails){
-            if(data[thumbnail.id].name.toUpperCase().indexOf(filter) == -1){
+        if (this.state.animalInfos === undefined) {
+            return;
+        }
+        console.log(thumbnails);
+        for (let thumbnail of thumbnails) {
+
+            if (this.state.animalInfos[thumbnail.id].name.toUpperCase().indexOf(filter) == -1 && filter != ""){
                 thumbnail.style.display = 'none';
             }
             else{
@@ -90,6 +101,17 @@ class UtilityView extends React.Component {
         }
     }
 
+    getAnimalInfos() {
+        const backEndURL = "http://127.0.0.1:9999/animalinfo";
+        axios.get(backEndURL)
+            .then((res) => {
+                console.log(res.data.animalInfos);
+                this.setState({ animalInfos: res.data.animalInfos });
+                this.data = res.data.animalInfos;
+                console.log(this.state.animalInfos);
+            });
+    }
+
     render() {
         return (
             <div className = "animal-list" style = {{height:'100%'}}>
@@ -97,7 +119,7 @@ class UtilityView extends React.Component {
                     <Input 
                         placeholder=" Search animal names, descriptions here..." 
                         allowClear 
-                        onKeyUp={this.onSearch} 
+                        onKeyUp={this.onSearch.bind(this)} 
                         style={{ marginLeft: "4px", width: '96%', height: '30px', padding: 0}}
                         suffix = {<SearchOutlined style = {{marginRight:"5px"}}/>}
                     />
@@ -114,7 +136,7 @@ class UtilityView extends React.Component {
                                 <PriceFilter/> : ""
                         )
                     }
-                    <AnimalList style={{ width: 'inherit' }} data = {data} setDisplay = {this.props.setDisplay}></AnimalList>
+                    <AnimalList style={{ width: 'inherit' }} data = {this.state.animalInfos} setDisplay = {this.props.setDisplay}></AnimalList>
                 </Space>
             </div>
         )

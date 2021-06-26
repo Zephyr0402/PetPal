@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { StarOutlined, ShoppingCartOutlined, CommentOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import {Card, Avatar, Descriptions, Button} from 'antd';
 import Comments from './Comments';
-import './AnimalCard.css'
+import './AnimalCard.css';
 const { Meta } = Card;
 const data = [
     {
@@ -49,7 +50,35 @@ const data = [
 ];
 
 const AnimalCard = (props) => {
-    const thisCard = data[props.aid];
+    const [animalInfos, setAnimalInfos] = useState(null);
+    useEffect(() => {
+        const backEndURL = "http://127.0.0.1:9999/animalinfo";
+        axios.get(backEndURL)
+            .then((res) => {
+                console.log(res.data.animalInfos);
+                setAnimalInfos(res.data.animalInfos);
+            });
+    }, []);
+    let thisCard = null;
+    if (animalInfos != undefined) {
+        thisCard = animalInfos[props.aid];
+    } else {
+        if (props.aid < 4) {
+            thisCard = data[props.aid];
+        } else {
+            thisCard = {
+                name: 'None',
+                image: 'https://www.google.com/search?q=Test+image&newwindow=1&safe=active&sxsrf=ALeKk02G4AVAGK_JgnSwZ_Sxj0LU_L26ww:1624699947317&tbm=isch&source=iu&ictx=1&fir=kP6LYXagHuVy2M%252CysX-Qr231ARcNM%252C_&vet=1&usg=AI4_-kRM4nMdypa1KTgxi5Pb17eOU9Cuyw&sa=X&ved=2ahUKEwiZp-f5_rTxAhVNwZ4KHRonCe4Q9QF6BAgQEAE&biw=1395&bih=764#imgrc=kP6LYXagHuVy2M',
+                age: 0,
+                price: 0,
+                user: 'Shijun',
+                userAvatar: 'userAvatars/shijun.jpg',
+                kind: 'None',
+                description: 'None'
+            };
+        }
+    }
+    
     console.log(thisCard);
     return(
         <div>
@@ -84,7 +113,7 @@ const AnimalCard = (props) => {
                         <Descriptions.Item label = "Street" span={1.5}>3338 Webber Lane</Descriptions.Item>
                         <Descriptions.Item label = "City" span = {1.5}>Vancouver</Descriptions.Item>
                         <Descriptions.Item label = "Price (CAD)" span={3}>{thisCard.price}</Descriptions.Item>
-                        <Descriptions.Item label = "Description">I love this bear so much, but as I am moving out of the city, I want you to keep it!</Descriptions.Item>
+                        <Descriptions.Item label="Description">{thisCard.description}</Descriptions.Item>
                     </Descriptions>
                 </Card>
                 <Comments aid = {props.aid}/>

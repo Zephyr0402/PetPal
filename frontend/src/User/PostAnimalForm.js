@@ -39,7 +39,7 @@ function PostAnimalForm() {
         if (category === null) {
             canPost = false;
         }
-        console.log(location);
+        console.log(location.value.description);
         console.log(animalName);
         console.log(animalAgeYear);
         console.log(animalAgeMonth);
@@ -48,16 +48,17 @@ function PostAnimalForm() {
         console.log(price);
         console.log(description);
         const animalInfo = {
-            animalName: animalName,
-            location: location,
-            animalAgeYear: animalAgeYear,
-            animalAgeMonth: animalAgeMonth,
-            dateFound: dateFound,
-            category: category,
-            price: price,
-            description: description,
-            userAvatar: "testuser",
-            image: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/chipmunk-nature-photos-1537973822.jpg",
+            "id": "",
+            "name": animalName,
+            "location": location.value.description,
+            "animalAgeYear": animalAgeYear,
+            "animalAgeMonth": animalAgeMonth,
+            "dateFound": dateFound,
+            "kind": category,
+            "price": price,
+            "description": description,
+            "userAvatar": "testuser",
+            "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/chipmunk-nature-photos-1537973822.jpg",
         }
         fetch(backEndURL, {
             method: 'POST',
@@ -172,7 +173,7 @@ function PostAnimalForm() {
                         name="animal_category_input"
                     >
                         <Select defaultValue="Select" onChange={handleSelectBoxChange}>
-                            <Option value="amphibian">Amphibian</Option>
+                            <Option value="Squirrel">Squirrel</Option>
                             <Option value="bird">Bird</Option>
                             <Option value="cat">Cat</Option>
                             <Option value="chicken">Chicken</Option>

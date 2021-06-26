@@ -8,7 +8,6 @@ class AnimalList extends React.Component {
     constructor(props) {
         super(props);
         this.state = { width: 0, height: 0, animalInfos: this.props.data };
-        this.animalInfos = null;
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
