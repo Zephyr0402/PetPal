@@ -43,7 +43,7 @@ const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
             try {
                 setIsProcessing(true);
                 const {id} = paymentMethod;
-                const response = await axios.post("http://localhost:9999/payment", {
+                const response = await axios.post("http://localhost:9999/api/payment", {
                     //stripe amount is in cent
                     amount: amount * 100,
                     id
