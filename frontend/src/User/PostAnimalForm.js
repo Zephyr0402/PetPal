@@ -19,7 +19,7 @@ function PostAnimalForm() {
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState(null);
 
-    const backEndURL = ""
+    const backEndURL = "http://127.0.0.1:3001/post";
 
     const layout = {
         labelCol: { span: 6 },
@@ -33,12 +33,11 @@ function PostAnimalForm() {
     const handlePostAnimal = (e) => {
         e.preventDefault();
         //TODO: replace with actual handlePostAnimal functionality
+        console.log("handlePostAnimal");
         let canPost = true;
         if (category === null) {
             canPost = false;
         }
-
-        console.log("handlePostAnimal");
         console.log(location);
         console.log(animalName);
         console.log(animalAgeYear);
@@ -47,8 +46,21 @@ function PostAnimalForm() {
         console.log(category);
         console.log(price);
         console.log(description);
+        const animalInfo = {
+            animalName: animalName,
+            location: location,
+            animalAgeYear: animalAgeYear,
+            animalAgeMonth: animalAgeMonth,
+            dateFound: dateFound,
+            category: category,
+            price: price,
+            description: description,
+        }
 
-        axios.post()
+        axios.post(backEndURL, animalInfo)
+            .then((res) => {
+                console.log(res);
+            });
         
         if (canPost) {
             resetInput();

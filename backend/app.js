@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var accountRouter = require('./routes/account');
 var paymentRouter = require('./routes/payment');
+var postRouter = require('./routes/post');
 
 var app = express();
 
@@ -28,6 +29,15 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/', accountRouter);
 app.use('/payment', paymentRouter);
+app.use('/post', postRouter);
+
+// app.post('/postAnimal', function (req, res) {
+//   console.log('Get post');
+// });
+
+var listener = app.listen(3001, function () {
+  console.log('Listening on port ' + listener.address().port); //Listening on port 8888
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
