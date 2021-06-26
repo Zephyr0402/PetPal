@@ -35,10 +35,9 @@ export const register = async (username, password) => {
         }),
         //mode: 'cors',
         //credentials: 'include',
-        headers: new Headers({
-            'Accept': 'application/json',
+        headers: {
             "Content-Type": "application/json",
-        })
+        }
     }).then(res => res.json());
 }
 
@@ -55,4 +54,8 @@ export const getCookie = async () => {
 export const getView = async () => {
     return await axios.get('http://localhost:9999/api/test')
         .then(res => res);
+}
+
+export const testPost = async() => {
+    return await axios.post('http://localhost:9999/api/testPost').then(res => res.data)
 }

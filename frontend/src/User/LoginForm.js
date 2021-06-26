@@ -1,7 +1,7 @@
 import React from 'react';
 import './forms.css';
 import { Form, Input, Button } from 'antd';
-import { getCookie, getHeader, login , getView} from '../Services/userService';
+import { getCookie, getHeader, login , getView, testPost} from '../Services/userService';
 import { LogContext } from '../Layout/HeaderContext';
 import { stringify } from 'css';
 import {cookies} from 'react-cookie'
@@ -43,11 +43,15 @@ const LoginForm = (props) => {
         //window.location.href = '/';
     };
 
-    const onClick = () => {
+    const onClick1 = () => {
         getHeader("_none_")
             .then(res => {
                 console.log(res);
         })
+    }
+
+    const onClick2 = () => {
+        testPost().then(res => console.log(res));
     }
 
     const onFinishFailed = (errorInfo) => {
@@ -89,7 +93,8 @@ const LoginForm = (props) => {
                     <Form.Item {...tailLayout}>
                         New user? <a href="/register"> Sign up here! </a>
                     </Form.Item>
-                    <Button onClick = {onClick}>check status</Button>
+                    <Button onClick = {onClick1}>check status</Button>
+                    <Button onClick = {onClick2}>post</Button>
                 </Form>
             </div>
         </div>

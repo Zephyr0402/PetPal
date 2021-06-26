@@ -3,30 +3,6 @@ import 'antd/dist/antd.css';
 import { List } from 'antd';
 import AnimalThumbnail from './AnimalThumbnail';
 
-const data = [
-    {
-        id : 0,
-        name: 'Jerry',
-        image: '/animalImages/cat.png',
-    },
-    {
-        id : 1,
-        name: 'Yuki',
-        image: '/animalImages/dog.png',
-    },
-    {
-        id : 2,
-        name: 'Milly',
-        image: '/animalImages/parrot.png',
-    },
-    {
-        id : 3,
-        name: 'Ruby',
-        image: '/animalImages/fish.png',
-    },
-    
-];
-
 class AnimalList extends React.Component {
     constructor(props) {
         super(props);
@@ -52,9 +28,9 @@ class AnimalList extends React.Component {
             <div>
                 <List style={{ width: "100%", height: this.state.height}}
                     itemLayout="horizontal"
-                    dataSource={data}
+                    dataSource={this.props.data}
                     renderItem={item => (
-                        <List.Item className = 'animal-list-item' id = {item.name} style={{ width: "100%", padding: 8}}>
+                        <List.Item className = 'animal-list-item' id = {item.id} style={{ width: "100%", padding: 8}}>
                             <AnimalThumbnail content={ item } setDisplay = {this.props.setDisplay}/>
                         </List.Item>
                     )}

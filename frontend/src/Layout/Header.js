@@ -9,20 +9,20 @@ import { getHeader } from '../Services/userService';
 const Header = (props) => {
     const [header, setHeader] = useState("");
 
-    useEffect(()=>{
-        console.log("hello");
-        getHeader()
-            .then(res => {
-                console.log(res);
-                setHeader(res);
-            })
-    },[]);
+    // useEffect(()=>{
+    //     console.log("hello");
+    //     getHeader()
+    //         .then(res => {
+    //             console.log(res);
+    //             setHeader(res);
+    //         })
+    // },[]);
 
     return (
         <header className = "header">
             <img src="https://i.ibb.co/k3rqzWb/Petpal-logo.png" alt="Petpal-logo" border="0" width={200}/>
             {
-                header.Logged ? 
+                false ? 
                     <span className = "header-btns">
                         <Button className = "header-btn" type = 'primary' danger href = "/logout">Log out</Button>
                         <Avatar style = {{marginRight:"8px"}} src = {header.avatar}/>

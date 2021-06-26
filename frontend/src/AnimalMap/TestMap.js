@@ -67,14 +67,12 @@ export class TestMapContainer extends Component {
     };
 
     componentDidMount(){
-        console.log(this.props.aid);
         if(this.props.aid > -1){
             aid2marker[this.props.aid].marker.click();
         }
     }
 
     render() {
-        console.log(this.state.activeMarker);
         return (
             <Map
             containerStyle = {mapStyles}
