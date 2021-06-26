@@ -7,7 +7,7 @@ import AnimalThumbnail from './AnimalThumbnail';
 class AnimalList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { width: 0, height: 0, animalInfos: data };
+        this.state = { width: 0, height: 0, animalInfos: this.props.data };
         this.animalInfos = null;
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
@@ -27,7 +27,7 @@ class AnimalList extends React.Component {
     }
 
     getAnimalInfos() {
-        const backEndURL = "http://127.0.0.1:3001/animalinfo";
+        const backEndURL = "http://127.0.0.1:9999/animalinfo";
         axios.get(backEndURL)
             .then((res) => {
                 console.log(res.data.animalInfos);

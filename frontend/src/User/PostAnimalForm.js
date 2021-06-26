@@ -4,6 +4,7 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 function PostAnimalForm() {
 
@@ -19,7 +20,7 @@ function PostAnimalForm() {
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState(null);
 
-    const backEndURL = "http://127.0.0.1:3001/animalinfo/post";
+    const backEndURL = "http://localhost:9999/animalinfo/post";
 
     const layout = {
         labelCol: { span: 6 },
@@ -56,12 +57,16 @@ function PostAnimalForm() {
             price: price,
             description: description,
             userAvatar: "testuser",
+            image: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/chipmunk-nature-photos-1537973822.jpg",
         }
-
-        axios.post(backEndURL, animalInfo)
-            .then((res) => {
-                console.log(res);
-            });
+        fetch(backEndURL, {
+            method: 'POST',
+            body: JSON.stringify(animalInfo),
+            headers: new Headers({
+                'Accept': 'application/json',
+                "Content-Type": "application/json",
+            })
+        }).then(res => res);
         
         if (canPost) {
             resetInput();
