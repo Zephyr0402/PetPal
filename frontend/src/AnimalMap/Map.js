@@ -1,127 +1,101 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useState } from 'react';
+import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 
 const mapStyles = {
-  map: {
     position: 'absolute',
     width: '62%',
     height: '92%'
-  }
 };
 
-export class CurrentLocation extends React.Component {
-  constructor(props) {
-    super(props);
-    const { lat, lng } = this.props.initialCenter;
-    this.state = {
-      currentLocation: {
-        lat: lat,
-        lng: lng
-      }
-    };
-  }
-  
-  componentDidMount() {
-    if (this.props.centerAroundCurrentLocation) {
-      if (navigator && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-          const coords = pos.coords;
-          this.setState({
-            currentLocation: {
-              lat: coords.latitude,
-              lng: coords.longitude
-            }
-          });
-        });
-      }
+const data = [
+    {
+      name : "Jerry",
+      position:{lat:49.26127572955761, lng:-123.23869115661624},
+      address: "2725 Osoyoos Cres\nVancouver\nBC V6T 1X7\nCanada"
+    },
+    {
+      name : "Yuki",
+      position:{lat:49.25727572955761, lng:-123.24769115661624},
+      address:"6328 Larkin Dr\nVancouver\nBC V6T 2K2\nCanada"
+    },
+    {
+      name : "Milly",
+      position:{lat:49.25127572955761, lng:-123.23769115661624},
+      address: "3461 Ross Dr\nVancouver\nBC V6T 1W5\nCanada"
+    },
+    {
+      name : "Ruby",
+      position:{lat:49.25127572955761, lng:-123.24769115661624},
+      address: "6804 SW Marine Dr\nVancouver\nBC V6T 1Z1\nCanada"
     }
-    this.loadMap();
-  }
+  ]
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.google !== this.props.google) {
-      this.loadMap();
-    }
-    if (prevState.currentLocation !== this.state.currentLocation) {
-      this.recenterMap();
-    }
-  }
+var aid2marker = [];
 
-  loadMap() {
-    if (this.props && this.props.google) {
-      // checks if google is available
-      const { google } = this.props;
-      const maps = google.maps;
+const AnimalMap = (props) => {
+    const [showInfoWindow, setShowInfoWindow] = useState(false);
+    const [activeMarker, setActiveMarker] = useState({});
+    //const inputEl = useRef(null);
 
-      const mapRef = this.refs.map;
-
-      // reference to the actual DOM element
-      const node = ReactDOM.findDOMNode(mapRef);
-
-      let { zoom } = this.props;
-      const { lat, lng } = this.state.currentLocation;
-      const center = new maps.LatLng(lat, lng);
-      const mapConfig = Object.assign(
-        {},
-        {
-          center: center,
-          zoom: zoom
+    useEffect(() => {
+        if(props.aid > -1){
+            aid2marker[props.aid].marker.click();
         }
-      );
-      // maps.Map() is constructor that instantiates the map
-      this.map = new maps.Map(node, mapConfig);
+    },[])
+
+    const marker2aid = (marker) => {
+        for(let i in aid2marker){
+            if(aid2marker[i].marker.position === marker.position){
+                return i;
+            }   
+        }
     }
-  }
 
-  recenterMap() {
-    const map = this.map;
-    const current = this.state.currentLocation;
-
-    const google = this.props.google;
-    const maps = google.maps;
-
-    if (map) {
-      let center = new maps.LatLng(current.lat, current.lng);
-      map.panTo(center);
+    const onMarkerClick = (marker) => {
+        console.log(marker)
+        props.setDisplay(marker2aid(marker));
+        setShowInfoWindow(true);
+        setActiveMarker(marker);
     }
-  }
 
-  renderChildren() {
-    const { children } = this.props;
+    const onInfoWindowClose = (props) => {
+        if(showInfoWindow){
+            setShowInfoWindow(false);
+        }
+    }
 
-    if (!children) return;
+    return(
+        <Map
+            containerStyle = {mapStyles}
+            google={props.google}
+            zoom={14}
+            initialCenter={{lat:49.26127572955761, lng:-123.23869115661624}}
+            center = {activeMarker.position}
+        >
+            {data.map((ele,index) => 
+                <Marker
+                    name = {ele.name}
+                    position = {ele.position}
+                    onClick = {onMarkerClick}
+                    ref = {(marker) => aid2marker[index] = marker}
+                />
+            )}
+            <InfoWindow
+                marker={
+                    props.aid > -1 ? 
+                    aid2marker[props.aid].marker : null
+                }
+                visible={props.aid > -1}
+                onClose={onInfoWindowClose}
+            >
+                <div className = "hello">
+                    <h3>{props.aid > -1 ? data[props.aid].name : ""}</h3>
+                    <pre>{props.aid > -1 ? data[props.aid].address : ""}</pre>
+                </div>
+            </InfoWindow>
+        </Map>
+    )
+} 
 
-    return React.Children.map(children, c => {
-      if (!c) return;
-      return React.cloneElement(c, {
-        map: this.map,
-        google: this.props.google,
-        mapCenter: this.state.currentLocation
-      });
-    });
-  }
-
-  render() {
-    const style = Object.assign({}, mapStyles.map);
-
-    return (
-      <div>
-        <div style={style} ref="map">
-          Loading map...
-        </div>
-        {this.renderChildren()}
-      </div>
-    );
-  }
-}
-export default CurrentLocation;
-
-CurrentLocation.defaultProps = {
-  zoom: 12,
-  initialCenter: {
-    lat: 49.246292,
-    lng: -123.116226
-  },
-  centerAroundCurrentLocation: false,
-  visible: true
-};
+export default GoogleApiWrapper({
+    apiKey: 'AIzaSyBgao-aq8zyAUnJUCg335-tYIDAI5AJeAc'})(AnimalMap);
