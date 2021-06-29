@@ -20,7 +20,7 @@ router.use(cors(corsOptions));
 
 router.use(session({
     name: "sid",
-    secret: 'whxn', // 建议使用 128 个字符的随机字符串
+    secret: 'whxn',
     resave: true,
     saveUninitialized: true,
     rolling: true,
@@ -28,7 +28,6 @@ router.use(session({
 }));
 
 const encryptPWD = async (req, res, next) => {
-    console.log(req.body);
     req.body.password = bcypt.hashSync(req.body.password, 10);
     next();
 }

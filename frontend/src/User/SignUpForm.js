@@ -70,7 +70,7 @@ function SignUpForm() {
                         label="Password"
                         name="password_input"
                     >
-                        <Input/>
+                        <Input.Password/>
                     </Form.Item>
 
                     <Form.Item
