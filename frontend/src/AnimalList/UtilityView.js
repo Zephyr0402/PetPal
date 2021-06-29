@@ -12,28 +12,28 @@ export const data = [
         name: 'Jerry',
         kind: 'cat',
         image: '/animalImages/cat.png',
-        price: 4
+        price: 400
     },
     {
         id : 1,
         name: 'Yuki',
         kind: 'dog',
         image: '/animalImages/dog.png',
-        price: 2
+        price: 200
     },
     {
         id : 2,
         name: 'Milly',
         kind: 'bird',
         image: '/animalImages/parrot.png',
-        price: 3
+        price: 100
     },
     {
         id : 3,
         name: 'Ruby',
         kind: 'fish',
         image: '/animalImages/fish.png',
-        price: 1
+        price: 30
     },
     
 ];
