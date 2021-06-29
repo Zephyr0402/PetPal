@@ -1,14 +1,13 @@
-import backendURL from 'backendURL';
+import backendURL from './backendURL';
 
-const fetchAnimalList = async () => {
-    fetch(backendURL + '/animalInfo', {
+export const fetchAnimalList = async () => {
+    const res = await fetch(backendURL + '/animalInfo', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         }
-    }).then(response => {
-        return response.json();
     })
+    return res.json();
 }
 
 const fetchAnimalListByKind = (kind) => {
