@@ -5,10 +5,14 @@ router.use(express.json())
 var session = require('express-session');
 var cors = require('cors');
 var uuid = require('uuid');
-const {User, UserInfo} = require('../models/userModel');
+const nodeMailer = require('nodemailer')
+const smtpTransport = require('nodemailer-smtp-transport')
+
+const {User, UserInfo, UserAuth} = require('../models/userModel');
 
 const defaultAvatar = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADHElEQVRYR9WXO2gUYRDH/7Mb5QobsUoURAQFC0EUERRRiNqolQ9ERRsTFFSMt/Nl01wszPnNXUghgo9CEBsjVgoxikQDdknno/WFKGgXG737RhbuwmZzr1XD4QfX7H0z89t5L6HNh9psH/8XgIjsBrALwFYAnQC6APwA8AXAVwBPVfWJMWaqVc+25AEROQLgvKouJaKH5XL5ke/7HzOZzKeZmZklnud1eZ63BsBeAPsAPPY8byibzb5pBtIUQERGAaxS1VvGmJvNFFpru4ioF0D0Y2a+00imIYCIvALwhpkPNTOc/L9YLK5zzo0S0UQQBGfrydcFsNZGcb1ujBlMazx+X0QmAPxk5j219NQEEJFxIpoOgmDgb4xXZSsQU8wcJPXNA7DWHieiU8y8PabgNYB1AF6oarZelltrjxLR5Up1XGDma5GOfD6/wfO8SQCbjTFv4xDzAETku3PuWH9//1gMQGNCJQAPiGhcVavPVxPRPlVdAWBZdFdVp40xm6pyhUIhdM6tN8ZEFTV75gAUCoX1qjrGzMsTcYwDtBqVl8y8LaHnPTOvrAsgIgNEtCgIgkv/AOAZM3fH9Vhrp5xzvWEYTlefz/GAiCgz1wrLn3jgETNHTWn2iMhBAAfjZb1gAKo6aow5HAfI5/M7fN8/UxOgWCxuLJfLN+KJUycJW82B+8kGFgF0dHT0BUGwf14IhoeH15RKpYfGmLVJC1FoWrUau3eHmU/U8ECOmXcueA6oatRFT/81gIicBHA7rQdUddI5lwvD8HkslE2TcEBVF1f7f8X1d6MZT0QNp1oC8JeqDhHRYVW9V9XXtAyTjShKGgAffN+/EpVPCi98B9CXHMUi0rgRRQaSrbhSOuecc2Oe5zXdBwB8ds4N+r7fHQTBbBm21IojgFrDqPrm1totAC4S0YEa3iir6lXf9y9ns9lvieRrfRhVvNBwHOdyuY5MJhMNntkThuG7eiFKNY5jb9u+hSRWNu1byWIQqZbSkZGRzlKp1KOqPQCGqktJvfA03YorOdG+tTxO3rYPkxQNKPXVlkKQWmsKgbYD/AY9Y8AwjKjyOAAAAABJRU5ErkJggg==";
-const cookieMaxAge = 30*1000;//10 seconds
+const cookieMaxAge = 30*1000;//30 seconds
+const codeMaxAge = 1000*60*1;//1 minute
 const SECRET = "znhy";
 
 const corsOptions = {
@@ -17,6 +21,15 @@ const corsOptions = {
     allowedHeaders: 'Content-type',
     credentials: true
 }
+
+const randomFns=()=> {
+    let code = ""
+    for(let i= 0;i<6;i++){
+        code += parseInt(Math.random()*10)
+    }
+    return code 
+}
+const regEmail=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
 
 router.use(cors(corsOptions));
 
@@ -32,6 +45,67 @@ router.use(session({
     }
 }));
 
+router.post('/api/auth',async(req, res) =>{
+    const EMAIL=req.body.email
+    if(!regEmail.test(EMAIL)){
+        return res.status(422).send({
+            message: "Not a correct email address!"
+        })
+    }
+
+    //create a transporter
+    const transporter = nodeMailer.createTransport(smtpTransport({
+        service: 'Gmail',
+        host: 'smtp.gmail.com',
+        secure: true,
+        port:465,
+        auth: {
+            user: 'petpal455official@gmail.com',
+            pass: '2021petpal455'
+        }
+    }))
+
+    //send code
+    let code = randomFns()
+    transporter.sendMail({
+        from: 'petpal455official@gmail.com',
+        to: EMAIL,
+        subject: 'Verify your Petpal account!',
+        html: `
+            <p>Welcom to Petpal!</p>
+            <p>You have tried to register for our app!</p>
+            <p>Your verification code：<strong style="color: #ff4e2a;">${code}</strong></p>
+            <p>***This code is valid for the next one minute***</p>`
+    }, function(error, data) {
+        if(error){
+            transporter.close();
+            return res.status(500).send({
+                message: "Error sending verification code"
+            })
+        }
+    })
+
+    await UserAuth.deleteMany({
+        'email' : EMAIL
+    })
+
+    //store code into db
+    await UserAuth.create({
+        'email' : EMAIL,
+        'code' : code
+    })
+
+    res.send({
+        message: "code sent!"
+    })
+    //set expiry time
+    setTimeout(async()=>{
+        await UserAuth.deleteMany({
+            'email' : EMAIL
+        })
+    },codeMaxAge)
+})
+
 const encryptPWD = async (req, res, next) => {
     req.body.password = bcypt.hashSync(req.body.password, 10);
     next();
@@ -43,12 +117,25 @@ router.post('/api/register', encryptPWD, async(req, res) => {
     const user = await UserInfo.findOne({
         'email' : req.body.email
     })
-
     if(user){
         return res.status(422).send({
-            messgae : "It seems like we already have an account for this email address!"
+            messgae : "We already have an account for this email address!"
         });
     }
+    //check verification code
+    const auth = await UserAuth.findOne({
+        'email' : req.body.email,
+        'code' : req.body.code
+    })
+    if(!auth){
+        return res.status(422).send({
+            message: "Verification code is not right! Or it has expired!"
+        })
+    }
+    await UserAuth.deleteOne({
+        'email' : req.body.email,
+        'code' : req.body.code
+    })
 
     //write to db
     //user stores merely a map between uuid and pwd
@@ -102,7 +189,6 @@ router.post('/api/login',  async (req, res) => {
     }
     
     //return uuid
-    console.log("log in succesful")
     res.send({
         uuid: user.uuid
     });

@@ -1,6 +1,14 @@
 @url = http://localhost:9999
 @json = Content-Type: application/json
 
+###send verification code
+post {{url}}/api/auth
+{{json}}
+
+{
+    "email" : "runzw0817@gmail.com"
+}
+
 ###register
 post {{url}}/api/register
 {{json}}
@@ -8,7 +16,8 @@ post {{url}}/api/register
 {
     "name" : "runzw",
     "password" : "runzw",
-    "email" : "runzw0817@gmail.com"
+    "email" : "runzw0817@gmail.com",
+    "code" : "696012"
 }
 
 ###login

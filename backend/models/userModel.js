@@ -15,4 +15,9 @@ const UserInfo = mongoose.model('UserInfo', new mongoose.Schema({
     avatar: {type: String}
 }))
 
-module.exports = {User, UserInfo}
+const UserAuth = mongoose.model('UserAuth', new mongoose.Schema({
+    email: {type: String},
+    code: {type: String}
+}))
+
+module.exports = {User, UserInfo, UserAuth}

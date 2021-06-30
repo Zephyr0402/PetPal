@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './forms.css';
-import { Button, Form, Input, Select} from 'antd';
-import { register} from '../Services/userService';
+import { Button, Form, Input, Modal} from 'antd';
+import { register, verify} from '../Services/userService';
 
 
-function SignUpForm() {
+const SignUpForm = () => {
+    const [verModal, setVerModal] = useState(false);
+    const emailInput = useRef("");
+    const nameInput = useRef("");
+    const passwordInput = useRef("");
+    const codeInput = useRef("");
 
     const layout = {
         labelCol: { span: 6 },
@@ -15,13 +20,18 @@ function SignUpForm() {
         wrapperCol: { offset: 6, span: 18 },
     };
 
-    const onFinish = (values) => {
-        register(values.name_input, values.email_input, values.password_input)
+    const onFinish = async (values) => {
+        register(nameInput.current.props.value, emailInput.current.props.value, passwordInput.current.props.value, codeInput.current.state.value)
         .then(res => {
             alert(res.message);
+            window.location.href = "/login";
         });
-        window.location.href = "/login";
     };
+
+    const showVerModal = () => {
+        verify(emailInput.current.props.value);
+        setVerModal(!verModal);
+    }
 
     return (
         <div className="form_container">
@@ -34,27 +44,36 @@ function SignUpForm() {
                         label="Preferred Name"
                         name="name_input"
                     >
-                        <Input/>
+                        <Input ref = {nameInput}/>
                     </Form.Item>
 
                     <Form.Item
                         label="Email"
                         name="email_input"
                     >
-                        <Input />
+                        <Input ref = {emailInput} />
                     </Form.Item>
 
                     <Form.Item
                         label="Password"
                         name="password_input"
                     >
-                        <Input.Password/>
+                        <Input.Password ref = {passwordInput}/>
                     </Form.Item>
 
                     <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit">Submit</Button>
+                        <Button type="primary" htmlType = "button" onClick = {showVerModal}>Submit</Button>
                         <Button htmlType="reset">Reset</Button>
                     </Form.Item>
+
+                    <Modal title="Email Address Verification" visible={verModal}
+                        onCancel = {showVerModal}
+                        onOk = {onFinish}
+                    >
+                        {verModal ? <p>Verification code has been sent to <b>{emailInput.current.props.value}</b></p> : ""}
+                        <p>Please input your code here:</p> 
+                        <Input id = "333" ref = {codeInput}/>
+                    </Modal>
 
                 </Form>
             </div>
