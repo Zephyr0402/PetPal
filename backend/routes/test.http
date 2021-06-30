@@ -6,8 +6,9 @@ post {{url}}/api/register
 {{json}}
 
 {
-    "username" : "runzw",
-    "password" : "runzw"
+    "name" : "runzw",
+    "password" : "runzw",
+    "email" : "runzw0817@gmail.com"
 }
 
 ###login
@@ -15,17 +16,19 @@ post {{url}}/api/login
 {{json}}
 
 {
-    "username" : "runzw",
+    "email" : "runzw0817@gmail.com",
     "password" : "runzw"
 }
 
-###login
+###header
+get {{url}}/api/cur_user/d6f9bc06-ca4c-42c3-b6c1-ba1f66ab383c
+
+###header
+get {{url}}/api/cur_user/
+
+###Get user infomation
+get {{url}}/api/cur_user/info
+
+###logout
 get {{url}}/api/logout
 
-###cookie-session
-get {{url}}/api/cookie-session
-
-###header
-get {{url}}/api/userStatus/runzw
-###header
-get {{url}}/api/userStatus/_none_

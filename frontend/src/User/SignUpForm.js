@@ -60,17 +60,10 @@ function SignUpForm() {
                     onFinish = {onFinish}
                 >
                     <Form.Item
-                        label="Username"
+                        label="Preferred Name"
                         name="username_input"
                     >
                         <Input/>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Password"
-                        name="password_input"
-                    >
-                        <Input.Password/>
                     </Form.Item>
 
                     <Form.Item
@@ -81,20 +74,20 @@ function SignUpForm() {
                     </Form.Item>
 
                     <Form.Item
-                        label="Phone Number"
-                        name="phone_number_input"
+                        label="Password"
+                        name="password_input"
                     >
-                        <Input />
+                        <Input.Password/>
                     </Form.Item>
 
-                    <Form.Item
+                    {/* <Form.Item
                         label="Street Address"
                         name="street_address_input"
                     >
                         <Input/>
-                    </Form.Item>
+                    </Form.Item> */}
 
-                    <Form.Item
+                    {/* <Form.Item
                         label="City"
                     >
                         <Input.Group compact>
@@ -125,9 +118,9 @@ function SignUpForm() {
                                 </Select>
                             </Form.Item>
                         </Input.Group>
-                    </Form.Item>
+                    </Form.Item> */}
 
-                    <Form.Item
+                    {/* <Form.Item
                         label="Identification"
                         name="identification_document"
                     >
@@ -135,14 +128,14 @@ function SignUpForm() {
                             <Button icon={<UploadOutlined />}>Upload (png or jpg only)</Button>
                         </Upload>
 
-                    </Form.Item>
+                    </Form.Item> */}
 
-                    <Form.Item
+                    {/* <Form.Item
                         label="About"
                         name="about_input"
                     >
                         <TextArea rows={4} />
-                    </Form.Item>
+                    </Form.Item> */}
 
                     <Form.Item {...tailLayout}>
                         <Button type="primary" htmlType="submit">Submit</Button>

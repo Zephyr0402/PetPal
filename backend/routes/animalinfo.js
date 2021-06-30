@@ -32,4 +32,16 @@ router.get("/", function (req, res) {
     res.send(rawdata);
 });
 
+router.use('/public', express.static('public'));
+
+router.post('/api/upload', async (req,res) => {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(error, fields, files) {
+        console.log("parsing done");
+        console.log(files.file);
+        fs.writeFileSync("public/images/"+files.file.name, fs.readFileSync(files.file.path));
+    });
+    res.send("hello");
+})
+
 module.exports = router;
