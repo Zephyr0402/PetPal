@@ -25,11 +25,18 @@ router.post('/post', function (req, res, next) {
 
 });
 
-
 router.get("/", function (req, res) {
     console.log('handle get animal information');
     let rawdata = fs.readFileSync('data.json');
     res.send(rawdata);
+});
+
+router.get("/kind", function (req, res) {
+    
+});
+
+router.get("/cost", function (req, res) {
+    
 });
 
 module.exports = router;

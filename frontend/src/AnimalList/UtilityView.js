@@ -66,6 +66,10 @@ const UtilityView = (props) => {
         }
         console.log(thumbnails);
         for (let thumbnail of thumbnails) {
+            if (animalInfos[thumbnail.id] === undefined) {
+                console.log("Ignoring...", thumbnail.id);
+                continue;
+            }
 
             if (animalInfos[thumbnail.id].name.toUpperCase().indexOf(filter) == -1 && filter != "") {
                 thumbnail.style.display = 'none';
