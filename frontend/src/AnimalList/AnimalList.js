@@ -29,7 +29,6 @@ class AnimalList extends React.Component {
         const backEndURL = "http://127.0.0.1:9999/animalinfo";
         axios.get(backEndURL)
             .then((res) => {
-                console.log(res.data.animalInfos);
                 this.setState({animalInfos: res.data.animalInfos});
             });
     }

@@ -47,7 +47,6 @@ class UtilityView extends React.Component {
             filter: -1,//-1 means no change, i>=0 means filter[i] is on
             animalInfos: data,
         }
-        console.log(this.state.animalInfos);
         this.getAnimalInfos();
     }
 
@@ -60,9 +59,7 @@ class UtilityView extends React.Component {
     }
 
     onSearch(e) {
-        console.log(this.state.animalInfos);
         var filter = e.target.value.toUpperCase();
-        console.log("filter:", filter);
         var thumbnails = document.getElementsByClassName('animal-list-item')
         if (this.state.animalInfos === undefined) {
             return;
@@ -105,10 +102,8 @@ class UtilityView extends React.Component {
         const backEndURL = "http://127.0.0.1:9999/animalinfo";
         axios.get(backEndURL)
             .then((res) => {
-                console.log(res.data.animalInfos);
                 this.setState({ animalInfos: res.data.animalInfos });
                 this.data = res.data.animalInfos;
-                console.log(this.state.animalInfos);
             });
     }
 

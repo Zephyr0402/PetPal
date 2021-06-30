@@ -4,12 +4,11 @@ var router = express.Router();
 router.use(express.json())
 var session = require('express-session');
 var cors = require('cors');
-var formidable = require("formidable");
 var uuid = require('uuid');
 const {User, UserInfo} = require('../models/userModel');
 
 const defaultAvatar = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADHElEQVRYR9WXO2gUYRDH/7Mb5QobsUoURAQFC0EUERRRiNqolQ9ERRsTFFSMt/Nl01wszPnNXUghgo9CEBsjVgoxikQDdknno/WFKGgXG737RhbuwmZzr1XD4QfX7H0z89t5L6HNh9psH/8XgIjsBrALwFYAnQC6APwA8AXAVwBPVfWJMWaqVc+25AEROQLgvKouJaKH5XL5ke/7HzOZzKeZmZklnud1eZ63BsBeAPsAPPY8byibzb5pBtIUQERGAaxS1VvGmJvNFFpru4ioF0D0Y2a+00imIYCIvALwhpkPNTOc/L9YLK5zzo0S0UQQBGfrydcFsNZGcb1ujBlMazx+X0QmAPxk5j219NQEEJFxIpoOgmDgb4xXZSsQU8wcJPXNA7DWHieiU8y8PabgNYB1AF6oarZelltrjxLR5Up1XGDma5GOfD6/wfO8SQCbjTFv4xDzAETku3PuWH9//1gMQGNCJQAPiGhcVavPVxPRPlVdAWBZdFdVp40xm6pyhUIhdM6tN8ZEFTV75gAUCoX1qjrGzMsTcYwDtBqVl8y8LaHnPTOvrAsgIgNEtCgIgkv/AOAZM3fH9Vhrp5xzvWEYTlefz/GAiCgz1wrLn3jgETNHTWn2iMhBAAfjZb1gAKo6aow5HAfI5/M7fN8/UxOgWCxuLJfLN+KJUycJW82B+8kGFgF0dHT0BUGwf14IhoeH15RKpYfGmLVJC1FoWrUau3eHmU/U8ECOmXcueA6oatRFT/81gIicBHA7rQdUddI5lwvD8HkslE2TcEBVF1f7f8X1d6MZT0QNp1oC8JeqDhHRYVW9V9XXtAyTjShKGgAffN+/EpVPCi98B9CXHMUi0rgRRQaSrbhSOuecc2Oe5zXdBwB8ds4N+r7fHQTBbBm21IojgFrDqPrm1totAC4S0YEa3iir6lXf9y9ns9lvieRrfRhVvNBwHOdyuY5MJhMNntkThuG7eiFKNY5jb9u+hSRWNu1byWIQqZbSkZGRzlKp1KOqPQCGqktJvfA03YorOdG+tTxO3rYPkxQNKPXVlkKQWmsKgbYD/AY9Y8AwjKjyOAAAAABJRU5ErkJggg==";
-const cookieMaxAge = 10*1000;//10 seconds
+const cookieMaxAge = 30*1000;//10 seconds
 const SECRET = "znhy";
 
 const corsOptions = {
@@ -103,6 +102,7 @@ router.post('/api/login',  async (req, res) => {
     }
     
     //return uuid
+    console.log("log in succesful")
     res.send({
         uuid: user.uuid
     });
@@ -120,7 +120,7 @@ router.get('/api/logout', async(req, res) => {
 router.get('/api/cur_user/info', async (req,res) => {
     //not logged in
     if(req.session.uuid === undefined){
-        res.status(422).send({
+        res.send({
             message : "Your session has expired. Please log in again!"
         })
     }
@@ -151,7 +151,7 @@ router.get('/api/cur_user/:uuid?', async (req,res) => {
         }
         //not in a session
         else{
-            res.status(422).send({
+            res.send({
                 message: "Not logged in!"
             })
         }
