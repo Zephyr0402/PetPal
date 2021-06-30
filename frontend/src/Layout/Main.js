@@ -38,7 +38,7 @@ const Main = (props) => {
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>
-                        <TestMapContainer aid = {display} setDisplay = {setMyDisplay}/>
+                        <TestMapContainer aid={display} setDisplay={setMyDisplay} animalInfos={animalInfos}/>
                     </Layout.Content>
                 </Layout>
             </Layout>
