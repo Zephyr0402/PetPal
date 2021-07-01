@@ -17,28 +17,13 @@ const LoginForm = (props) => {
     };
 
     const onFinish = async (values) => {
-        //getView().then(res => console.log(res));
-        // await getCookie()
-        // .then(res => console.log(res));
         await login(values.username, values.password)
         .then(
-            getHeader("runzw")
+            await getHeader("runzw")
             .then(res => {
                 console.log(res);
         })
         );
-        getHeader("runzw")
-            .then(res => {
-                console.log(res);
-        })
-        getHeader("_none_")
-            .then(res => {
-                console.log(res);
-        })
-        // getView().then(res=>console.log(res));
-        // getView().then(res=>console.log(res));
-        // getView().then(res=>console.log(res));
-        // getView().then(res=>console.log(res));
         
         window.location.href = '/';
     };
@@ -55,7 +40,6 @@ const LoginForm = (props) => {
     }
 
     const onFinishFailed = (errorInfo) => {
-        //TODO: replace with actual onFinishFailed functionality
         console.log('Failed:', errorInfo);
     };
     console.log(props);
@@ -93,8 +77,8 @@ const LoginForm = (props) => {
                     <Form.Item {...tailLayout}>
                         New user? <a href="/register"> Sign up here! </a>
                     </Form.Item>
-                    <Button onClick = {onClick1}>check status</Button>
-                    <Button onClick = {onClick2}>post</Button>
+                    {/*<Button onClick = {onClick1}>check status</Button>
+                    <Button onClick = {onClick2}>post</Button>*/}
                 </Form>
             </div>
         </div>

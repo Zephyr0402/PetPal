@@ -4,7 +4,7 @@ var router = express.Router();
 var session = require('express-session');
 //var cors = require('express-cors');
 var cors = require('cors');
-var flatted = require('flatted/cjs');
+// var flatted = require('flatted/cjs');
 var formidable = require("formidable");
 fs = require("fs");
 
@@ -16,23 +16,7 @@ var corsOptions = {
     credentials: true
 }
 
-
 router.use(cors(corsOptions));
-
-// router.all('*', function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-//     res.header("Access-Control-Allow-Credentials", true);
-//     res.header("Access-Control-Allow-Headers", "X-Requested-with, Content-Type, application/json");
-//     res.header("Access-Control-Allow-Methods","*");
-//     console.log(res.header);
-//     next();
-// });
-
-// router.use(cors({
-//     allowedOrigins: [
-//         'http://localhost:3000'
-//     ]
-// }))
 
 router.use(session({
     name: "sid",
@@ -96,11 +80,6 @@ router.post('/api/login',  async (req, res) => {
           message : "incorrect password!"
       });
     }
-  
-    // req.session.Logged = 1;
-    // res.cookie({signed: true});
-    // thisUser.sessionID = req.sessionID
-    console.log(req.session);
     
     res.send({
         username: thisUser.username,
@@ -182,10 +161,10 @@ router.use('/public', express.static('public'));
 
 router.post('/api/upload', async (req,res) => {
     var form = new formidable.IncomingForm();
-    console.log("about to parse");
+    //console.log("about to parse");
     form.parse(req, function(error, fields, files) {
-        console.log("parsing done");
-        console.log(files.file.path);
+        // console.log("parsing done");
+        // console.log(files.file.path);
         fs.writeFileSync("public/images/test.png", fs.readFileSync(files.file.path));
     });
     res.send("hello");

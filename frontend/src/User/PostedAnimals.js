@@ -41,8 +41,8 @@ const cardDisplay = animalInfo.map((card) =>
     <Col xs={24} md={12} lg={8} xl={6} xxl={4}>
         <Card
         hoverable
-        style={{ height: "96%", objectFit: 'cover', width: 200}}
-        cover={<img alt={card.name} src={card.imgUrl} />}
+        style={{ height: "95%", objectFit: 'cover', width: 200}}
+        cover={<img alt={card.name} src={card.imgUrl} width="200" height="150"/>}
         >
         <Meta title={card.name} description={card.description} />
         </Card>
