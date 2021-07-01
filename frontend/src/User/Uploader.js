@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 
-const Test = () => {
-  const [fileList, setFileList] = useState([]);
+const Uploader = (props) => {
 
-  console.log(fileList);
+  console.log(props.fileList);
 
   const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+    props.setFileList(newFileList);
   };
 
   const onPreview = async file => {
@@ -29,16 +28,16 @@ const Test = () => {
   return (
     <ImgCrop rotate>
       <Upload
-        action="http://localhost:9999/api/avatar"
+        action="http://localhost:9999/api/upload"
         listType="picture-card"
-        fileList={fileList}
+        fileList={props.fileList}
         onChange={onChange}
         onPreview={onPreview}
       >
-        {fileList.length < 5 && '+ Upload'}
+        {props.fileList.length < 2 && '+ Upload'}
       </Upload>
     </ImgCrop>
   );
 };
 
-export default Test;
+export default Uploader;

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import './forms.css';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-
+import { UploadOutlined, WindowsFilled } from '@ant-design/icons';
+import axios from 'axios';
+import Uploader from './Uploader'
+axios.defaults.withCredentials = true;
 
 function PostAnimalForm() {
 
@@ -16,8 +18,10 @@ function PostAnimalForm() {
     const [dateFound, setDateFound] = useState(null);
     const [category, setCategory] = useState(null);
     const [price, setPrice] = useState(null);
-    const [image, setImage] = useState(null);
+    const [fileList, setFileList] = useState([]);
     const [description, setDescription] = useState(null);
+
+    const backEndURL = "http://localhost:9999/animalinfo/post";
 
     const layout = {
         labelCol: { span: 6 },
@@ -31,13 +35,12 @@ function PostAnimalForm() {
     const handlePostAnimal = (e) => {
         e.preventDefault();
         //TODO: replace with actual handlePostAnimal functionality
+        console.log("handlePostAnimal");
         let canPost = true;
         if (category === null) {
             canPost = false;
         }
-
-        console.log("handlePostAnimal");
-        console.log(location);
+        console.log(location.value.description);
         console.log(animalName);
         console.log(animalAgeYear);
         console.log(animalAgeMonth);
@@ -45,11 +48,32 @@ function PostAnimalForm() {
         console.log(category);
         console.log(price);
         console.log(description);
+        const animalInfo = {
+            "id": "",
+            "name": animalName,
+            "location": location.value.description,
+            "animalAgeYear": animalAgeYear,
+            "animalAgeMonth": animalAgeMonth,
+            "dateFound": dateFound,
+            "kind": category,
+            "price": price,
+            "description": description,
+            "userAvatar": "testuser",
+            "image": 'http://localhost:9999/public/images/'+fileList[0].name,
+        }
+        fetch(backEndURL, {
+            method: 'POST',
+            body: JSON.stringify(animalInfo),
+            headers: new Headers({
+                'Accept': 'application/json',
+                "Content-Type": "application/json",
+            })
+        }).then(res => res);
         
         if (canPost) {
             resetInput();
+            window.location.href = '/'
         }
-        
     };
 
     const handleResetForm = (e) => {
@@ -150,7 +174,7 @@ function PostAnimalForm() {
                         name="animal_category_input"
                     >
                         <Select defaultValue="Select" onChange={handleSelectBoxChange}>
-                            <Option value="amphibian">Amphibian</Option>
+                            <Option value="Squirrel">Squirrel</Option>
                             <Option value="bird">Bird</Option>
                             <Option value="cat">Cat</Option>
                             <Option value="chicken">Chicken</Option>
@@ -180,10 +204,7 @@ function PostAnimalForm() {
                         label="Image"
                         name="animal_image"
                     >
-                        <Upload beforeUpload={beforeUpload} onChange={handleUpload}>
-                            <Button icon={<UploadOutlined />}>Upload (png or jpg only)</Button>
-                        </Upload>
-
+                        <Uploader fileList = {fileList} setFileList = {setFileList}/>
                     </Form.Item>
 
                     <Form.Item
