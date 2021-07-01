@@ -29,7 +29,7 @@ const SignUpForm = () => {
     };
 
     const showVerModal = () => {
-        verify(emailInput.current.props.value);
+        if(!verModal) verify(emailInput.current.props.value);
         setVerModal(!verModal);
     }
 

@@ -4,7 +4,7 @@ var router = express.Router();
 router.use(express.json())
 var session = require('express-session');
 var cors = require('cors');
-var uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const nodeMailer = require('nodemailer')
 const smtpTransport = require('nodemailer-smtp-transport')
 
@@ -141,7 +141,7 @@ router.post('/api/register', encryptPWD, async(req, res) => {
     //user stores merely a map between uuid and pwd
     //it should not be accessed anywhere except /api/login
     //userinfo stores information about that user
-    const newUUid = uuid.v4();
+    const newUUid = uuidv4();
     await User.create({
         'uuid' : newUUid,
         'password' : req.body.password
@@ -157,6 +157,42 @@ router.post('/api/register', encryptPWD, async(req, res) => {
     res.send({
         message: "Welcome to the Petpal!"
     });
+})
+
+//reset password
+router.post('/api/reset_pwd/:token', async (req, res) => {
+    //create a transporter
+    const transporter = nodeMailer.createTransport(smtpTransport({
+        service: 'Gmail',
+        host: 'smtp.gmail.com',
+        secure: true,
+        port:465,
+        auth: {
+            user: 'petpal455official@gmail.com',
+            pass: '2021petpal455'
+        }
+    }))
+
+    //send code
+    let token = crypto.randomBytes(20).toString('hex')
+    let resetURL = "http://localhost:3000/reset_pwd/"+token
+    transporter.sendMail({
+        from: 'petpal455official@gmail.com',
+        to: EMAIL,
+        subject: 'Password reset request',
+        html: `
+            <p>You are receiving this email because you have requested the reset of the password for your accoun <b>${EMAIL}</b></p>
+            <p>Please click on the following link, or paste it into your browser to complete the process. This link expires after one hour of receiving it:</p>
+            <p>${resetURL}</p>
+            <p>***If you did not request to reset your password, please disgard this email and your password will remain unchanged.***</p>`
+    }, function(error, data) {
+        if(error){
+            transporter.close();
+            return res.status(500).send({
+                message: "Error sending verification code"
+            })
+        }
+    })
 })
 
 //login
