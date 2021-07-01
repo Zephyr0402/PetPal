@@ -113,4 +113,4 @@ export class TestMapContainer extends Component {
 }
  
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBgao-aq8zyAUnJUCg335-tYIDAI5AJeAc'})(TestMapContainer);
+  apiKey: 'AIzaSyC8w_bEe3IlzsbyjWJ96uOhlSADfrhh7gQ'})(TestMapContainer);
