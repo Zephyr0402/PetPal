@@ -4,6 +4,7 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
 import { UploadOutlined, WindowsFilled } from '@ant-design/icons';
 import axios from 'axios';
+import Uploader from './Uploader'
 axios.defaults.withCredentials = true;
 
 function PostAnimalForm() {
@@ -17,7 +18,7 @@ function PostAnimalForm() {
     const [dateFound, setDateFound] = useState(null);
     const [category, setCategory] = useState(null);
     const [price, setPrice] = useState(null);
-    const [image, setImage] = useState(null);
+    const [fileList, setFileList] = useState([]);
     const [description, setDescription] = useState(null);
 
     const backEndURL = "http://localhost:9999/animalinfo/post";
@@ -58,7 +59,7 @@ function PostAnimalForm() {
             "price": price,
             "description": description,
             "userAvatar": "testuser",
-            "image": "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/chipmunk-nature-photos-1537973822.jpg",
+            "image": 'http://localhost:9999/public/images/'+fileList[0].name,
         }
         fetch(backEndURL, {
             method: 'POST',
@@ -203,10 +204,7 @@ function PostAnimalForm() {
                         label="Image"
                         name="animal_image"
                     >
-                        <Upload beforeUpload={beforeUpload} onChange={handleUpload}>
-                            <Button icon={<UploadOutlined />}>Upload (png or jpg only)</Button>
-                        </Upload>
-
+                        <Uploader fileList = {fileList} setFileList = {setFileList}/>
                     </Form.Item>
 
                     <Form.Item
