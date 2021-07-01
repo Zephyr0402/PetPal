@@ -20,4 +20,9 @@ const UserAuth = mongoose.model('UserAuth', new mongoose.Schema({
     code: {type: String}
 }))
 
-module.exports = {User, UserInfo, UserAuth}
+const UserReset = mongoose.model('UserReset', new mongoose.Schema({
+    uuid: {type: String},
+    token: {type: String}
+}))
+
+module.exports = {User, UserInfo, UserAuth, UserReset}

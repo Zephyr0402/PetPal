@@ -48,6 +48,30 @@ export const verify = async (email) => {
     });
 }
 
+export const sendResetLink = async (email) => {
+    return fetch('http://localhost:9999/api/reset_token',{
+        method: 'POST',
+        body: JSON.stringify({
+            "email":email
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+}
+
+export const resetPassword = async (token, password) => {
+    return await fetch('http://localhost:9999/api/reset_pwd/'+token, {
+        method: 'POST',
+        body: JSON.stringify({
+            "password" : password
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }).then(res => res.json());
+}
+
 export const getHeader = async ( uuid = "" ) => {
     return await axios.get('http://localhost:9999/api/cur_user/'+uuid)
         .then(res => res.data);

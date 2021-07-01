@@ -9,6 +9,22 @@ post {{url}}/api/auth
     "email" : "runzw0817@gmail.com"
 }
 
+###send password reset token
+post {{url}}/api/reset_token
+{{json}}
+
+{
+    "email" : "runzw0817@gmail.com"
+}
+
+###send password reset token
+post {{url}}/api/reset_pwd/2288d90c1304b73c1dcde9ddc4c24ac43438ac3c
+{{json}}
+
+{
+    "password" : "newrunzw"
+}
+
 ###register
 post {{url}}/api/register
 {{json}}
@@ -26,7 +42,7 @@ post {{url}}/api/login
 
 {
     "email" : "runzw0817@gmail.com",
-    "password" : "runzw"
+    "password" : "newrunzw"
 }
 
 ###header

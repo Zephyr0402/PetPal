@@ -6,9 +6,7 @@ import PostAnimalForm from './User/PostAnimalForm'
 import SignUpForm from './User/SignUpForm'
 import UserInfoPage from './User/UserInfoPage'
 import "antd/dist/antd.css";
-import {LogContext} from './Layout/HeaderContext';
-import { useState } from 'react';
-
+import ResetPwdForm from './User/ResetPwdForm'
 
 function App() {
 
@@ -32,6 +30,8 @@ function App() {
         </Route>
         <Route path = "/user">
           <UserInfoPage/>
+        </Route>
+        <Route path = "/reset_pwd/:token" component = {ResetPwdForm}>
         </Route>
       </Switch>
     </BrowserRouter>
