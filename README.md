@@ -60,7 +60,7 @@ Our application acts as a platform that allows people to adopt, sell and buy ani
 |              | User can search for the animal                                                                        |           |
 |              | User can make a payment for adopting or purchasing an animal                                          |           |
 |              | User can cancel the payment within 2 hours after submitting the order                                 |           |
-|              | Administrator actions (add/delete users, manage transactions, verify user identity)                   |           |
+|              | Send verification email to verify the user's email address is valid when one tries to sign up         |           |
 |              | User can submit documentation to confirm his/her identity                                             |           |
 |              | User can see sellers’ profiles (including basic information, recent transactions, rating and comments)|           |
 |              | Buyers can give ratings and leave comments after the payment is completed                             |           |
@@ -70,6 +70,7 @@ Our application acts as a platform that allows people to adopt, sell and buy ani
 |              | Buyers can confirm the payment after receiving the animal                                             |           |
 |              | Seller will get a notification when a buyer submits an order                                          |           |
 
+Note: Originally one of our requirements is "Administrator actions (add/delete users, manage transactions, verify user identity)", but it seems less important as we move on.
 ## Task Breakdown for minimal requirement:
 * **User registration, login and logout**
 
