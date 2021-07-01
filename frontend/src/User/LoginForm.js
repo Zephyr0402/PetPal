@@ -1,7 +1,7 @@
 import React from 'react';
 import './forms.css';
 import { Form, Input, Button } from 'antd';
-import { getCookie, getHeader, login , getView, testPost} from '../Services/userService';
+import { getHeader, login } from '../Services/userService';
 import { LogContext } from '../Layout/HeaderContext';
 import { stringify } from 'css';
 import {cookies} from 'react-cookie'
@@ -17,27 +17,18 @@ const LoginForm = (props) => {
     };
 
     const onFinish = async (values) => {
-        await login(values.username, values.password)
+        await login(values.email, values.password)
         .then(
-            await getHeader("runzw")
-            .then(res => {
-                console.log(res);
-        })
+            async res => {
+                await getHeader(res.uuid)
+                .then(res => {
+                    alert(res.message);
+                })
+            }
         );
         
         window.location.href = '/';
     };
-
-    const onClick1 = () => {
-        getHeader("_none_")
-            .then(res => {
-                console.log(res);
-        })
-    }
-
-    const onClick2 = () => {
-        testPost().then(res => console.log(res));
-    }
 
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
@@ -54,8 +45,8 @@ const LoginForm = (props) => {
                     onFinishFailed={onFinishFailed}
                 >
                     <Form.Item
-                        label="Username"
-                        name="username"
+                        label="Email"
+                        name="email"
                         place
                     >
                         <Input />
