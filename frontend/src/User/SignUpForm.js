@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './forms.css';
-import { Button, Form, Input, Select, Upload, message} from 'antd';
-import {UploadOutlined} from "@ant-design/icons";
-import { getCookie, register, getView } from '../Services/userService';
+import { Button, Form, Input, Modal} from 'antd';
+import { register, verify} from '../Services/userService';
 
 
-function SignUpForm() {
-    const { Option } = Select;
-    const { TextArea } = Input;
+const SignUpForm = () => {
+    const [verModal, setVerModal] = useState(false);
+    const emailInput = useRef("");
+    const nameInput = useRef("");
+    const passwordInput = useRef("");
+    const codeInput = useRef("");
 
     const layout = {
         labelCol: { span: 6 },
@@ -18,39 +20,18 @@ function SignUpForm() {
         wrapperCol: { offset: 6, span: 18 },
     };
 
-    const onFinish = (values) => {
-        register(values.username_input, values.password_input)
+    const onFinish = async (values) => {
+        register(nameInput.current.props.value, emailInput.current.props.value, passwordInput.current.props.value, codeInput.current.state.value)
         .then(res => {
-            // if(typeof res.message === "string")
-            //     return alert(res.message);
-            console.log(res);
+            alert(res.message);
+            window.location.href = "/login";
         });
-        window.location.href = "/login";
-        //getView().then();
     };
 
-    const handleResetForm = (e) => {
-        e.preventDefault();
-        resetInput();
-    };
-
-    const resetInput = () => {
-        //TODO: replace with actual resetInput functionality
-        console.log("resetInput");
-    };
-
-    const beforeUpload = (file) => {
-        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-        if (!isJpgOrPng) {
-            message.error('You can only upload JPG/PNG file!');
-        }
-        return isJpgOrPng;
-    };
-
-    const handleUpload = (info) => {
-        //TODO: replace with actual handleUpload functionality
-        console.log("handleUpload");
-    };
+    const showVerModal = () => {
+        if(!verModal) verify(emailInput.current.props.value);
+        setVerModal(!verModal);
+    }
 
     return (
         <div className="form_container">
@@ -60,94 +41,39 @@ function SignUpForm() {
                     onFinish = {onFinish}
                 >
                     <Form.Item
-                        label="Username"
-                        name="username_input"
+                        label="Preferred Name"
+                        name="name_input"
                     >
-                        <Input/>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Password"
-                        name="password_input"
-                    >
-                        <Input/>
+                        <Input ref = {nameInput}/>
                     </Form.Item>
 
                     <Form.Item
                         label="Email"
                         name="email_input"
                     >
-                        <Input />
+                        <Input ref = {emailInput} />
                     </Form.Item>
 
                     <Form.Item
-                        label="Phone Number"
-                        name="phone_number_input"
+                        label="Password"
+                        name="password_input"
                     >
-                        <Input />
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Street Address"
-                        name="street_address_input"
-                    >
-                        <Input/>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="City"
-                    >
-                        <Input.Group compact>
-                            <Form.Item
-                                name={['location', 'city']}
-                                noStyle
-                            >
-                                <Input placeholder="City" style={{ width: '50%' }} />
-                            </Form.Item>
-                            <Form.Item
-                                name={['location', 'province']}
-                                noStyle
-                            >
-                                <Select placeholder="Province">
-                                    <Option value="ab">AB</Option>
-                                    <Option value="bc">BC</Option>
-                                    <Option value="mb">MB</Option>
-                                    <Option value="nb">NB</Option>
-                                    <Option value="nl">NL</Option>
-                                    <Option value="nt">NT</Option>
-                                    <Option value="ns">NS</Option>
-                                    <Option value="nu">NU</Option>
-                                    <Option value="on">ON</Option>
-                                    <Option value="pe">PE</Option>
-                                    <Option value="qc">QC</Option>
-                                    <Option value="sk">SK</Option>
-                                    <Option value="yt">YT</Option>
-                                </Select>
-                            </Form.Item>
-                        </Input.Group>
-                    </Form.Item>
-
-                    <Form.Item
-                        label="Identification"
-                        name="identification_document"
-                    >
-                        <Upload beforeUpload={beforeUpload} onChange={handleUpload}>
-                            <Button icon={<UploadOutlined />}>Upload (png or jpg only)</Button>
-                        </Upload>
-
-                    </Form.Item>
-
-                    <Form.Item
-                        label="About"
-                        name="about_input"
-                    >
-                        <TextArea rows={4} />
+                        <Input.Password ref = {passwordInput}/>
                     </Form.Item>
 
                     <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit">Submit</Button>
-                        <Button htmlType="reset" onClick={(e) => handleResetForm(e)}>Reset</Button>
+                        <Button type="primary" htmlType = "button" onClick = {showVerModal}>Submit</Button>
+                        <Button htmlType="reset">Reset</Button>
                     </Form.Item>
+
+                    <Modal title="Email Address Verification" visible={verModal}
+                        onCancel = {showVerModal}
+                        onOk = {onFinish}
+                    >
+                        {verModal ? <p>Verification code has been sent to <b>{emailInput.current.props.value}</b></p> : ""}
+                        <p>Please input your code here:</p> 
+                        <Input id = "333" ref = {codeInput}/>
+                    </Modal>
 
                 </Form>
             </div>

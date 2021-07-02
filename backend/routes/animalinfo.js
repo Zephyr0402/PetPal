@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const fs = require('fs');
 const database = require('../database/database');
+var formidable = require("formidable");
 
 let animalID = 4;
 
@@ -57,5 +58,17 @@ router.get("/kind", function (req, res) {
 router.get("/cost", function (req, res) {
     
 });
+
+router.use('/public', express.static('public'));
+
+router.post('/api/upload', async (req,res) => {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(error, fields, files) {
+        console.log("parsing done");
+        console.log(files.file);
+        fs.writeFileSync("public/images/"+files.file.name, fs.readFileSync(files.file.path));
+    });
+    res.send("hello");
+})
 
 module.exports = router;

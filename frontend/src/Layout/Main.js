@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import MapContainer from '../AnimalMap/MapContainer'
 import {Layout} from 'antd';
 import Header from './Header';
 import UtilityView from '../AnimalList/UtilityView';
 import AnimalCard from '../AnimalCard/AnimalCard'
-import TestMapContainer from '../AnimalMap/TestMap';
+import AnimalMap from '../AnimalMap/Map';
 import Payment from "../Payment/Payment";
 import { fetchAnimalList } from '../Services/fetchData';
 
@@ -38,7 +37,7 @@ const Main = (props) => {
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>
-                        <TestMapContainer aid={display} setDisplay={setMyDisplay} animalInfos={animalInfos}/>
+                        <AnimalMap aid = {display} setDisplay = {setMyDisplay}/>
                     </Layout.Content>
                 </Layout>
             </Layout>
