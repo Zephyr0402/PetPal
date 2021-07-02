@@ -68,7 +68,9 @@ function PostAnimalForm() {
                 'Accept': 'application/json',
                 "Content-Type": "application/json",
             })
-        }).then(res => res);
+        }).then(res => {
+            window.alert(res);
+        });
         
         if (canPost) {
             resetInput();
