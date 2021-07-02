@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Avatar, Button, Card} from "antd";
 import {CloseOutlined} from "@ant-design/icons";
 import StripeContainer from "./StripeContainer";
 import './Payment.css'
 import OrderConfirmation from "./OrderConfirmation";
+import {getHeader, getUserInfo} from "../Services/userService";
 
 const { Meta } = Card;
 const data = [
@@ -41,6 +42,13 @@ const data = [
 const Payment = (props) => {
     const selectedAnimal = data[props.aid];
     const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+    useEffect(()=>{
+        getHeader()
+            .then(async res => {
+                console.log(res.uuid);
+            })
+    },[]);
 
     return (
         <div className="payment-wrapper">
