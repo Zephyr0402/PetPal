@@ -7,5 +7,4 @@ const configs = {
 
 mongoose.connect('mongodb://' + configs.URL + '/' + configs.Name);
 
-exports.configs = configs;
-exports.mongoose = mongoose;
+module.exports = mongoose;

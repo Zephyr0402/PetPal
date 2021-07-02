@@ -1,9 +1,9 @@
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const database = require('../database/database');
 
-mongoose.connect('mongodb://' + database.configs.URL + '/' + database.configs.Name);
+// database.connect('mongodb://' + database.configs.URL + '/' + database.configs.Name);
 
-const AnimalInfo = mongoose.model('AnimalInfo', new mongoose.Schema({
+const AnimalInfo = database.model('AnimalInfo', new database.Schema({
     id: Number,
     name: String,
     image: String,

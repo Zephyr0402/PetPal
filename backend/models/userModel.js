@@ -1,21 +1,22 @@
-const mongoose = require('mongoose');
-// mongoose.connect('mongodb://127.0.0.1:27017/users', {
+// const mongoose = require('mongoose');
+const database = require('../database/database');
+// database.connect('mongodb://127.0.0.1:27017/users', {
 //     useNewUrlParser: true
 // })
 
-const User = mongoose.model('User', new mongoose.Schema({
+const User = database.model('User', new database.Schema({
     uuid: {type: String},
     password: {type: String},
 }))
 
-const UserInfo = mongoose.model('UserInfo', new mongoose.Schema({
+const UserInfo = database.model('UserInfo', new database.Schema({
     uuid: {type: String},
     name: {type: String},
     email: {type: String},
     avatar: {type: String}
 }))
 
-const UserAuth = mongoose.model('UserAuth', new mongoose.Schema({
+const UserAuth = database.model('UserAuth', new database.Schema({
     email: {type: String},
     code: {type: String}
 }))
