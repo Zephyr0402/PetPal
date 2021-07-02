@@ -21,6 +21,8 @@ const animalInfoSchema = new Schema({
         lat: String,
         lng: String,
     },
+    // available or sold
+    status: String,
 });
 
 exports.configs = configs;
