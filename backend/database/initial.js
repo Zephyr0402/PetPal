@@ -1,24 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const AnimalInfo = require('../models/animalinfoModel');
 
-const database = require('./database');
+console.log(AnimalInfo);
 
-console.log(database);
-
-mongoose.connect('mongodb://' + database.configs.URL + '/' + database.configs.Name);
-
-// Check if is connecting to mongodb
-mongoose.connection.once('open', () => {
-    console.log('Connected to database', database.configs.Name, database.configs.URL);
-});
-
-// Check if mongodb has been disconnected
-mongoose.connection.once('close', () => {
-    console.log('Disconnected to database', database.configs.Name, database.configs.URL);
-});
-
-var animalModel = mongoose.model('AnimalInfo', database.animalInfoSchema);
-animalModel.create({
+AnimalInfo.create({
     id: "0",
     name: "Jerry",
     image: "/animalImages/cat.png",
@@ -39,7 +23,7 @@ animalModel.create({
     }
 });
 
-animalModel.create({
+AnimalInfo.create({
     id: 1,
     name: "Yuki",
     image: "/animalImages/dog.png",
@@ -57,7 +41,7 @@ animalModel.create({
     }
 });
 
-animalModel.create({
+AnimalInfo.create({
     id: 2,
     name: "Milly",
     image: "/animalImages/parrot.png",
@@ -75,7 +59,7 @@ animalModel.create({
     }
 });
 
-animalModel.create({
+AnimalInfo.create({
     id: 3,
     name: "Ruby",
     image: "/animalImages/fish.png",

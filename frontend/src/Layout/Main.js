@@ -19,8 +19,8 @@ const Main = (props) => {
     useEffect(() => {
         // fetch animal info from backend
         fetchAnimalList().then(res => {
-            console.log("fetchAnimalList1", res.animalInfos);
-            setAnimalInfos(res.animalInfos);
+            console.log("fetchAnimalList", res);
+            setAnimalInfos(res);
         });
     }, [display]);
     
