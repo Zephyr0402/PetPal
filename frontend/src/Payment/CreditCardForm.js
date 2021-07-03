@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import axios from "axios";
 import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {Button, Typography} from "antd";
+import { CloseCircleTwoTone } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
@@ -89,6 +90,7 @@ const CreditCardForm = (props) => {
         ev.error ? setErrorMsg(ev.error.message) : setErrorMsg();
     };
 
+
     return (
         <div className="credit-card-form">
             <Title level={2} className="payment-summary"><span>Payment for {props.animal.name}</span><span>${props.animal.price}</span></Title>
@@ -100,12 +102,15 @@ const CreditCardForm = (props) => {
                     </div>
                 </fieldset>
                 {isProcessing ?
-                    <Text>Processing Payment</Text> :
+                    <Text >Processing Payment</Text > :
                     <Button type="primary" htmlType="submit">Make Payment</Button>
                 }
 
             </form>
-            <Text type="danger">{errorMsg}</Text>
+            <div className={errorMsg === "" || errorMsg === undefined ? "error-msg hidden" : "error-msg"}>
+                <CloseCircleTwoTone twoToneColor="#ff4d4f"/>
+                <Text type="danger"> {errorMsg}</Text>
+            </div>
         </div>
     )
 };
