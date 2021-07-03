@@ -11,7 +11,7 @@ const AnimalInfo = database.model('AnimalInfo', new database.Schema({
     price: Number,
     user: String,
     userAvatar: String,
-    king: String,
+    kind: String,
     description: String,
     address: String,
     position: {
