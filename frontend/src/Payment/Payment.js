@@ -7,46 +7,23 @@ import OrderConfirmation from "./OrderConfirmation";
 import {getHeader, getUserInfo} from "../Services/userService";
 
 const { Meta } = Card;
-const data = [
-    {
-        name: 'Jerry',
-        image: '/animalImages/cat.png',
-        price: 200,
-        user: 'Julia',
-        userAvatar: 'userAvatars/julia.jpg',
-    },
-    {
-        name: 'Yuki',
-        image: '/animalImages/dog.png',
-        price: 200,
-        user: 'Nawa',
-        userAvatar: 'userAvatars/nawa.png',
-    },
-    {
-        name: 'Milly',
-        image: '/animalImages/parrot.png',
-        price: 100,
-        user: 'Runze',
-        userAvatar: 'userAvatars/tsuki.jpg',
-    },
-    {
-        name: 'Ruby',
-        image: '/animalImages/fish.png',
-        price: 30,
-        user: 'Shijun',
-        userAvatar: 'userAvatars/shijun.jpg',
-    },
-
-];
 
 const Payment = (props) => {
-    const selectedAnimal = data[props.aid];
+    const selectedAnimal = props.data[props.aid];
+
+    console.log("aid: " + props.aid);
+    console.log("name: " + selectedAnimal.name);
+    console.log("price: " + selectedAnimal.price);
+    console.log("seller: " + selectedAnimal.user);
+    console.log("_id: " + selectedAnimal._id);
+
     const [paymentSuccess, setPaymentSuccess] = useState(false);
 
     useEffect(()=>{
+        //check if user is logging in
         getHeader()
             .then(async res => {
-                console.log(res.uuid);
+                console.log("uuid: " + res.uuid);
             })
     },[]);
 
@@ -69,7 +46,7 @@ const Payment = (props) => {
                 }
             >
                 {!paymentSuccess ?
-                    <StripeContainer animalName={selectedAnimal.name} amount={selectedAnimal.price} setPaymentSuccess={setPaymentSuccess}/> :
+                    <StripeContainer animal={selectedAnimal} animalName={selectedAnimal.name} amount={selectedAnimal.price} setPaymentSuccess={setPaymentSuccess}/> :
                     <OrderConfirmation animalName={selectedAnimal.name} amount={selectedAnimal.price} />
                 }
             </Card>

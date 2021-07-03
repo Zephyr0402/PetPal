@@ -8,10 +8,10 @@ const PUBLIC_KEY = "pk_test_51J2f66JoWtlpotrESG51Kl1u0CjSHCLPwdIliNtHh5WGX3aGwGu
 //synchronously loads the Stripe.js script and initializes a Stripe object
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
-const StripeContainer = ({animalName, amount, setPaymentSuccess}) => {
+const StripeContainer = (props) => {
     return (
         <Elements stripe={stripeTestPromise}>
-            <CreditCardForm animalName={animalName} amount={amount} setPaymentSuccess={setPaymentSuccess}/>
+            <CreditCardForm animal={props.animal} setPaymentSuccess={props.setPaymentSuccess}/>
         </Elements>
     )
 };

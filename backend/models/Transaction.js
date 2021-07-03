@@ -5,7 +5,7 @@ const TransactionInfo = database.model('TransactionInfo', new database.Schema({
     orderNumber: String,
     buyerId: String,
     sellerId: String,
-    animalID: String,
+    animalId: String,
     timestamp: Date,
     price: Number,
     // Completed, Pending (withing 2 hours), Sold

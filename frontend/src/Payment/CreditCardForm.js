@@ -5,7 +5,7 @@ import {Button, Typography} from "antd";
 
 const { Title, Text } = Typography;
 
-const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
+const CreditCardForm = (props) => {
     const [errorMsg, setErrorMsg] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
     const stripe = useStripe();
@@ -44,29 +44,32 @@ const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
                 setIsProcessing(true);
                 const {id} = paymentMethod;
 
-                /*const response = await axios.post("http://localhost:9999/api/payment", {
-                    //stripe amount is in cent
-                    amount: amount * 100,
-                    id
-                });
-
-                if(response.data.success) {
-                    console.log("Successful payment");
-                    setPaymentSuccess(true);
-                }*/
-
                 const payment = {
-                    amount: amount * 100,
+                    //TODO: change to auto-increment or random unique number
+                    orderNumber: "PetPal-001",
+
+                    //TODO: update to id???
+                    buyerId: "123",
+                    //TODO: update to id
+                    sellerId: props.animal.user,
+                    animalId: props.animal._id,
+                    timestamp: new Date(),
+                    price: props.animal.price,
+                    status: "Pending",
+                    tag: props.animal.kind,
                     id
                 };
 
                 fetch("http://localhost:9999/api/payment", {
                     method: "POST",
-                    headers: {"Content-Type":"application/json"},
+                    headers: new Headers({
+                        'Accept': 'application/json',
+                        "Content-Type": "application/json",
+                    }),
                     body: JSON.stringify(payment)
                 }).then(res => {
                     if(res.status === 200) {
-                        setPaymentSuccess(true);
+                        props.setPaymentSuccess(true);
                     }else if(res.status >= 400){
                         res.text().then(text => setErrorMsg(text));
                     }
@@ -88,7 +91,7 @@ const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
 
     return (
         <div className="credit-card-form">
-            <Title level={2} className="payment-summary"><span>Payment for {animalName}</span><span>${amount}</span></Title>
+            <Title level={2} className="payment-summary"><span>Payment for {props.animal.name}</span><span>${props.animal.price}</span></Title>
             <form onSubmit={handleSubmit}>
                 <h3>Please enter your valid credit card</h3>
                 <fieldset className="form-group">
