@@ -4,6 +4,7 @@ import { StarOutlined, ShoppingCartOutlined, CommentOutlined, ArrowLeftOutlined 
 import {Card, Avatar, Descriptions, Button} from 'antd';
 import Comments from './Comments';
 import './AnimalCard.css';
+import {getHeader} from "../Services/userService";
 const { Meta } = Card;
 const data = [
     {
@@ -51,12 +52,19 @@ const data = [
 
 const AnimalCard = (props) => {
     const [animalInfos, setAnimalInfos] = useState(null);
+    const [userId, setUserId] = useState(null);
     useEffect(() => {
         const backEndURL = "http://127.0.0.1:9999/animalinfo";
         axios.get(backEndURL)
             .then((res) => {
                 console.log(res.data.animalInfos);
                 setAnimalInfos(res.data.animalInfos);
+            });
+
+        getHeader()
+            .then(async res => {
+                console.log("uuid: " + res.uuid);
+                setUserId(res.uuid);
             });
     }, []);
     let thisCard = null;
@@ -78,8 +86,15 @@ const AnimalCard = (props) => {
             };
         }
     }
-    
+
     console.log(thisCard);
+
+    const showLoginAlert = () => {
+        if (window.confirm("Please log in to make the payment.")) {
+            window.location.href="http://localhost:3000/login";
+        }
+    };
+
     return(
         <div>
             <div style = {{height:'100%', overflow:'auto', position:'absolute'}}>
@@ -118,7 +133,9 @@ const AnimalCard = (props) => {
                 </Card>
                 <Comments aid = {props.aid}/>
                 <div className="shopping-cart-wrapper">
-                    <span className="cta-button-round" onClick={() => props.setDisplayCheckout(true)}><ShoppingCartOutlined /></span>
+                    <span className="cta-button-round" onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showLoginAlert()}>
+                        <ShoppingCartOutlined />
+                    </span>
                 </div>
             </div>
         </div>
