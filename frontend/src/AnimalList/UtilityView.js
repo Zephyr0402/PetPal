@@ -8,7 +8,6 @@ import './UtilityView.css';
 const UtilityView = (props) => {
     const [filter, setFilter] = useState(-1);
     const [animalInfos, setAnimalInfos] = useState(props.animalInfos);
-    var sortedData = props.animalInfos;
 
     useEffect(() => {
         setAnimalInfos(props.animalInfos);
@@ -46,7 +45,6 @@ const UtilityView = (props) => {
     }
 
     const onFilterClick = (e) => {
-        sortedData = sort(animalInfos);
         if ((filter === 0 && e.target.innerText == "Kind") || (filter === 1 && e.target.innerText == "Price")) {
             setFilter(-1);
             return;
@@ -81,7 +79,7 @@ const UtilityView = (props) => {
                         <KindFilter data={animalInfos} />
                         : (
                             filter === 1 ?
-                                <PriceFilter sortedData={sortedData} data={animalInfos}/> : ""
+                                <PriceFilter sortedData={sort(animalInfos)} data={animalInfos}/> : ""
                         )
                 }
                 <AnimalList style={{ width: 'inherit' }} animalInfos={animalInfos} setDisplay={props.setDisplay}></AnimalList>
