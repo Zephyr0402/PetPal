@@ -11,26 +11,22 @@ const { Meta } = Card;
 const Payment = (props) => {
     const selectedAnimal = props.data[props.aid];
 
+/*
     console.log("aid: " + props.aid);
     console.log("name: " + selectedAnimal.name);
     console.log("price: " + selectedAnimal.price);
     console.log("seller: " + selectedAnimal.user);
     console.log("_id: " + selectedAnimal._id);
+*/
 
     const [paymentSuccess, setPaymentSuccess] = useState(false);
-
-    useEffect(()=>{
-        //check if user is logging in
-        getHeader()
-            .then(async res => {
-                console.log("uuid: " + res.uuid);
-            })
-    },[]);
 
     return (
         <div className="payment-wrapper">
             <div className="card-header">
-                <Button type = 'text' onClick = {() => props.setDisplayCheckout(false)}><CloseOutlined /></Button>
+                {/* If payment is successfully process, the back button should take user to home page, otherwise
+                 take user to animal info*/}
+                <Button type = 'text' onClick = {() => paymentSuccess ? props.setDisplay(-1) : props.setDisplayCheckout(false)}><CloseOutlined /></Button>
                 <Meta
                     avatar={<Avatar src={selectedAnimal.userAvatar} />}
                     title={selectedAnimal.user}
