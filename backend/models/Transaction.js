@@ -1,7 +1,7 @@
 const database = require('../database/database');
 
 
-const TransactionInfo = database.model('TransactionInfo', new database.Schema({
+const Transaction = database.model('Transaction', new database.Schema({
     orderNumber: String,
     buyerId: String,
     sellerId: String,
@@ -14,4 +14,4 @@ const TransactionInfo = database.model('TransactionInfo', new database.Schema({
     tag: String
 }));
 
-module.exports = TransactionInfo;
+module.exports = Transaction;
