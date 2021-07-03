@@ -21,7 +21,7 @@ function OrderConfirmation({animalName, amount}) {
                 <Text>Have a lovely day <SmileTwoTone /></Text>
             </div>
 
-            <Link href="#">
+            <Link href="http://localhost:3000/user">
                 View your order
             </Link>
 
