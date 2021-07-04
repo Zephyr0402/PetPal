@@ -9,7 +9,7 @@ import {getHeader, getUserInfo} from "../Services/userService";
 const { Meta } = Card;
 
 const Payment = (props) => {
-    const selectedAnimal = props.data[props.aid];
+    const selectedAnimal = props.animalInfos[props.aid];
 
 /*
     console.log("aid: " + props.aid);

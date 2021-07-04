@@ -32,7 +32,7 @@ const Main = (props) => {
                     {  display === -1 ?
                         <UtilityView animalInfos={ animalInfos } setDisplay = {setMyDisplay}/> :
                         displayCheckout ?
-                            <Payment aid={display} setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout} data={animalInfos}/> :
+                            <Payment aid={display} setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout} animalInfos={animalInfos}/> :
                             <AnimalCard aid = {display} setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout}/> }
                 </Layout.Sider>
                 <Layout>
