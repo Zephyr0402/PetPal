@@ -5,7 +5,7 @@ require("dotenv").config();
 //Must set environment variable STRIPE_SECRET_TEST in your OS to test this
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 
-const Transaction = require('../models/Transaction');
+const Transaction = require('../models/transaction');
 
 router.post("/", cors(), async (req, res) => {
     let transaction = req.body;
