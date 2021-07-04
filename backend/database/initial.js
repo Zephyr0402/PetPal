@@ -35,6 +35,7 @@ AnimalInfo.create({
     description: "A cute dog!!!",
     position: { lat: 49.25727572955761, lng: -123.24769115661624 },
     address: "6328 Larkin Dr\nVancouver\nBC V6T 2K2\nCanada",
+    status: "available"
 }, (err, docs) => {
     if (!err) {
         console.log('Inserted successfully' + docs)
@@ -52,7 +53,8 @@ AnimalInfo.create({
     kind: "bird",
     description: "A cute bird!!!",
     position: { lat: 49.25127572955761, lng: -123.23769115661624 },
-    address: "3461 Ross Dr\nVancouver\nBC V6T 1W5\nCanada"
+    address: "3461 Ross Dr\nVancouver\nBC V6T 1W5\nCanada",
+    status: "available"
 }, (err, docs) => {
     if (!err) {
         console.log('Inserted successfully' + docs)
@@ -70,7 +72,8 @@ AnimalInfo.create({
     kind: "Fish",
     description: "A cute fish!!!",
     position: { lat: 49.25127572955761, lng: -123.24769115661624 },
-    address: "6804 SW Marine Dr\nVancouver\nBC V6T 1Z1\nCanada"
+    address: "6804 SW Marine Dr\nVancouver\nBC V6T 1Z1\nCanada",
+    status: "available"
 }, (err, docs) => {
     if (!err) {
         console.log('Inserted successfully' + docs)

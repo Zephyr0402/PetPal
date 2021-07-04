@@ -15,9 +15,9 @@ const AnimalList = (props) => {
             <List style={{ width: "100%", height: 0 }}
                 itemLayout="horizontal"
                 dataSource={animalInfos}
-                renderItem={item => (
+                renderItem={(item, index) => (
                     <List.Item className='animal-list-item' id={item.id} style={{ width: "100%", padding: 8 }}>
-                        <AnimalThumbnail content={item} setDisplay={props.setDisplay} />
+                        <AnimalThumbnail content={item} index={index} setDisplay={props.setDisplay} />
                     </List.Item>
                 )}
             />

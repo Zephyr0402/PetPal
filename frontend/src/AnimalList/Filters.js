@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {Slider, InputNumber, Button} from 'antd';
-import { data, sortedData } from './UtilityView';
 import { LineOutlined } from '@ant-design/icons';
 import './Filter.css'
 
 export const KindFilter = (props) => {
     const [kind, setKind] = useState("none");
+    const data = props.data;
 
     useEffect(()=>{
         return function cleanup(){
@@ -18,16 +18,17 @@ export const KindFilter = (props) => {
 
     const onKindChange = (e) => {
         var thumbnails = document.getElementsByClassName('animal-list-item')
-        
+        var index = 0;
         for (let thumbnail of thumbnails) {
-            if (data[thumbnail.id] === undefined) {
+            if (data[index] === undefined) {
                 thumbnail.style.display = 'none';
                 continue;
             }
-            if(data[thumbnail.id].kind.toUpperCase() === e.target.innerText.toUpperCase())
+            if (data[index].kind.toUpperCase() === e.target.innerText.toUpperCase())
                 thumbnail.style.display = 'block';
             else 
                 thumbnail.style.display = 'none';
+            index++;
         }
     }
 
@@ -46,7 +47,9 @@ export const KindFilter = (props) => {
 
 export const PriceFilter = (props) => {
     const [range, setRange] = useState({min:0, max:100});
-    const [curRange, setCurRange] = useState({min:0,max:100});
+    const [curRange, setCurRange] = useState({ min: 0, max: 100 });
+    const sortedData = props.sortedData;
+    const data = props.data;
 
     useEffect(()=>{
         setRange({
@@ -77,17 +80,18 @@ export const PriceFilter = (props) => {
     }
 
     const onSliderChange = ([min, max]) => {
-        var thumbnails = document.getElementsByClassName('animal-list-item')
-
+        var thumbnails = document.getElementsByClassName('animal-list-item');
+        var index = 0;
         for (let thumbnail of thumbnails) {
-            if (data[thumbnail.id] === undefined) {
+            if (data[index] === undefined) {
                 thumbnail.style.display = 'none';
                 continue;
             }
-            if(data[thumbnail.id].price >= min && data[thumbnail.id].price <= max)
+            if(data[index].price >= min && data[index].price <= max)
                 thumbnail.style.display = 'block';
             else 
                 thumbnail.style.display = 'none';
+            index++;
         }
         setCurRange({
             min: min,
