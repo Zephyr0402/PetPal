@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var accountRouter = require('./routes/account');
 var paymentRouter = require('./routes/payment');
 var postRouter = require('./routes/animalinfo');
+var transactionRouter = require('./routes/transaction')
 
 var app = express();
 
@@ -28,6 +29,8 @@ app.use('/', indexRouter);
 app.use('/', accountRouter);
 app.use('/api/payment', paymentRouter);
 app.use('/animalinfo', postRouter);
+app.use('/api/transaction', transactionRouter);
+
 
 // app.post('/postAnimal', function (req, res) {
 //   console.log('Get post');

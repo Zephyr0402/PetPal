@@ -24,7 +24,7 @@ const AnimalThumbnail = (props) => {
 }
 
 // class AnimalThumbnail extends React.Component {
-    
+
 //     constructor(props) {
 //         super(props);
 //         this.state = {

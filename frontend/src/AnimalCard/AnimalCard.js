@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { StarOutlined, ShoppingCartOutlined, CommentOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import {Card, Avatar, Descriptions, Button} from 'antd';
 import Comments from './Comments';
 import './AnimalCard.css';
+import {getHeader} from "../Services/userService";
 const { Meta } = Card;
 
 const AnimalCard = (props) => {
+    const [userId, setUserId] = useState(null);
     let thisCard = props.animalCardInfo;
     if (thisCard === undefined) {
         thisCard = {
@@ -22,6 +23,19 @@ const AnimalCard = (props) => {
     }
     console.log(props.aid);
     console.log(thisCard);
+
+    getHeader()
+        .then(async res => {
+            console.log("uuid: " + res.uuid);
+            setUserId(res.uuid);
+        });
+
+    const showLoginAlert = () => {
+        if (window.confirm("Please log in to make the payment.")) {
+            window.location.href="http://localhost:3000/login";
+        }
+    };
+
     return(
         <div>
             <div style = {{height:'100%', overflow:'auto', position:'absolute'}}>
@@ -60,7 +74,9 @@ const AnimalCard = (props) => {
                 </Card>
                 <Comments aid = {props.aid}/>
                 <div className="shopping-cart-wrapper">
-                    <span className="cta-button-round" onClick={() => props.setDisplayCheckout(true)}><ShoppingCartOutlined /></span>
+                    <span className="cta-button-round" onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showLoginAlert()}>
+                        <ShoppingCartOutlined />
+                    </span>
                 </div>
             </div>
         </div>

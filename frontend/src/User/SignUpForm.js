@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './forms.css';
-import { Button, Form, Input, Modal} from 'antd';
+import {Button, Form, Input, Layout, Modal} from 'antd';
 import { register, verify} from '../Services/userService';
+import Header from "../Layout/Header";
 
 
 const SignUpForm = () => {
@@ -34,48 +35,51 @@ const SignUpForm = () => {
     }
 
     return (
-        <div className="form_container">
-            <div id="register_form_wrapper">
-                <h1 className="form_title">Sign Up</h1>
-                <Form id="register_form" {...layout}
-                    onFinish = {onFinish}
-                >
-                    <Form.Item
-                        label="Preferred Name"
-                        name="name_input"
+        <div>
+            <Header/>
+            <div className="form_container">
+                <div id="register_form_wrapper">
+                    <h1 className="form_title">Sign Up</h1>
+                    <Form id="register_form" {...layout}
+                          onFinish = {onFinish}
                     >
-                        <Input ref = {nameInput}/>
-                    </Form.Item>
+                        <Form.Item
+                            label="Preferred Name"
+                            name="name_input"
+                        >
+                            <Input ref = {nameInput}/>
+                        </Form.Item>
 
-                    <Form.Item
-                        label="Email"
-                        name="email_input"
-                    >
-                        <Input ref = {emailInput} />
-                    </Form.Item>
+                        <Form.Item
+                            label="Email"
+                            name="email_input"
+                        >
+                            <Input ref = {emailInput} />
+                        </Form.Item>
 
-                    <Form.Item
-                        label="Password"
-                        name="password_input"
-                    >
-                        <Input.Password ref = {passwordInput}/>
-                    </Form.Item>
+                        <Form.Item
+                            label="Password"
+                            name="password_input"
+                        >
+                            <Input.Password ref = {passwordInput}/>
+                        </Form.Item>
 
-                    <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType = "button" onClick = {showVerModal}>Submit</Button>
-                        <Button htmlType="reset">Reset</Button>
-                    </Form.Item>
+                        <Form.Item {...tailLayout}>
+                            <Button type="primary" htmlType = "button" onClick = {showVerModal}>Submit</Button>
+                            <Button htmlType="reset">Reset</Button>
+                        </Form.Item>
 
-                    <Modal title="Email Address Verification" visible={verModal}
-                        onCancel = {showVerModal}
-                        onOk = {onFinish}
-                    >
-                        {verModal ? <p>Verification code has been sent to <b>{emailInput.current.props.value}</b></p> : ""}
-                        <p>Please input your code here:</p> 
-                        <Input id = "333" ref = {codeInput}/>
-                    </Modal>
+                        <Modal title="Email Address Verification" visible={verModal}
+                               onCancel = {showVerModal}
+                               onOk = {onFinish}
+                        >
+                            {verModal ? <p>Verification code has been sent to <b>{emailInput.current.props.value}</b></p> : ""}
+                            <p>Please input your code here:</p>
+                            <Input id = "333" ref = {codeInput}/>
+                        </Modal>
 
-                </Form>
+                    </Form>
+                </div>
             </div>
         </div>
     );
