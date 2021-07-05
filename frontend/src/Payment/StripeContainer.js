@@ -11,7 +11,7 @@ const stripeTestPromise = loadStripe(PUBLIC_KEY);
 const StripeContainer = (props) => {
     return (
         <Elements stripe={stripeTestPromise}>
-            <CreditCardForm animal={props.animal} setPaymentSuccess={props.setPaymentSuccess}/>
+            <CreditCardForm animal={props.animal} setPaymentSuccess={props.setPaymentSuccess} setOrderNumber={props.setOrderNumber}/>
         </Elements>
     )
 };

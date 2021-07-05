@@ -1,16 +1,25 @@
 import React, {useState} from 'react';
-import axios from "axios";
 import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {Button, Typography} from "antd";
 import { CloseCircleTwoTone } from '@ant-design/icons';
+import {getHeader} from "../Services/userService";
 
 const { Title, Text } = Typography;
+const backEndURL = "http://localhost:9999/api/";
 
 const CreditCardForm = (props) => {
     const [errorMsg, setErrorMsg] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
     const stripe = useStripe();
     const elements = useElements();
+
+    const [userId, setUserId] = useState(null);
+
+    getHeader()
+        .then(async res => {
+            console.log("uuid: " + res.uuid);
+            setUserId(res.uuid);
+        });
 
     const CARD_OPTIONS = {
         iconStyle: "solid",
@@ -46,22 +55,10 @@ const CreditCardForm = (props) => {
                 const {id} = paymentMethod;
 
                 const payment = {
-                    //TODO: change to auto-increment or random unique number
-                    orderNumber: "PetPal-001",
-
-                    //TODO: update to id???
-                    buyerId: "123",
-                    //TODO: update to id
-                    sellerId: props.animal.user,
-                    animalId: props.animal._id,
-                    timestamp: new Date(),
-                    price: props.animal.price,
-                    status: "Pending",
-                    tag: props.animal.kind,
+                    amount: props.animal.price * 100,
                     id
                 };
-
-                fetch("http://localhost:9999/api/payment", {
+                fetch(backEndURL + "payment", {
                     method: "POST",
                     headers: new Headers({
                         'Accept': 'application/json',
@@ -76,13 +73,42 @@ const CreditCardForm = (props) => {
                     }
                 });
 
+                const transaction = {
+                    buyerId: userId,
+                    //TODO: update to id
+                    sellerId: props.animal.user,
+                    animalId: props.animal._id,
+                    timestamp: new Date(),
+                    price: props.animal.price,
+                    status: "Pending",
+                    tag: props.animal.kind,
+                    id
+                };
+
+
+                fetch(backEndURL + "transaction/add", {
+                    method: "POST",
+                    headers: new Headers({
+                        'Accept': 'application/json',
+                        "Content-Type": "application/json",
+                    }),
+                    body: JSON.stringify(transaction)
+                }).then(res => {
+                    if(res.status === 200) {
+                        console.log("transaction successfully added to DB");
+                        res.json().then(result => {
+                            props.setOrderNumber(result.data.toString());
+                        });
+                    }else if(res.status >= 400){
+                        res.text().then(text => setErrorMsg(text));
+                    }
+                });
+
             }catch (err) {
                 setErrorMsg(err.message);
-                console.log("Error", err);
             }
         }else {
             setErrorMsg(error.message);
-            console.log(error.message);
         }
     };
 
