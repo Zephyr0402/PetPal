@@ -21,7 +21,7 @@ const UserAuth = database.model('UserAuth', new database.Schema({
     code: {type: String}
 }))
 
-const UserReset = mongoose.model('UserReset', new mongoose.Schema({
+const UserReset = database.model('UserReset', new database.Schema({
     uuid: {type: String},
     token: {type: String}
 }))
