@@ -12,7 +12,7 @@ const AnimalThumbnail = (props) => {
     }, [props.name]);
 
     return (
-        <Card className="animal-thumbnail" hoverable cover={<img alt="example" style={{ height: "100%", objectFit: 'cover', width: 300 }} src={props.content.image} />} onClick={() => props.setDisplay(props.content.id)}>
+        <Card className="animal-thumbnail" hoverable cover={<img alt="example" style={{ height: "100%", objectFit: 'cover', width: 300 }} src={props.content.image} />} onClick={() => props.setDisplay(props.index)}>
             <Meta
                 title={name}
                 description={props.content.description}
@@ -24,7 +24,7 @@ const AnimalThumbnail = (props) => {
 }
 
 // class AnimalThumbnail extends React.Component {
-    
+
 //     constructor(props) {
 //         super(props);
 //         this.state = {

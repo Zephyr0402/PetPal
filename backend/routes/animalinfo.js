@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 const fs = require('fs');
-const database = require('../database/database');
+const AnimalInfo = require('../models/animalinfoModel');
 var formidable = require("formidable");
 
 let animalID = 4;
@@ -32,20 +30,10 @@ router.post('/post', function (req, res, next) {
 router.get("/", async function (req, res) {
     try {
         console.log('handle get animal information');
-        // mongoose.connect('mongodb://' + database.configs.URL + '/' + database.configs.Name, async (err) => {
-        //     if (!err) {
-        //         const animalInfos = mongoose.model('AnimalInfo', database.animalInfoSchema);
-        //         // console.log(animalInfos);
-        //         await animalInfos.find().lean().exec(function (err, infos) {
-        //             console.log(JSON.stringify(infos));
-        //             res.send(JSON.stringify(infos));
-        //         });
-        //     } else {
-        //         console.log(err);
-        //     }
-        // });
-        let rawdata = fs.readFileSync('data.json');
-        res.send(rawdata);
+        const infos = await AnimalInfo.find();
+        console.log(infos);
+        //let rawdata = fs.readFileSync('data.json');
+        res.send(infos);
     } catch (e) {
         console.log(e);
     }

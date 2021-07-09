@@ -3,7 +3,10 @@
     justify-content: space-between;
     background-color: whitesmoke;
     width: 100%;
-    padding-left: 0.6rem;
+    padding: 0.3rem 0.6rem;
+    -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    z-index: 999;
 }
 
 .header-btns{

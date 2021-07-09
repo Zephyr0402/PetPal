@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="af4e2d9c-d304-49eb-8b00-a8d7ed598dd2" name="Default Changelist" comment="" />
+    <list default="true" id="af4e2d9c-d304-49eb-8b00-a8d7ed598dd2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/models/transactionModel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/routes/transaction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/database/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/database.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/transaction.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/payment.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/payment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Payment/CreditCardForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Payment/CreditCardForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Payment/OrderConfirmation.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Payment/OrderConfirmation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Payment/Payment.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Payment/Payment.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/Payment/StripeContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/Payment/StripeContainer.js" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -22,6 +44,21 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="af4e2d9c-d304-49eb-8b00-a8d7ed598dd2" name="Default Changelist" comment="" />
@@ -30,7 +67,52 @@
       <option name="presentableId" value="Default" />
       <updated>1623649894633</updated>
       <workItem from="1623649899990" duration="16000" />
+      <workItem from="1625238982016" duration="2864000" />
+      <workItem from="1625243225583" duration="2397000" />
+      <workItem from="1625248521014" duration="19366000" />
+      <workItem from="1625423396517" duration="197000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

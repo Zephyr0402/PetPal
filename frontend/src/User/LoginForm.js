@@ -30,7 +30,7 @@ const LoginForm = (props) => {
                 })
             }
         );
-        
+
         window.location.href = '/';
     };
 
@@ -44,50 +44,53 @@ const LoginForm = (props) => {
     };
     console.log(props);
     return (
-        <div className="form_container">
-            <div id="login_form_wrapper">
-                <h1 className="form_title">Log in</h1>
-                <Form
-                    {...layout}
-                    name="basic"
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                >
-                    <Form.Item
-                        label="Email"
-                        name="email"
-                        place
+        <div>
+            <Header/>
+            <div className="form_container">
+                <div id="login_form_wrapper">
+                    <h1 className="form_title">Log in</h1>
+                    <Form
+                        {...layout}
+                        name="basic"
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
                     >
-                        <Input />
-                    </Form.Item>
+                            <Form.Item
+                                label="Email"
+                                name="email"
+                                place
+                            >
+                                <Input />
+                            </Form.Item>
 
-                    <Form.Item
-                        label="Password"
-                        name="password"
-                    >
-                        <Input.Password />
-                    </Form.Item>
-                
-                    <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit">Submit</Button>
-                        <a className="login-form-forgot" onClick = {onShowModal}>
-                            Forgot password
-                        </a>
-                    </Form.Item>
-                    <Form.Item {...tailLayout}>
-                        New user? <a href="/register"> Sign up here! </a>
-                    </Form.Item>
+                        <Form.Item
+                            label="Password"
+                            name="password"
+                        >
+                            <Input.Password />
+                        </Form.Item>
+                    
+                        <Form.Item {...tailLayout}>
+                            <Button type="primary" htmlType="submit">Submit</Button>
+                            <a className="login-form-forgot" onClick = {onShowModal}>
+                                Forgot password
+                            </a>
+                        </Form.Item>
+                        <Form.Item {...tailLayout}>
+                            New user? <a href="/register"> Sign up here! </a>
+                        </Form.Item>
 
-                    <Modal title="Reset Password" visible={showResetModal}
-                        onCancel = {onShowModal}
-                        onOk = {onResetLinkSent}
-                    >
-                        <p>Please input your email here:</p>
-                        <Input ref = {emailInput}/>
-                        <p>After you submit, an confirmation email will be sent to your email address. Please follow instructions in it</p> 
-                    </Modal>
+                        <Modal title="Reset Password" visible={showResetModal}
+                            onCancel = {onShowModal}
+                            onOk = {onResetLinkSent}
+                        >
+                            <p>Please input your email here:</p>
+                            <Input ref = {emailInput}/>
+                            <p>After you submit, an confirmation email will be sent to your email address. Please follow instructions in it</p> 
+                        </Modal>
 
-                </Form>
+                    </Form>
+                </div>
             </div>
         </div>
     );

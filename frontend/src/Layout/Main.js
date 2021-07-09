@@ -15,15 +15,15 @@ const Main = (props) => {
     const setMyDisplay = (e) => {
         setDisplay(e);
     }
-    
+
     useEffect(() => {
         // fetch animal info from backend
         fetchAnimalList().then(res => {
-            console.log("fetchAnimalList1", res.animalInfos);
-            setAnimalInfos(res.animalInfos);
+            console.log("fetchAnimalList", res);
+            setAnimalInfos(res);
         });
     }, [display]);
-    
+
     return(
         <Layout>
             <Header/>
@@ -32,8 +32,8 @@ const Main = (props) => {
                     {  display === -1 ?
                         <UtilityView animalInfos={ animalInfos } setDisplay = {setMyDisplay}/> :
                         displayCheckout ?
-                            <Payment aid={display} setDisplayCheckout = {setDisplayCheckout}/> :
-                            <AnimalCard aid = {display} setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout}/> }
+                            <Payment aid={display} setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout} animalInfos={animalInfos}/> :
+                            <AnimalCard aid={display} animalCardInfo={ animalInfos[display] } setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout}/> }
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>

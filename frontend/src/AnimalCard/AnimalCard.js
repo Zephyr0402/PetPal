@@ -1,85 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { StarOutlined, ShoppingCartOutlined, CommentOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import {Card, Avatar, Descriptions, Button} from 'antd';
 import Comments from './Comments';
 import './AnimalCard.css';
+import {getHeader} from "../Services/userService";
 const { Meta } = Card;
-const data = [
-    {
-        name: 'Jerry',
-        image: '/animalImages/cat.png',
-        age: 1.5,
-        price: 200,
-        user: 'Julia',
-        userAvatar: 'userAvatars/julia.jpg',
-        kind: 'cat',
-        description : 'A cute cat!!!'
-    },
-    {
-        name: 'Yuki',
-        image: '/animalImages/dog.png',
-        age: 2,
-        price: 200,
-        user: 'Nawa',
-        userAvatar: 'userAvatars/nawa.png',
-        kind: 'dog',
-        description : 'A cute dog!!!'
-    },
-    {
-        name: 'Milly',
-        image: '/animalImages/parrot.png',
-        age: '6 month',
-        price: 100,
-        user: 'Runze',
-        userAvatar: 'userAvatars/tsuki.jpg',
-        kind: 'bird',
-        description : 'A cute bird!!!'
-    },
-    {
-        name: 'Ruby',
-        image: '/animalImages/fish.png',
-        age: 3,
-        price: 30,
-        user: 'Shijun',
-        userAvatar: 'userAvatars/shijun.jpg',
-        kind: 'Fish',
-        description : 'A cute fish!!!'
-    },
-
-];
 
 const AnimalCard = (props) => {
-    const [animalInfos, setAnimalInfos] = useState(null);
-    useEffect(() => {
-        const backEndURL = "http://127.0.0.1:9999/animalinfo";
-        axios.get(backEndURL)
-            .then((res) => {
-                console.log(res.data.animalInfos);
-                setAnimalInfos(res.data.animalInfos);
-            });
-    }, []);
-    let thisCard = null;
-    if (animalInfos != undefined) {
-        thisCard = animalInfos[props.aid];
-    } else {
-        if (props.aid < 4) {
-            thisCard = data[props.aid];
-        } else {
-            thisCard = {
-                name: 'None',
-                image: 'https://www.google.com/search?q=Test+image&newwindow=1&safe=active&sxsrf=ALeKk02G4AVAGK_JgnSwZ_Sxj0LU_L26ww:1624699947317&tbm=isch&source=iu&ictx=1&fir=kP6LYXagHuVy2M%252CysX-Qr231ARcNM%252C_&vet=1&usg=AI4_-kRM4nMdypa1KTgxi5Pb17eOU9Cuyw&sa=X&ved=2ahUKEwiZp-f5_rTxAhVNwZ4KHRonCe4Q9QF6BAgQEAE&biw=1395&bih=764#imgrc=kP6LYXagHuVy2M',
-                age: 0,
-                price: 0,
-                user: 'Shijun',
-                userAvatar: 'userAvatars/shijun.jpg',
-                kind: 'None',
-                description: 'None'
-            };
-        }
+    const [userId, setUserId] = useState(null);
+    let thisCard = props.animalCardInfo;
+    if (thisCard === undefined) {
+        thisCard = {
+            name: 'None',
+            image: '/image-not-found.png',
+            age: 0,
+            price: 0,
+            user: 'None',
+            userAvatar: 'None',
+            kind: 'None',
+            description: 'None'
+        };
     }
-    
+    console.log(props.aid);
     console.log(thisCard);
+
+    getHeader()
+        .then(async res => {
+            console.log("uuid: " + res.uuid);
+            setUserId(res.uuid);
+        });
+
+    const showLoginAlert = () => {
+        if (window.confirm("Please log in to make the payment.")) {
+            window.location.href="http://localhost:3000/login";
+        }
+    };
+
     return(
         <div>
             <div style = {{height:'100%', overflow:'auto', position:'absolute'}}>
@@ -118,7 +74,9 @@ const AnimalCard = (props) => {
                 </Card>
                 <Comments aid = {props.aid}/>
                 <div className="shopping-cart-wrapper">
-                    <span className="cta-button-round" onClick={() => props.setDisplayCheckout(true)}><ShoppingCartOutlined /></span>
+                    <span className="cta-button-round" onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showLoginAlert()}>
+                        <ShoppingCartOutlined />
+                    </span>
                 </div>
             </div>
         </div>

@@ -49,6 +49,16 @@
     background-color: white;
 }
 
+.error-msg {
+    background-color: #fdf2f1;
+    padding: 0.5rem;
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
 .order-confirmation {
     text-align: center;
 }
