@@ -1,50 +1,26 @@
-import React, { createElement, useState } from 'react';
-import UserComment from './Comment'
+import React, { createElement, useEffect, useState } from 'react';
+import SingleComment from './Comment'
 import './Comments.css';
+import {getComments} from '../Services/commentService'
 
-//grab comments by animalID from the back end here
-const data = [
-  {
-    user: 'Nawa',
-    userAvatar: 'userAvatars/nawa.png',
-    content: 'Jerry is sooooo cute! I sooooo love it!',
-    subComments:[
-      {
-        user: 'Julia',
-        userAvatar: 'userAvatars/julia.jpg',
-        content: 'Thank you! Jerry is my favorite!'
-      }
-    ]
-  },
-  {
-    user: 'Runze',
-    userAvatar: 'userAvatars/tsuki.jpg',
-    content: 'I\'ll raise my offer to 100 bucks! Deal?',
-    subComments: []
-  },
-  {
-    user: 'Shijun',
-    userAvatar: 'userAvatars/shijun.jpg',
-    content: 'DONT listen to Runze, I bet he\'s a dog person!',
-    subComments:[
-      {
-        user: "Runze",
-        userAvatar: 'userAvatars/tsuki.jpg',
-        content: 'Hey! Watch your language, you are a dog person!',
-      }
-    ]
-  }
-]
+const CommentCollection = (props) => {
 
-const Comments = () => {
+  const [comments, setComments] = useState([]);
+
+  useEffect(async () => {
+    await getComments(props.commentType, props.src).then(
+      res => setComments(res)
+    )
+  }, [])
+
   return (
     <div className = "comments">
       {
-        data.map(e =>
-          <UserComment
-            commentDetail={e}
-            subComments = {e.subComments.map(sub =>
-              <UserComment commentDetail = {sub}/>
+        comments.map(comment =>
+          <SingleComment
+            commentDetail={comment}
+            replies = {comment.replies.map(reply =>
+              <SingleComment commentDetail = {reply}/>
             )}
           />
         )
@@ -53,4 +29,4 @@ const Comments = () => {
   );
 };
 
-export default Comments
+export default CommentCollection;

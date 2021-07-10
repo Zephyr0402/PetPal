@@ -1,27 +1,40 @@
 import React , {createElement,useState} from 'react';
 import { Comment, Tooltip, Avatar } from 'antd';
-import moment from 'moment';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 
-const UserComment = (props) => {
+const SingleComment = (props) => {
     const cmtDetail = props.commentDetail;
 
-    const [likes, setLikes] = useState(0);
-    const [dislikes, setDislikes] = useState(0);
+    const [liked, setLike] = useState(0);
+    const [disliked, setDisliked] = useState(0);
     const [action, setAction] = useState(null);
   
     const like = () => {
-      setLikes(1);
-      setDislikes(0);
+      setLikes(likes+1);
+      //setDislikes(0);
       setAction('liked');
     };
   
     const dislike = () => {
-      setLikes(0);
-      setDislikes(1);
+      //setLikes(0);
+      setDislikes(dislikes+1);
       setAction('disliked');
     };
   
+    const formatDate = (date) => {  
+      var y = date.getFullYear();  
+      var m = date.getMonth() + 1;  
+      m = m < 10 ? ('0' + m) : m;  
+      var d = date.getDate();  
+      d = d < 10 ? ('0' + d) : d;  
+      var h = date.getHours();  
+      var minute = date.getMinutes();  
+      minute = minute < 10 ? ('0' + minute) : minute; 
+      var second= date.getSeconds();  
+      second = minute < 10 ? ('0' + second) : second;  
+      return y + '-' + m + '-' + d+' '+h+':'+minute+':'+ second;  
+    }
+
     const actions = [
       <Tooltip key="comment-basic-like" title="Like">
         <span onClick={like}>
@@ -41,27 +54,25 @@ const UserComment = (props) => {
     return(
         <Comment
             actions={actions}
-            author={<a>{cmtDetail.user}</a>}
+            author={<a>{cmtDetail.name}</a>}
             avatar={
                 <Avatar
-                src={cmtDetail.userAvatar}
+                src={cmtDetail.avatar}
                 alt="Han Solo"
                 />
             }
             content={
                 <p>
-                {cmtDetail.content}
+                  {cmtDetail.content}
                 </p>
             }
             datetime={
-                <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-                <span>{moment().fromNow()}</span>
-                </Tooltip>
+                <span>{cmtDetail.time}</span>
             }
         >
-          {props.subComments}
+          {props.replies}
         </Comment>
     )
 }
 
-export default UserComment;
+export default SingleComment;

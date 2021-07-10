@@ -7,6 +7,7 @@ import SignUpForm from './User/SignUpForm'
 import UserInfoPage from './User/UserInfoPage'
 import "antd/dist/antd.css";
 import ResetPwdForm from './User/ResetPwdForm'
+import CommentCollection from './AnimalCard/Comments';
 
 function App() {
 
@@ -32,6 +33,9 @@ function App() {
           <UserInfoPage/>
         </Route>
         <Route path = "/reset_pwd/:token" component = {ResetPwdForm}>
+        </Route>
+        <Route path = "/commenttest">
+          <CommentCollection commentType = "animal" src = "0"/>
         </Route>
       </Switch>
     </BrowserRouter>

@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import './forms.css';
 import { Form, Input, Button, Modal } from 'antd';
 import { getHeader, login , sendResetLink} from '../Services/userService';
+import Header from '../Layout/Header'
 
 const LoginForm = (props) => {
 
