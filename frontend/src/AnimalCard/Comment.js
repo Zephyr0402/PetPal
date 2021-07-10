@@ -1,24 +1,61 @@
-import React , {createElement,useState} from 'react';
+import React , {createElement,useEffect,useState} from 'react';
 import { Comment, Tooltip, Avatar } from 'antd';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
+import {LikeComment, DislikeComment} from '../Services/commentService'
 
 const SingleComment = (props) => {
     const cmtDetail = props.commentDetail;
 
-    const [liked, setLike] = useState(0);
-    const [disliked, setDisliked] = useState(0);
-    const [action, setAction] = useState(null);
+    const [liked, setLiked] = useState(false);
+    const [likes, setLikes] = useState(cmtDetail.likes.length)
+    const [disliked, setDisliked] = useState(false);
   
+    useEffect(() => {
+      
+    }, [])
+
     const like = () => {
-      setLikes(likes+1);
-      //setDislikes(0);
-      setAction('liked');
+      setLiked(true);
+      setLikes(likes +1);
+      setDisliked(false);
+      console.log(cmtDetail.ucid);
+      LikeComment(cmtDetail.ucid,'set');
+    }
+
+    const cancelLike = () => {
+      setLiked(false);
+      setLikes(likes - 1);
+      LikeComment(cmtDetail.ucid,'cancel');
+    }
+
+    const dislike = () => {
+      setDisliked(true);
+      DislikeComment(cmtDetail.ucid, 'set');
+    }
+
+    const cancelDislike = () => {
+      setDisliked(false);
+      DislikeComment(cmtDetail.ucid, 'cancel');
+    }
+
+    const onLike = () => {
+      if(!liked){
+        like();
+        if(disliked) cancelDislike();
+      }
+      else{
+        cancelLike();
+      }
     };
   
-    const dislike = () => {
-      //setLikes(0);
-      setDislikes(dislikes+1);
-      setAction('disliked');
+    const onDislike = () => {
+      if(!disliked){
+        dislike();
+        if(liked) cancelLike();
+      }
+      else{
+        cancelDislike();
+      }
     };
   
     const formatDate = (date) => {  
@@ -37,21 +74,21 @@ const SingleComment = (props) => {
 
     const actions = [
       <Tooltip key="comment-basic-like" title="Like">
-        <span onClick={like}>
-          {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
+        <span onClick={onLike}>
+          {createElement(liked ? LikeFilled : LikeOutlined)}
           <span className="comment-action">{likes}</span>
         </span>
       </Tooltip>,
       <Tooltip key="comment-basic-dislike" title="Dislike">
-        <span onClick={dislike}>
-          {createElement(action === 'disliked' ? DislikeFilled : DislikeOutlined)}
-          <span className="comment-action">{dislikes}</span>
+        <span onClick={onDislike}>
+          {createElement(disliked ? DislikeFilled : DislikeOutlined)}
         </span>
       </Tooltip>,
       <span key="comment-basic-reply-to">Reply to</span>,
     ];
 
     return(
+
         <Comment
             actions={actions}
             author={<a>{cmtDetail.name}</a>}

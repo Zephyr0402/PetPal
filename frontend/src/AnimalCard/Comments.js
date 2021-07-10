@@ -2,6 +2,7 @@ import React, { createElement, useEffect, useState } from 'react';
 import SingleComment from './Comment'
 import './Comments.css';
 import {getComments} from '../Services/commentService'
+import Header from '../Layout/Header'
 
 const CommentCollection = (props) => {
 
@@ -14,6 +15,8 @@ const CommentCollection = (props) => {
   }, [])
 
   return (
+    <div>
+    <Header/>
     <div className = "comments">
       {
         comments.map(comment =>
@@ -25,6 +28,7 @@ const CommentCollection = (props) => {
           />
         )
       }
+    </div>
     </div>
   );
 };

@@ -18,8 +18,8 @@ router.post('/api/comment', async (req, res) => {
         'fcid' : req.body.fcid === undefined ? "" : req.body.fcid,
         'content' : req.body.content,
         'time' : req.body.time,
-        'likes' : 0,
-        'dislikes' : 0,
+        'likes' : [],
+        'dislikes' : [],
         'replies' : []
     })
 
@@ -50,6 +50,7 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
         })
 
         userComments.push({
+            'ucid' : c.ucid,
             'name': userInfo.name,
             'avatar': userInfo.avatar,
             'content' : c.content,
@@ -86,6 +87,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
             }, 'name avatar')
 
             replies.push({
+                'ucid' : r.ucid,
                 'name' : repliesUserInfo.name,
                 'avatar': repliesUserInfo.avatar,
                 'content' : r.content,
@@ -96,6 +98,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
         }
 
         animalComments.push({
+            'ucid' : c.ucid,
             'name': userInfo.name,
             'avatar': userInfo.avatar,
             'content' : c.content,
@@ -107,6 +110,54 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
     }
 
     return res.send(animalComments);
+})
+
+router.post('/api/comment/like/:type/:ucid', async (req, res) => {
+    const uuid = req.session.uuid;
+
+    const comment = await Comment.findOne({
+        'ucid' : req.params.ucid
+    })
+
+    if(req.params.type == "set"){
+        await Comment.updateOne({
+            'ucid' : req.params.ucid
+        },{
+            '$push' : {'likes' : uuid}
+        })
+        return res.send("liked!")
+    }else{
+        await Comment.updateOne({
+            'ucid' : req.params.ucid
+        },{
+            '$pull' : {'likes' : uuid}
+        })
+        return res.send("Canceled like!")
+    }
+})
+
+router.post('/api/comment/dislike/:type/:ucid', async (req, res) => {
+    const uuid = req.session.uuid;
+
+    const comment = await Comment.findOne({
+        'ucid' : req.params.ucid
+    })
+
+    if(req.params.type == "set"){
+        await Comment.updateOne({
+            'ucid' : req.params.ucid
+        },{
+            '$push' : {'dislikes' : uuid}
+        })
+        return res.send("Disliked!")
+    }else{
+        await Comment.updateOne({
+            'ucid' : req.params.ucid
+        },{
+            '$pull' : {'dislikes' : uuid}
+        })
+        return res.send("Canceled dislike!")
+    }
 })
 
 module.exports = router;

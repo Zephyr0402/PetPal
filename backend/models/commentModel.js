@@ -7,8 +7,8 @@ const Comment = database.model('Comment', new database.Schema({
     uuid : {type: String},
     fcid : {type: String},
     content: {type: String, default: ""},
-    likes : {type: Number, default: 0},
-    dislikes: {type: Number, default: 0},
+    likes : {type: [String]},
+    dislikes: {type: [String]},
     time: {type: Date},
     replies: {type: [String]} //array of ucid
 }))

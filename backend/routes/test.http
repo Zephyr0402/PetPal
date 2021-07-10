@@ -46,7 +46,7 @@ post {{url}}/api/login
 }
 
 ###header
-get {{url}}/api/cur_user/01b95259-a749-4d68-b081-6cdd8ee5c61e
+get {{url}}/api/cur_user/8ac031dd-6097-4a77-b98e-b61b4c5734f5
 
 ###header
 get {{url}}/api/cur_user/
@@ -66,7 +66,10 @@ post {{url}}/api/comment
 {{json}}
 
 {
-    "fcid" : "89d5d2cf-cccd-445f-b92d-c24f9f443bf4",
-    "content" : "This is a subcomment",
+    "uaid" : 0,
+    "content" : "This is a comment for animal",
     "time" : "2017-05-03 23:20:16"
 }
+
+###like
+post {{url}}/api/comment/dislike/ca89d0c2-6836-43f2-a205-503e663ed9fd
