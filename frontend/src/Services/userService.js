@@ -81,3 +81,20 @@ export const getUserInfo = async () => {
     return await axios.get('http://localhost:9999/api/cur_user/info')
         .then(res => res.data);
 }
+
+export const updateUserInfo = async (userInfo) => {
+    return await fetch('http://localhost:9999/api/cur_user/update', {
+        method: 'POST',
+        body: JSON.stringify({
+            "name": userInfo.inputName,
+            "phone": userInfo.inputPNumber,
+            "mail": userInfo.inputMail,
+            "city": userInfo.inputCity,
+            "intro": userInfo.inputIntro,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+        credentials:'include'
+    })
+}
