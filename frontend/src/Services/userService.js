@@ -59,7 +59,7 @@ export const getUserInfo = async () => {
 }
 
 export const updateUserInfo = async (userInfo) => {
-    return await fetch('http://localhost:9999/api/cur_user/update', {
+    return await fetch('http://localhost:9999/api/cur_user/info/update', {
         method: 'POST',
         body: JSON.stringify({
             "name": userInfo.inputName,
@@ -68,9 +68,6 @@ export const updateUserInfo = async (userInfo) => {
             "city": userInfo.inputCity,
             "intro": userInfo.inputIntro,
         }),
-        headers: {
-            "Content-Type": "application/json",
-        },
         credentials:'include'
     })
 }

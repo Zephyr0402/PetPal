@@ -293,7 +293,7 @@ router.get('/api/cur_user/:uuid?', async (req,res) => {
 })
 
 // update user info
-router.post('/api/cur_user/update', async (req, res) => {
+router.post('/api/cur_user/info/update', async (req, res) => {
     console.log(req.session);
     console.log(req.session.uuid);
     if(req.session.uuid === undefined){
@@ -305,6 +305,7 @@ router.post('/api/cur_user/update', async (req, res) => {
         console.log("start update");
         // update user info
         const filter = { 'uuid': req.session.uuid };
+        console.log(req.body);
         const update = { 
             name: req.body.name,
             phone: req.body.phone,
