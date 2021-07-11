@@ -83,8 +83,9 @@ export const getUserInfo = async () => {
 }
 
 export const updateUserInfo = async (userInfo) => {
-    return await fetch('http://localhost:9999/api/cur_user/update', {
+    return await fetch(backendURL+'/api/cur_user/info/update', {
         method: 'POST',
+        credentials:'include',
         body: JSON.stringify({
             "name": userInfo.inputName,
             "phone": userInfo.inputPNumber,
@@ -94,7 +95,6 @@ export const updateUserInfo = async (userInfo) => {
         }),
         headers: {
             "Content-Type": "application/json",
-        },
-        credentials:'include'
+        }
     })
 }
