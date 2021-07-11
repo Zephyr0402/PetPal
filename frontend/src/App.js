@@ -35,7 +35,7 @@ function App() {
         <Route path = "/reset_pwd/:token" component = {ResetPwdForm}>
         </Route>
         <Route path = "/commenttest">
-          <CommentCollection commentType = "animal" src = "0"/>
+          <CommentCollection commentType = "animal" id = "0"/>
         </Route>
       </Switch>
     </BrowserRouter>

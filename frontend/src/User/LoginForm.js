@@ -43,7 +43,7 @@ const LoginForm = (props) => {
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
-    console.log(props);
+
     return (
         <div>
             <Header/>
