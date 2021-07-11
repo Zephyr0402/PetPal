@@ -7,18 +7,19 @@ var cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
 const nodeMailer = require('nodemailer')
 const smtpTransport = require('nodemailer-smtp-transport')
+const crypto = require('crypto') 
 
-const {User, UserInfo, UserAuth} = require('../models/userModel');
+const {User, UserInfo, UserAuth, UserReset} = require('../models/userModel');
 
 const defaultAvatar = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADHElEQVRYR9WXO2gUYRDH/7Mb5QobsUoURAQFC0EUERRRiNqolQ9ERRsTFFSMt/Nl01wszPnNXUghgo9CEBsjVgoxikQDdknno/WFKGgXG737RhbuwmZzr1XD4QfX7H0z89t5L6HNh9psH/8XgIjsBrALwFYAnQC6APwA8AXAVwBPVfWJMWaqVc+25AEROQLgvKouJaKH5XL5ke/7HzOZzKeZmZklnud1eZ63BsBeAPsAPPY8byibzb5pBtIUQERGAaxS1VvGmJvNFFpru4ioF0D0Y2a+00imIYCIvALwhpkPNTOc/L9YLK5zzo0S0UQQBGfrydcFsNZGcb1ujBlMazx+X0QmAPxk5j219NQEEJFxIpoOgmDgb4xXZSsQU8wcJPXNA7DWHieiU8y8PabgNYB1AF6oarZelltrjxLR5Up1XGDma5GOfD6/wfO8SQCbjTFv4xDzAETku3PuWH9//1gMQGNCJQAPiGhcVavPVxPRPlVdAWBZdFdVp40xm6pyhUIhdM6tN8ZEFTV75gAUCoX1qjrGzMsTcYwDtBqVl8y8LaHnPTOvrAsgIgNEtCgIgkv/AOAZM3fH9Vhrp5xzvWEYTlefz/GAiCgz1wrLn3jgETNHTWn2iMhBAAfjZb1gAKo6aow5HAfI5/M7fN8/UxOgWCxuLJfLN+KJUycJW82B+8kGFgF0dHT0BUGwf14IhoeH15RKpYfGmLVJC1FoWrUau3eHmU/U8ECOmXcueA6oatRFT/81gIicBHA7rQdUddI5lwvD8HkslE2TcEBVF1f7f8X1d6MZT0QNp1oC8JeqDhHRYVW9V9XXtAyTjShKGgAffN+/EpVPCi98B9CXHMUi0rgRRQaSrbhSOuecc2Oe5zXdBwB8ds4N+r7fHQTBbBm21IojgFrDqPrm1totAC4S0YEa3iir6lXf9y9ns9lvieRrfRhVvNBwHOdyuY5MJhMNntkThuG7eiFKNY5jb9u+hSRWNu1byWIQqZbSkZGRzlKp1KOqPQCGqktJvfA03YorOdG+tTxO3rYPkxQNKPXVlkKQWmsKgbYD/AY9Y8AwjKjyOAAAAABJRU5ErkJggg==";
-const cookieMaxAge = 1000*60*60;//30 seconds
+const cookieMaxAge = 60*60*1000;//30 seconds
 const codeMaxAge = 1000*60*1;//1 minute
+const resetTokenMaxAge = 1000*60*1;//1 minute
 const SECRET = "znhy";
 
 const corsOptions = {
     origin: 'http://localhost:3000',
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: 'Content-type',
     credentials: true
 }
 
@@ -160,7 +161,8 @@ router.post('/api/register', encryptPWD, async(req, res) => {
 })
 
 //reset password
-router.post('/api/reset_pwd/:token', async (req, res) => {
+router.post('/api/reset_token/', async (req, res) => {
+    const EMAIL = req.body.email;
     //create a transporter
     const transporter = nodeMailer.createTransport(smtpTransport({
         service: 'Gmail',
@@ -181,7 +183,7 @@ router.post('/api/reset_pwd/:token', async (req, res) => {
         to: EMAIL,
         subject: 'Password reset request',
         html: `
-            <p>You are receiving this email because you have requested the reset of the password for your accoun <b>${EMAIL}</b></p>
+            <p>You are receiving this email because you have requested the reset of the password for your account <b>${EMAIL}</b></p>
             <p>Please click on the following link, or paste it into your browser to complete the process. This link expires after one hour of receiving it:</p>
             <p>${resetURL}</p>
             <p>***If you did not request to reset your password, please disgard this email and your password will remain unchanged.***</p>`
@@ -192,6 +194,67 @@ router.post('/api/reset_pwd/:token', async (req, res) => {
                 message: "Error sending verification code"
             })
         }
+    })
+
+    const userInfo = await UserInfo.findOne({
+        'email' : EMAIL
+    })
+
+    if(!userInfo){
+        return res.send({
+            message: "There is no account for this email address!"
+        })
+    }
+
+    const uuid = userInfo.uuid;
+
+    await UserReset.deleteMany({
+        'uuid' : uuid
+    })
+
+    //store code into db
+    await UserReset.create({
+        'uuid' : uuid,
+        'token' : token
+    })
+
+    res.send({
+        message: "reset link sent!"
+    })
+
+    //set expiry time
+    setTimeout(async()=>{
+        await UserReset.deleteMany({
+            'uuid' : uuid
+        })
+    },resetTokenMaxAge)    
+})
+
+router.post('/api/reset_pwd/:token', encryptPWD, async (req, res) => {
+    const token = req.params.token;
+    const userReset = await UserReset.findOne({
+        'token' : token
+    })
+    if(!userReset){
+        return res.send({
+            message: "This session has expired!"
+        })
+    }
+
+    const uuid = userReset.uuid;
+
+    await User.updateOne({
+        'uuid' : uuid
+    },{
+        'password' : req.body.password
+    })
+
+    await UserReset.deleteMany({
+        'token' : token
+    })
+
+    return res.send({
+        messsage: "You have successfully reset your password!. Please log in again"
     })
 })
 
@@ -240,25 +303,25 @@ router.get('/api/logout', async(req, res) => {
 })
 
 router.get('/api/cur_user/info', async (req,res) => {
-    console.log(req.session);
+    // console.log(req.session);
     //not logged in
     if(req.session.uuid === undefined){
-        res.send({
+        return res.send({
             message : "Your session has expired. Please log in again!"
-        })
+        })  
     }
 
     //return user information
     const user = await UserInfo.findOne({
         'uuid' : req.session.uuid
-    },'name email avatar', function (err, doc){
+    }, (err, doc) => {
         if(err){
             res.status(404).send({
                 message: "User does not exist!"
             })
         }
         else{
-            // console.log(doc);
+            console.log(doc);
             res.send(doc);
         }
     })
@@ -294,10 +357,7 @@ router.get('/api/cur_user/:uuid?', async (req,res) => {
 
 // update user info
 router.post('/api/cur_user/info/update', async (req, res) => {
-    console.log(req.session);
-    console.log(req.session.uuid);
     if(req.session.uuid === undefined){
-        console.log("session expired");
         res.send({
             message : "Your session has expired. Please log in again!"
         })
@@ -305,7 +365,6 @@ router.post('/api/cur_user/info/update', async (req, res) => {
         console.log("start update");
         // update user info
         const filter = { 'uuid': req.session.uuid };
-        console.log(req.body);
         const update = { 
             name: req.body.name,
             phone: req.body.phone,
@@ -313,19 +372,19 @@ router.post('/api/cur_user/info/update', async (req, res) => {
             city: req.body.city,
             intro: req.body.intro,
         };
-        console.log(filter);
-        console.log(update);
-        const newUser = await UserInfo.findOneAndUpdate(filter, update, {
+        // console.log(filter);
+        // console.log(update);
+        await UserInfo.findOneAndUpdate(filter, update, {
             new: true
         }, (err, doc) => {
             if(err){
-                console.log(err);
+                // console.log(err);
                 res.status(404).send({
                     message: "Something wrong when updating data"
                 })
             } else {
                 console.log(doc);
-                console.log(newUser);
+                // console.log(newUser);
                 res.send(doc);
             }
         });

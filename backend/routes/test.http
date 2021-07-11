@@ -9,6 +9,22 @@ post {{url}}/api/auth
     "email" : "runzw0817@gmail.com"
 }
 
+###send password reset token
+post {{url}}/api/reset_token
+{{json}}
+
+{
+    "email" : "runzw0817@gmail.com"
+}
+
+###send password reset token
+post {{url}}/api/reset_pwd/2288d90c1304b73c1dcde9ddc4c24ac43438ac3c
+{{json}}
+
+{
+    "password" : "newrunzw"
+}
+
 ###register
 post {{url}}/api/register
 {{json}}
@@ -17,7 +33,7 @@ post {{url}}/api/register
     "name" : "runzw",
     "password" : "runzw",
     "email" : "runzw0817@gmail.com",
-    "code" : "696012"
+    "code" : "648998"
 }
 
 ###login
@@ -30,7 +46,7 @@ post {{url}}/api/login
 }
 
 ###header
-get {{url}}/api/cur_user/d6f9bc06-ca4c-42c3-b6c1-ba1f66ab383c
+get {{url}}/api/cur_user/8ac031dd-6097-4a77-b98e-b61b4c5734f5
 
 ###header
 get {{url}}/api/cur_user/
@@ -41,3 +57,19 @@ get {{url}}/api/cur_user/info
 ###logout
 get {{url}}/api/logout
 
+
+###generate uuid
+get {{url}}/api/comment/animal/0
+
+###comment
+post {{url}}/api/comment
+{{json}}
+
+{
+    "uaid" : 0,
+    "content" : "This is a comment for animal",
+    "time" : "2017-05-03 23:20:16"
+}
+
+###like
+post {{url}}/api/comment/dislike/ca89d0c2-6836-43f2-a205-503e663ed9fd

@@ -25,4 +25,9 @@ const UserAuth = database.model('UserAuth', new database.Schema({
     code: {type: String}
 }))
 
-module.exports = {User, UserInfo, UserAuth}
+const UserReset = database.model('UserReset', new database.Schema({
+    uuid: {type: String},
+    token: {type: String}
+}))
+
+module.exports = {User, UserInfo, UserAuth, UserReset}
