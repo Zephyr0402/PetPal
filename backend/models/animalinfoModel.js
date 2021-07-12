@@ -10,6 +10,7 @@ const AnimalInfo = database.model('AnimalInfo', new database.Schema({
     age: String,
     price: Number,
     user: String,
+    userinfo: { type: String, ref: 'UserInfo' },
     userAvatar: String,
     kind: String,
     description: String,
