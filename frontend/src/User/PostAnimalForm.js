@@ -5,6 +5,7 @@ import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} 
 import { UploadOutlined, WindowsFilled } from '@ant-design/icons';
 import axios from 'axios';
 import Uploader from './Uploader'
+import Header from "../Layout/Header";
 axios.defaults.withCredentials = true;
 
 function PostAnimalForm() {
@@ -68,10 +69,8 @@ function PostAnimalForm() {
                 'Accept': 'application/json',
                 "Content-Type": "application/json",
             })
-        }).then(res => {
-            window.alert(res);
-        });
-        
+        }).then(res => res);
+
         if (canPost) {
             resetInput();
             window.location.href = '/'
@@ -112,7 +111,9 @@ function PostAnimalForm() {
     };
 
     return (
-        <div className="form_container">
+        <div>
+            <Header/>
+            <div className="form_container">
             <div id="post_animal_form_wrapper">
                 <h1 className="form_title">Post New Animal</h1>
                 <Form {...layout}>
@@ -151,7 +152,7 @@ function PostAnimalForm() {
                             </Form.Item>
                         </Input.Group>
                     </Form.Item>
-                    
+
                     <Form.Item label="Location">
                         <GooglePlacesAutocomplete
                             apiKey="AIzaSyC8w_bEe3IlzsbyjWJ96uOhlSADfrhh7gQ"
@@ -160,9 +161,9 @@ function PostAnimalForm() {
                                 onChange: setLocation,
                             }}
                         />
-                        
+
                     </Form.Item>
-                    
+
 
                     <Form.Item
                         label="Date Found"
@@ -223,7 +224,7 @@ function PostAnimalForm() {
                 </Form>
             </div>
         </div>
-
+        </div>
     );
 }
 

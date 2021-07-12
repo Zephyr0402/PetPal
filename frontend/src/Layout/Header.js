@@ -30,7 +30,7 @@ const Header = (props) => {
             case "profile":
                 return <Redirect to = {{pathname : '/user', state: {id:"1"}}}/>
                 break;
-        
+
             case "posts":
                 <Redirect to = {{pathname : '/user', state: {id:"2"}}}/>
             break;
@@ -66,9 +66,11 @@ const Header = (props) => {
     console.log("hello");
     return (
         <header className = "header">
-            <img src="https://i.ibb.co/k3rqzWb/Petpal-logo.png" alt="Petpal-logo" border="0" width={200}/>
+            <a href="http://localhost:3000/map">
+                <img src="https://i.ibb.co/k3rqzWb/Petpal-logo.png" alt="Petpal-logo" border="0" width={200}/>
+            </a>
             {
-                header.name === undefined ? 
+                header.name === undefined ?
                     <span className = "header-btns">
                         <Tooltip title = "Post now!">
                             <Button danger shape="circle" icon={<FormOutlined />} href = "/post"/>

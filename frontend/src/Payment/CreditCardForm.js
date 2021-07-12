@@ -1,15 +1,25 @@
 import React, {useState} from 'react';
-import axios from "axios";
 import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {Button, Typography} from "antd";
+import { CloseCircleTwoTone } from '@ant-design/icons';
+import {getHeader} from "../Services/userService";
 
 const { Title, Text } = Typography;
+const backEndURL = "http://localhost:9999/api/";
 
-const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
+const CreditCardForm = (props) => {
     const [errorMsg, setErrorMsg] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
     const stripe = useStripe();
     const elements = useElements();
+
+    const [userId, setUserId] = useState(null);
+
+    getHeader()
+        .then(async res => {
+            console.log("uuid: " + res.uuid);
+            setUserId(res.uuid);
+        });
 
     const CARD_OPTIONS = {
         iconStyle: "solid",
@@ -44,29 +54,51 @@ const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
                 setIsProcessing(true);
                 const {id} = paymentMethod;
 
-                /*const response = await axios.post("http://localhost:9999/api/payment", {
-                    //stripe amount is in cent
-                    amount: amount * 100,
-                    id
-                });
-
-                if(response.data.success) {
-                    console.log("Successful payment");
-                    setPaymentSuccess(true);
-                }*/
-
                 const payment = {
-                    amount: amount * 100,
+                    amount: props.animal.price * 100,
                     id
                 };
-
-                fetch("http://localhost:9999/api/payment", {
+                fetch(backEndURL + "payment", {
                     method: "POST",
-                    headers: {"Content-Type":"application/json"},
+                    headers: new Headers({
+                        'Accept': 'application/json',
+                        "Content-Type": "application/json",
+                    }),
                     body: JSON.stringify(payment)
                 }).then(res => {
                     if(res.status === 200) {
-                        setPaymentSuccess(true);
+                        props.setPaymentSuccess(true);
+                    }else if(res.status >= 400){
+                        res.text().then(text => setErrorMsg(text));
+                    }
+                });
+
+                const transaction = {
+                    buyerId: userId,
+                    //TODO: update to id
+                    sellerId: props.animal.user,
+                    animalId: props.animal._id,
+                    timestamp: new Date(),
+                    price: props.animal.price,
+                    status: "Pending",
+                    tag: props.animal.kind,
+                    id
+                };
+
+
+                fetch(backEndURL + "transaction/add", {
+                    method: "POST",
+                    headers: new Headers({
+                        'Accept': 'application/json',
+                        "Content-Type": "application/json",
+                    }),
+                    body: JSON.stringify(transaction)
+                }).then(res => {
+                    if(res.status === 200) {
+                        console.log("transaction successfully added to DB");
+                        res.json().then(result => {
+                            props.setOrderNumber(result.data.toString());
+                        });
                     }else if(res.status >= 400){
                         res.text().then(text => setErrorMsg(text));
                     }
@@ -74,11 +106,9 @@ const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
 
             }catch (err) {
                 setErrorMsg(err.message);
-                console.log("Error", err);
             }
         }else {
             setErrorMsg(error.message);
-            console.log(error.message);
         }
     };
 
@@ -86,9 +116,10 @@ const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
         ev.error ? setErrorMsg(ev.error.message) : setErrorMsg();
     };
 
+
     return (
         <div className="credit-card-form">
-            <Title level={2} className="payment-summary"><span>Payment for {animalName}</span><span>${amount}</span></Title>
+            <Title level={2} className="payment-summary"><span>Payment for {props.animal.name}</span><span>${props.animal.price}</span></Title>
             <form onSubmit={handleSubmit}>
                 <h3>Please enter your valid credit card</h3>
                 <fieldset className="form-group">
@@ -97,12 +128,15 @@ const CreditCardForm = ({animalName, amount, setPaymentSuccess}) => {
                     </div>
                 </fieldset>
                 {isProcessing ?
-                    <Text>Processing Payment</Text> :
+                    <Text >Processing Payment</Text > :
                     <Button type="primary" htmlType="submit">Make Payment</Button>
                 }
 
             </form>
-            <Text type="danger">{errorMsg}</Text>
+            <div className={errorMsg === "" || errorMsg === undefined ? "error-msg hidden" : "error-msg"}>
+                <CloseCircleTwoTone twoToneColor="#ff4d4f"/>
+                <Text type="danger"> {errorMsg}</Text>
+            </div>
         </div>
     )
 };
