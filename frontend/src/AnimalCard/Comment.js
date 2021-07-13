@@ -1,67 +1,125 @@
-import React , {createElement,useState} from 'react';
-import { Comment, Tooltip, Avatar } from 'antd';
-import moment from 'moment';
+import React , {createElement,useEffect,useState} from 'react';
+import { Comment, Tooltip, Avatar, Divider } from 'antd';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
+import {LikeComment, DislikeComment} from '../Services/commentService'
+import {CommentArea} from './CommentArea'
 
-const UserComment = (props) => {
+const SingleComment = (props) => {
     const cmtDetail = props.commentDetail;
 
-    const [likes, setLikes] = useState(0);
-    const [dislikes, setDislikes] = useState(0);
-    const [action, setAction] = useState(null);
+    const [liked, setLiked] = useState(false);
+    const [likes, setLikes] = useState(cmtDetail.likes.length)
+    const [disliked, setDisliked] = useState(false);
+
+    const [showCommentArea,setShowCommentArea] = useState(false)
   
+    useEffect(() => {
+      
+    }, [])
+
     const like = () => {
-      setLikes(1);
-      setDislikes(0);
-      setAction('liked');
-    };
-  
+      setLiked(true);
+      setLikes(likes +1);
+      setDisliked(false);
+      console.log(cmtDetail.ucid);
+      LikeComment(cmtDetail.ucid,'set');
+    }
+
+    const cancelLike = () => {
+      setLiked(false);
+      setLikes(likes - 1);
+      LikeComment(cmtDetail.ucid,'cancel');
+    }
+
     const dislike = () => {
-      setLikes(0);
-      setDislikes(1);
-      setAction('disliked');
+      setDisliked(true);
+      DislikeComment(cmtDetail.ucid, 'set');
+    }
+
+    const cancelDislike = () => {
+      setDisliked(false);
+      DislikeComment(cmtDetail.ucid, 'cancel');
+    }
+
+    const onLike = () => {
+      if(!liked){
+        like();
+        if(disliked) cancelDislike();
+      }
+      else{
+        cancelLike();
+      }
     };
   
+    const onDislike = () => {
+      if(!disliked){
+        dislike();
+        if(liked) cancelLike();
+      }
+      else{
+        cancelDislike();
+      }
+    };
+
+    const showComment = () => {
+      setShowCommentArea(!showCommentArea);
+    }
+  
+    const formatDate = (date) => {
+      date = new Date(date)
+      var y = date.getFullYear();  
+      var m = date.getMonth() + 1;  
+      m = m < 10 ? ('0' + m) : m;  
+      var d = date.getDate();  
+      d = d < 10 ? ('0' + d) : d;  
+      var h = date.getHours();  
+      var minute = date.getMinutes();  
+      minute = minute < 10 ? ('0' + minute) : minute; 
+      var second= date.getSeconds();  
+      second = minute < 10 ? ('0' + second) : second;  
+      return y + '-' + m + '-' + d+' '+h+':'+minute+':'+ second;  
+    }
+
     const actions = [
       <Tooltip key="comment-basic-like" title="Like">
-        <span onClick={like}>
-          {createElement(action === 'liked' ? LikeFilled : LikeOutlined)}
+        <span onClick={onLike}>
+          {createElement(liked ? LikeFilled : LikeOutlined)}
           <span className="comment-action">{likes}</span>
         </span>
       </Tooltip>,
       <Tooltip key="comment-basic-dislike" title="Dislike">
-        <span onClick={dislike}>
-          {createElement(action === 'disliked' ? DislikeFilled : DislikeOutlined)}
-          <span className="comment-action">{dislikes}</span>
+        <span onClick={onDislike}>
+          {createElement(disliked ? DislikeFilled : DislikeOutlined)}
         </span>
       </Tooltip>,
-      <span key="comment-basic-reply-to">Reply to</span>,
+      <span key="comment-basic-reply-to" onClick = {showComment}>Reply to</span>,
     ];
 
     return(
         <Comment
             actions={actions}
-            author={<a>{cmtDetail.user}</a>}
+            author={<a>{cmtDetail.name}</a>}
             avatar={
                 <Avatar
-                src={cmtDetail.userAvatar}
-                alt="Han Solo"
+                src={cmtDetail.avatar}
+                alt="Username loading..."
                 />
             }
             content={
                 <p>
-                {cmtDetail.content}
+                  {cmtDetail.content}
                 </p>
             }
             datetime={
-                <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-                <span>{moment().fromNow()}</span>
-                </Tooltip>
+                <span>{formatDate(cmtDetail.time)}</span>
             }
         >
-          {props.subComments}
+          {props.replies}
+          {
+            showCommentArea ? 
+            <CommentArea id = {props.id} type = {props.type} onCommentSubmit = {props.onCommentSubmit} onSubmitFinish = {setShowCommentArea}/> : ""}
         </Comment>
     )
 }
 
-export default UserComment;
+export default SingleComment;

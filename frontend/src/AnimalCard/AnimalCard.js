@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StarOutlined, ShoppingCartOutlined, CommentOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import {Card, Avatar, Descriptions, Button} from 'antd';
-import Comments from './Comments';
+import CommentCollection from './Comments';
 import './AnimalCard.css';
 import {getHeader} from "../Services/userService";
 const { Meta } = Card;
@@ -72,7 +72,7 @@ const AnimalCard = (props) => {
                         <Descriptions.Item label="Description">{thisCard.description}</Descriptions.Item>
                     </Descriptions>
                 </Card>
-                <Comments aid = {props.aid}/>
+                <CommentCollection commentType = "animal" uaid = {props.aid}/>
                 <div className="shopping-cart-wrapper">
                     <span className="cta-button-round" onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showLoginAlert()}>
                         <ShoppingCartOutlined />

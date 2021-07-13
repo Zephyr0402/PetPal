@@ -48,6 +48,30 @@ export const verify = async (email) => {
     });
 }
 
+export const sendResetLink = async (email) => {
+    return fetch('http://localhost:9999/api/reset_token',{
+        method: 'POST',
+        body: JSON.stringify({
+            "email":email
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+}
+
+export const resetPassword = async (token, password) => {
+    return await fetch('http://localhost:9999/api/reset_pwd/'+token, {
+        method: 'POST',
+        body: JSON.stringify({
+            "password" : password
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }).then(res => res.json());
+}
+
 export const getHeader = async ( uuid = "" ) => {
     return await axios.get('http://localhost:9999/api/cur_user/'+uuid)
         .then(res => res.data);
@@ -56,4 +80,21 @@ export const getHeader = async ( uuid = "" ) => {
 export const getUserInfo = async () => {
     return await axios.get('http://localhost:9999/api/cur_user/info')
         .then(res => res.data);
+}
+
+export const updateUserInfo = async (userInfo) => {
+    return await fetch(backendURL+'/api/cur_user/info/update', {
+        method: 'POST',
+        credentials:'include',
+        body: JSON.stringify({
+            "name": userInfo.inputName,
+            "phone": userInfo.inputPNumber,
+            "mail": userInfo.inputMail,
+            "city": userInfo.inputCity,
+            "intro": userInfo.inputIntro,
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
 }
