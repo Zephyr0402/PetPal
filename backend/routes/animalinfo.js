@@ -1,29 +1,53 @@
 var express = require('express');
 var router = express.Router();
+var formidable = require("formidable");
 const fs = require('fs');
 const AnimalInfo = require('../models/animalinfoModel');
-var formidable = require("formidable");
-
-let animalID = 4;
+const {UserInfo} = require('../models/userModel');
+const { v4: uuidv4 } = require('uuid');
 
 // For post one animalInfo
 // request is required to be sent as a specific JSON format 
 // (details are on Google Doc)
-router.post('/post', function (req, res, next) {
+router.post('/post', async function (req, res) {
     console.log('handle animal post');
+
     try {
-        let rawdata = fs.readFileSync('data.json');
-        let jsondata = JSON.parse(rawdata);
         let newEntry = req.body;
-        newEntry["id"] = animalID;
-        newEntry["userAvatar"] = "userAvatars/shijun.jpg";
-        jsondata['animalInfos'].push(newEntry);
-        console.log(jsondata['animalInfos']);
-        rawdata = JSON.stringify(jsondata);
-        fs.writeFileSync('data.json', rawdata);
-    } catch (e) {
-        console.log(e);
+        newEntry["id"] = uuidv4();
+        console.log("User:", newEntry.user);
+        const docs = await UserInfo.find({ uuid: newEntry.user });
+        console.log("Doc:", docs);
+        newEntry["userAvatar"] = docs.avatar;
+        newEntry["status"] = "available";
+
+        AnimalInfo.create(newEntry, (err, docs) => {
+            if (!err) {
+                console.log('Inserted successfully' + docs);
+            } else {
+                res.status(500);
+                res.send("You shall not pass!");
+            }
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500);
+        res.send("You shall not pass!");
     }
+
+    // try {
+    //     let rawdata = fs.readFileSync('data.json');
+    //     let jsondata = JSON.parse(rawdata);
+    //     let newEntry = req.body;
+    //     newEntry["id"] = animalID;
+    //     newEntry["userAvatar"] = "userAvatars/shijun.jpg";
+    //     jsondata['animalInfos'].push(newEntry);
+    //     console.log(jsondata['animalInfos']);
+    //     rawdata = JSON.stringify(jsondata);
+    //     fs.writeFileSync('data.json', rawdata);
+    // } catch (e) {
+    //     console.log(e);
+    // }
 
 });
 
@@ -49,14 +73,60 @@ router.get("/cost", function (req, res) {
 
 router.use('/public', express.static('public'));
 
-router.post('/api/upload', async (req,res) => {
+router.post('/api/upload', async (req, res) => {
     var form = new formidable.IncomingForm();
-    form.parse(req, function(error, fields, files) {
+    form.parse(req, function (error, fields, files) {
         console.log("parsing done");
         console.log(files.file);
-        fs.writeFileSync("public/images/"+files.file.name, fs.readFileSync(files.file.path));
+        fs.writeFileSync("public/images/" + files.file.name, fs.readFileSync(files.file.path));
     });
     res.send("hello");
-})
+});
+
+// Get status of an animalinfo
+// request body example: 
+// { "id" : ID_OF_THE_ANIMAL }
+// response body example:
+// { "status" : STATUS_OF_THE_ANIMAL }
+router.post('/status', async (req, res) => {
+    console.log(req.body.id);
+    try {
+        const info = await AnimalInfo.findOne({ id: req.body.id });
+        console.log(info);
+        res.send('{"status":' + info.status + '}');
+    } catch (err) {
+        console.log(err);
+        res.status(500);
+    }
+});
+
+// change the status of an animalinfo
+// request body example: 
+// { "id" : ID_OF_THE_ANIMAL }
+router.post('/changestatus', async (req, res) => {
+    console.log(req.body);
+    try {
+        let res = await AnimalInfo.updateOne({ "id": req.body.id }, { "status": req.body.status });
+        res.send(200);
+    } catch (err) {
+        console.log(err);
+        res.send(500);
+    }
+});
+
+// Get seller's UserInfo of a certain animalinfo
+// request body example: 
+// { "id" : ID_OF_THE_ANIMAL }
+// response is the JSON format data of userinfo table
+router.post('/userinfo', async (req, res) => {
+    try {
+        let info = await AnimalInfo.find({ "id": req.body.id }).populate('userinfo');
+        console.log(info[0].userinfo);
+        res.send(info[0].userinfo);
+    } catch (err) {
+        console.log(err);
+        res.send(500);
+    }
+});
 
 module.exports = router;
