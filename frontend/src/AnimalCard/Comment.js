@@ -65,7 +65,8 @@ const SingleComment = (props) => {
       setShowCommentArea(!showCommentArea);
     }
   
-    const formatDate = (date) => {  
+    const formatDate = (date) => {
+      date = new Date(date)
       var y = date.getFullYear();  
       var m = date.getMonth() + 1;  
       m = m < 10 ? ('0' + m) : m;  
@@ -101,7 +102,7 @@ const SingleComment = (props) => {
             avatar={
                 <Avatar
                 src={cmtDetail.avatar}
-                alt="Han Solo"
+                alt="Username loading..."
                 />
             }
             content={
@@ -110,7 +111,7 @@ const SingleComment = (props) => {
                 </p>
             }
             datetime={
-                <span>{cmtDetail.time}</span>
+                <span>{formatDate(cmtDetail.time)}</span>
             }
         >
           {props.replies}

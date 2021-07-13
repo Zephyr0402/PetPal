@@ -3,7 +3,7 @@ import SingleComment from './Comment'
 import './Comments.css';
 import {getComments, postComment} from '../Services/commentService'
 import Header from '../Layout/Header'
-import {List, Comment, Avatar} from 'antd'
+import {List, Comment, Avatar, Divider} from 'antd'
 import { CommentArea } from './CommentArea';
 
 const CommentCollection = (props) => {
@@ -24,8 +24,7 @@ const CommentCollection = (props) => {
   }
 
   return (
-    <>
-      <Header/>
+    <div style = {{paddingLeft:"12px"}}>
       <CommentArea id = {props.id} type = {props.commentType} onCommentSubmit = {onCommentSubmit} onSubmitFinish = {() => {}}/>
       <List
         dataSource = {comments}
@@ -33,6 +32,7 @@ const CommentCollection = (props) => {
         itemLayout="horizontal"
         renderItem = {
           comment =>
+          <>
             <SingleComment
               commentDetail={comment}
               onCommentSubmit = {onCommentSubmit}
@@ -47,9 +47,11 @@ const CommentCollection = (props) => {
                 />
               )}
             />
+            <Divider />
+            </>
         }
       />
-    </>
+    </div>
   );
 };
 
