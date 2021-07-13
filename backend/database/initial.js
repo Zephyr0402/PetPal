@@ -1,4 +1,5 @@
 const AnimalInfo = require('../models/animalinfoModel');
+const { User, UserInfo, UserAuth } = require('../models/userModel');
 const database = require('../database/database');
 
 AnimalInfo.create({
@@ -8,7 +9,6 @@ AnimalInfo.create({
     age: "1.5",
     price: "200",
     user: "Julia",
-    userinfo: "",
     userAvatar: "userAvatars/julia.jpg",
     kind: "cat",
     description: "A cute cat!!!",
@@ -31,7 +31,6 @@ AnimalInfo.create({
     age: "3",
     price: "200",
     user: "Nawa",
-    userinfo: "",
     userAvatar: "userAvatars/nawa.png",
     kind: "dog",
     description: "A cute dog!!!",
@@ -51,7 +50,6 @@ AnimalInfo.create({
     age: "6 month",
     price: 100,
     user: "Runze",
-    userinfo: "",
     userAvatar: "userAvatars/tsuki.jpg",
     kind: "bird",
     description: "A cute bird!!!",
@@ -71,7 +69,7 @@ AnimalInfo.create({
     age: "3",
     price: "30",
     user: "Shijun",
-    userinfo: "",
+    userinfo: "60ed087d2273fb54e1491f48",
     userAvatar: "userAvatars/shijun.jpg",
     kind: "Fish",
     description: "A cute fish!!!",
