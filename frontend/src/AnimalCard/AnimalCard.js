@@ -72,7 +72,7 @@ const AnimalCard = (props) => {
                         <Descriptions.Item label="Description">{thisCard.description}</Descriptions.Item>
                     </Descriptions>
                 </Card>
-                <CommentCollection commentType = "animal" id = {props.aid}/>
+                <CommentCollection commentType = "animal" uaid = {props.aid}/>
                 <div className="shopping-cart-wrapper">
                     <span className="cta-button-round" onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showLoginAlert()}>
                         <ShoppingCartOutlined />

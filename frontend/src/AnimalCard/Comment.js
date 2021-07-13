@@ -1,7 +1,8 @@
 import React , {createElement,useEffect,useState} from 'react';
-import { Comment, Tooltip, Avatar } from 'antd';
+import { Comment, Tooltip, Avatar, Divider } from 'antd';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import {LikeComment, DislikeComment} from '../Services/commentService'
+import {CommentArea} from './CommentArea'
 
 const SingleComment = (props) => {
     const cmtDetail = props.commentDetail;
@@ -9,6 +10,8 @@ const SingleComment = (props) => {
     const [liked, setLiked] = useState(false);
     const [likes, setLikes] = useState(cmtDetail.likes.length)
     const [disliked, setDisliked] = useState(false);
+
+    const [showCommentArea,setShowCommentArea] = useState(false)
   
     useEffect(() => {
       
@@ -57,8 +60,13 @@ const SingleComment = (props) => {
         cancelDislike();
       }
     };
+
+    const showComment = () => {
+      setShowCommentArea(!showCommentArea);
+    }
   
-    const formatDate = (date) => {  
+    const formatDate = (date) => {
+      date = new Date(date)
       var y = date.getFullYear();  
       var m = date.getMonth() + 1;  
       m = m < 10 ? ('0' + m) : m;  
@@ -84,18 +92,17 @@ const SingleComment = (props) => {
           {createElement(disliked ? DislikeFilled : DislikeOutlined)}
         </span>
       </Tooltip>,
-      <span key="comment-basic-reply-to">Reply to</span>,
+      <span key="comment-basic-reply-to" onClick = {showComment}>Reply to</span>,
     ];
 
     return(
-
         <Comment
             actions={actions}
             author={<a>{cmtDetail.name}</a>}
             avatar={
                 <Avatar
                 src={cmtDetail.avatar}
-                alt="Han Solo"
+                alt="Username loading..."
                 />
             }
             content={
@@ -104,10 +111,13 @@ const SingleComment = (props) => {
                 </p>
             }
             datetime={
-                <span>{cmtDetail.time}</span>
+                <span>{formatDate(cmtDetail.time)}</span>
             }
         >
           {props.replies}
+          {
+            showCommentArea ? 
+            <CommentArea id = {props.id} type = {props.type} onCommentSubmit = {props.onCommentSubmit} onSubmitFinish = {setShowCommentArea}/> : ""}
         </Comment>
     )
 }

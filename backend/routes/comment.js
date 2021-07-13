@@ -10,6 +10,8 @@ router.get('/api/getuuid', async (req, res) => {
 
 //post comment
 router.post('/api/comment', async (req, res) => {
+    console.log(req.body);
+
     const comment = await Comment.create({
         'ucid' : uuidv4(),
         'cmtorid' : req.session.uuid,
