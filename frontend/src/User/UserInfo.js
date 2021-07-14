@@ -1,8 +1,9 @@
 import { Comment, Tooltip, Avatar, Descriptions, Rate, Card, Button, Input } from 'antd';
-import React, { createElement, useState } from 'react';
+import React, { createElement, useState, useEffect } from 'react';
 import moment from 'moment';
 import { UserOutlined } from '@ant-design/icons';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
+import { getUserInfo, updateUserInfo } from '../Services/userService'
 import './UserInfoPage.css'
 
 function UserInfo(){
@@ -10,11 +11,23 @@ function UserInfo(){
     const [dislikes, setDislikes] = useState(0);
     const [action, setAction] = useState(null);
     const [edit, setEdit] = useState(false);
-    const [inputName, setInputName] = useState('Julia');
-    const [inputPNumber, setInputPNumber] = useState('604-xxx-xxxx');
-    const [inputMail, setInputMail] = useState('xxx@gmail.com');
-    const [inputCity, setInputCity] = useState('Vancouver');
-    const [inputIntro, setInputIntro] = useState('I love cats and dogs.');
+    const [update, setUpdate] = useState(false);
+    const [inputName, setInputName] = useState('');
+    const [inputPNumber, setInputPNumber] = useState('');
+    const [inputMail, setInputMail] = useState('');
+    const [inputCity, setInputCity] = useState('');
+    const [inputIntro, setInputIntro] = useState('');
+
+    useEffect(() => {
+      getUserInfo()
+        .then((res) => {
+          setInputName(res.name);
+          setInputPNumber(res.phone);
+          setInputMail(res.email);
+          setInputCity(res.city);
+          setInputIntro(res.intro);
+        })
+    },[update]);
 
     const inputChangeName = (e) => {
       setInputName(e.target.value);
@@ -50,6 +63,22 @@ function UserInfo(){
 
     const enableEdit = () => {
       setEdit(!edit);
+      console.log(edit);
+      if (edit) {
+        const userInfoUpdated = {
+          inputName,
+          inputPNumber,
+          inputMail,
+          inputCity,
+          inputIntro,
+        }
+        console.log(userInfoUpdated);
+        updateUserInfo(userInfoUpdated)
+          .then( () => {
+            setUpdate(!update);
+            console.log("User info has updated");
+          })
+      }
     };
 
     const createButton = () => {

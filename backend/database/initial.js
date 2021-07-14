@@ -1,4 +1,5 @@
 const AnimalInfo = require('../models/animalinfoModel');
+const database = require('../database/database');
 
 console.log(AnimalInfo);
 
@@ -30,6 +31,7 @@ AnimalInfo.create({
     age: "3",
     price: "200",
     user: "Nawa",
+    userID: "",
     userAvatar: "userAvatars/nawa.png",
     kind: "dog",
     description: "A cute dog!!!",
@@ -78,4 +80,6 @@ AnimalInfo.create({
     if (!err) {
         console.log('Inserted successfully' + docs)
     }
+    database.disconnect();
 });
+
