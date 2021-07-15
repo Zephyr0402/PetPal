@@ -7,11 +7,12 @@ import Header from '../Layout/Header';
 import '../Layout/Header.css'
 import PostedAnimals from './PostedAnimals';
 import TransactionHistory from './TransactionHistory';
+import { withRouter } from 'react-router-dom'
 
 const {Content, Sider } = Layout;
 
-function UserInfoPage(){
-    const [selectedKey, setSelectedKey] = useState("1")
+const UserInfoPage = (props) => {
+    const [selectedKey, setSelectedKey] = useState(props.location.state.key)
 
     const switchComponent = (key) => {
         switch (key){
@@ -61,4 +62,4 @@ function UserInfoPage(){
     )
 }
 
-export default UserInfoPage;
+export default withRouter(UserInfoPage);
