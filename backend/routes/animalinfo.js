@@ -7,7 +7,7 @@ const {UserInfo} = require('../models/userModel');
 const { v4: uuidv4 } = require('uuid');
 
 // For post one animalInfo
-// request is required to be sent as a specific JSON format 
+// request is required to be sent as a specific JSON format
 // (details are on Google Doc)
 router.post('/post', async function (req, res) {
     console.log('handle animal post');
@@ -64,11 +64,11 @@ router.get("/", async function (req, res) {
 });
 
 router.get("/kind", function (req, res) {
-    
+
 });
 
 router.get("/cost", function (req, res) {
-    
+
 });
 
 router.use('/public', express.static('public'));
@@ -84,7 +84,7 @@ router.post('/api/upload', async (req, res) => {
 });
 
 // Get status of an animalinfo
-// request body example: 
+// request body example:
 // { "id" : ID_OF_THE_ANIMAL }
 // response body example:
 // { "status" : STATUS_OF_THE_ANIMAL }
@@ -101,12 +101,12 @@ router.post('/status', async (req, res) => {
 });
 
 // change the status of an animalinfo
-// request body example: 
+// request body example:
 // { "id" : ID_OF_THE_ANIMAL }
 router.post('/changestatus', async (req, res) => {
     console.log(req.body);
     try {
-        let res = await AnimalInfo.updateOne({ "id": req.body.id }, { "status": req.body.status });
+        let info = await AnimalInfo.updateOne({ "id": req.body.id }, { "status": req.body.status });
         res.send(200);
     } catch (err) {
         console.log(err);
@@ -115,7 +115,7 @@ router.post('/changestatus', async (req, res) => {
 });
 
 // Get seller's UserInfo of a certain animalinfo
-// request body example: 
+// request body example:
 // { "id" : ID_OF_THE_ANIMAL }
 // response is the JSON format data of userinfo table
 router.post('/userinfo', async (req, res) => {
