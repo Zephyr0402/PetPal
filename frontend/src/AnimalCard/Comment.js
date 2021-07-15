@@ -12,10 +12,6 @@ const SingleComment = (props) => {
     const [disliked, setDisliked] = useState(false);
 
     const [showCommentArea,setShowCommentArea] = useState(false)
-  
-    useEffect(() => {
-      
-    }, [])
 
     const like = () => {
       setLiked(true);

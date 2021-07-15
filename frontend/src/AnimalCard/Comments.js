@@ -28,8 +28,9 @@ const CommentCollection = (props) => {
       <CommentArea id = {props.id} type = {props.commentType} onCommentSubmit = {onCommentSubmit} onSubmitFinish = {() => {}}/>
       <List
         dataSource = {comments}
-        header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
+        header={`${comments.length} ${comments.length > 1 ? 'comments' : 'comment'}`}
         itemLayout="horizontal"
+        locale = {{emptyText: " "}}
         renderItem = {
           comment =>
           <>
