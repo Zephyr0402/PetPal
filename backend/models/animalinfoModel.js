@@ -22,4 +22,4 @@ const AnimalInfo = database.model('AnimalInfo', new database.Schema({
     // available or sold
     status: String,
 }));
-module.exports = {AnimalInfo};
+module.exports = AnimalInfo;
