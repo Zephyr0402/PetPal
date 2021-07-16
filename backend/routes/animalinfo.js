@@ -56,12 +56,26 @@ router.post('/post', async function (req, res) {
 router.get("/", async function (req, res) {
     try {
         console.log('handle get animal information');
-        const infos = await AnimalInfo.find();
+        const infos = await AnimalInfo.find({});
         console.log(infos);
         //let rawdata = fs.readFileSync('data.json');
         res.send(infos);
     } catch (e) {
         console.log(e);
+    }
+});
+
+// get posted animals according to user's uuid
+// TODO: talk with shijun about userinfo references with type string
+router.get("/uuid", async function (req, res) {
+    if(req.session.uuid === undefined){
+        res.send({
+            message : "Your session has expired. Please log in again!"
+        })
+    } else {
+        console.log("Get Uploaded Animals");
+
+        await AnimalInfo.find();
     }
 });
 

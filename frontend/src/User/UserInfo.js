@@ -83,7 +83,7 @@ function UserInfo(){
     };
         
     return(
-        <div style = {{height:'100%', overflow :'auto'}}>
+        <div>
           <div className="avatar" >
               <Avatar  
                 size={64}
