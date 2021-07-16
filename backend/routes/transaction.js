@@ -42,12 +42,17 @@ router.post("/add", cors(), async (req, res) => {
 });
 
 //update payment status
+// request body example:
+// {
+//     "id": TRANSACTION_ID,
+//     "status": NEW_STATUS
+// }
 router.patch("/update_status", cors(), async (req, res) => {
-    Transaction.updateOne({_id : req.body.id}, {status : req.body.status}, function (err, docs) {
+    Transaction.updateOne({_id : req.body.id}, {status : req.body.status.trim().toLowerCase()}, function (err, docs) {
         if (err){
-            console.log(err);
+            res.status(400).json('Error: ' + error)
         } else{
-            console.log("Successfully updated transaction status");
+            res.status(200).json("Successfully updated transaction status")
         }
     });
 });
