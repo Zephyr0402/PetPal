@@ -13,20 +13,19 @@ let animalID = 4;
 // (details are on Google Doc)
 router.post('/post', async function (req, res) {
     console.log('handle animal post');
-
     try {
-        let newEntry = req.body;
+        let newEntry = req.body.animalinfo;
         newEntry["id"] = uuidv4();
-        console.log("User:", newEntry.user);
-        const docs = await UserInfo.find({ uuid: newEntry.user });
-        console.log("Doc:", docs);
-        newEntry["userAvatar"] = docs.avatar;
+        //const docs = await UserInfo.find({ uuid: req.body.userUUID });
+        //console.log("Doc:", docs);
+        //newEntry["userinfo"] = docs._id;
         newEntry["status"] = "available";
 
         AnimalInfo.create(newEntry, (err, docs) => {
             if (!err) {
                 console.log('Inserted successfully' + docs);
             } else {
+                console.log(err);
                 res.status(500);
                 res.send("You shall not pass!");
             }
@@ -37,27 +36,13 @@ router.post('/post', async function (req, res) {
         res.send("You shall not pass!");
     }
 
-    // try {
-    //     let rawdata = fs.readFileSync('data.json');
-    //     let jsondata = JSON.parse(rawdata);
-    //     let newEntry = req.body;
-    //     newEntry["id"] = animalID;
-    //     newEntry["userAvatar"] = "userAvatars/shijun.jpg";
-    //     jsondata['animalInfos'].push(newEntry);
-    //     console.log(jsondata['animalInfos']);
-    //     rawdata = JSON.stringify(jsondata);
-    //     fs.writeFileSync('data.json', rawdata);
-    // } catch (e) {
-    //     console.log(e);
-    // }
-
 });
 
 router.get("/", async function (req, res) {
     try {
         console.log('handle get animal information');
-        const infos = await AnimalInfo.find({});
-        console.log(infos);
+        const infos = await AnimalInfo.find();
+        //console.log(infos);
         //let rawdata = fs.readFileSync('data.json');
         res.send(infos);
     } catch (e) {
@@ -122,7 +107,7 @@ router.post('/status', async (req, res) => {
 router.post('/changestatus', async (req, res) => {
     console.log(req.body);
     try {
-        let res = await AnimalInfo.updateOne({ "id": req.body.id }, { "status": req.body.status });
+        let info = await AnimalInfo.updateOne({ "id": req.body.id }, { "status": req.body.status });
         res.send(200);
     } catch (err) {
         console.log(err);
