@@ -13,12 +13,12 @@ router.post('/post', async function (req, res) {
     console.log('handle animal post');
 
     try {
-        let newEntry = req.body;
+        let newEntry = req.body.animalinfo;
         newEntry["id"] = uuidv4();
         console.log("User:", newEntry.user);
-        const docs = await UserInfo.find({ uuid: newEntry.user });
+        const docs = await UserInfo.find({ uuid: req.body.userUUID });
         console.log("Doc:", docs);
-        newEntry["userAvatar"] = docs.avatar;
+        newEntry["userinfo"] = docs._id;
         newEntry["status"] = "available";
 
         AnimalInfo.create(newEntry, (err, docs) => {
@@ -106,7 +106,7 @@ router.post('/status', async (req, res) => {
 router.post('/changestatus', async (req, res) => {
     console.log(req.body);
     try {
-        let res = await AnimalInfo.updateOne({ "id": req.body.id }, { "status": req.body.status });
+        let info = await AnimalInfo.updateOne({ "id": req.body.id }, { "status": req.body.status });
         res.send(200);
     } catch (err) {
         console.log(err);

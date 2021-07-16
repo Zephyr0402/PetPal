@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './forms.css';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
-import { UploadOutlined, WindowsFilled } from '@ant-design/icons';
+import { Button, Form, Input, InputNumber, DatePicker, Select, message} from 'antd';
 import axios from 'axios';
 import Uploader from './Uploader'
 import Header from "../Layout/Header";
+import backEndURL from '../Services/backendURL';
+
 axios.defaults.withCredentials = true;
 
 function PostAnimalForm() {
@@ -22,8 +23,6 @@ function PostAnimalForm() {
     const [fileList, setFileList] = useState([]);
     const [description, setDescription] = useState(null);
 
-    const backEndURL = "http://localhost:9999/animalinfo/post";
-
     const layout = {
         labelCol: { span: 6 },
         wrapperCol: { span: 18 },
@@ -33,7 +32,7 @@ function PostAnimalForm() {
         wrapperCol: { offset: 6, span: 18 },
     };
 
-    const handlePostAnimal = (e) => {
+    const handlePostAnimal = async (e) => {
         e.preventDefault();
         //TODO: replace with actual handlePostAnimal functionality
         console.log("handlePostAnimal");
@@ -49,6 +48,17 @@ function PostAnimalForm() {
         console.log(category);
         console.log(price);
         console.log(description);
+
+        const info = await fetch(backEndURL + '/api/cur_user', {
+            method: 'GET',
+            headers: new Headers({
+                'Accept': 'application/json',
+                "Content-Type": "application/json",
+            })
+        });
+
+        console.log("Get current user")
+        
         const animalInfo = {
             "id": "",
             "name": animalName,
@@ -59,17 +69,22 @@ function PostAnimalForm() {
             "kind": category,
             "price": price,
             "description": description,
-            "userAvatar": "testuser",
-            "image": 'http://localhost:9999/public/images/'+fileList[0].name,
+            "image": 'http://localhost:9999/public/images/' + fileList[0].name,
+        };
+
+        const req = {
+            "animalinfo": animalInfo,
+            "userUUID": info.uuid
         }
-        fetch(backEndURL, {
+        
+        await fetch(backEndURL, {
             method: 'POST',
-            body: JSON.stringify(animalInfo),
+            body: JSON.stringify(req),
             headers: new Headers({
                 'Accept': 'application/json',
                 "Content-Type": "application/json",
             })
-        }).then(res => res);
+        });
 
         if (canPost) {
             resetInput();
@@ -218,7 +233,7 @@ function PostAnimalForm() {
                     </Form.Item>
 
                     <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit" onClick={(e) => handlePostAnimal(e)}>Post</Button>
+                        <Button type="primary" htmlType="submit" onClick={async (e) => handlePostAnimal(e)}>Post</Button>
                         <Button htmlType="reset" onClick={(e) => handleResetForm(e)}>Reset</Button>
                     </Form.Item>
                 </Form>
