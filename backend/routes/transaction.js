@@ -29,18 +29,32 @@ router.post("/add", cors(), async (req, res) => {
             .then(() => res.json({
                 message: "Transaction Successfully Created",
                 success: true,
-                data: newTransaction.orderNumber
+                data: newTransaction
             }))
             .catch(error => res.status(400).json('Error: ' + error));
 
     }catch (err) {
-        console.log("Error", err);
-        res.json({
-            message: "Failed to Add Transaction",
+        await res.json({
+            message: "Failed to add transaction",
             success: false
-        }).then().catch();
+        });
     }
 });
 
+//update payment status
+// request body example:
+// {
+//     "id": TRANSACTION_ID,
+//     "status": NEW_STATUS
+// }
+router.patch("/update_status", cors(), async (req, res) => {
+    Transaction.updateOne({_id : req.body.id}, {status : req.body.status.trim().toLowerCase()}, function (err, docs) {
+        if (err){
+            res.status(400).json('Error: ' + error)
+        } else{
+            res.status(200).json("Successfully updated transaction status")
+        }
+    });
+});
 
 module.exports = router;
