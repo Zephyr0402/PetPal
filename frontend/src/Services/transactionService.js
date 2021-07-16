@@ -1,20 +1,42 @@
 import backendURL from "./backendURL";
 
-export const verifyAndUpdatePaymentStatus = async () => {
+const millisecInAndHour = 3600000;
+const pendingStatusTimeLimit = 2;
+
+export const TRANSACTION_STATUS = {
+    COMPLETE: "complete",
+    PENDING: "pending",
+    CANCELED: "canceled"
+};
+
+export const fetchTransactionList = async () => {
+    const res = await fetch(backendURL + '/api/transaction', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    return res.json();
+};
+
+
+//Update transaction status to "complete" after 2 hours
+//Should be called in Main's useEffect so the status is immediately updated when the site is loading
+export const updateTransactionStatusToCompleted = async () => {
 
    await fetch(backendURL + '/api/transaction', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-        }
+   }
     })
     .then(res => res.json())
     .then(data => {
         data.map(d => {
-            if((new Date() - new Date(d.timestamp))/3600000 > 2 && d.status === "pending"){
+            if((new Date() - new Date(d.timestamp))/millisecInAndHour > pendingStatusTimeLimit && d.status.trim() === TRANSACTION_STATUS.PENDING){
                 const transaction = {
                     id: d._id,
-                    status: "completed"
+                    status: TRANSACTION_STATUS.COMPLETE
                 };
 
                 fetch(backendURL + "/api/transaction/update_status", {
@@ -33,15 +55,4 @@ export const verifyAndUpdatePaymentStatus = async () => {
             }
         })
     });
-};
-
-
-export const fetchTransactionList = async () => {
-    const res = await fetch(backendURL + '/api/transaction', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    });
-    return res.json();
 };
