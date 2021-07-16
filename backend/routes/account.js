@@ -256,7 +256,7 @@ router.get('/api/cur_user/info', async (req,res) => {
                 message: "User does not exist!"
             })
         }
-        else{
+        else {
             res.send(doc);
         }
     })
