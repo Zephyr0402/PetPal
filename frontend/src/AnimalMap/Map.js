@@ -47,7 +47,7 @@ const AnimalMap = (props) => {
         for(let i in aid2marker){
             if(aid2marker[i].marker.position === marker.position){
                 return i;
-            }   
+            }
         }
     }
 
@@ -72,7 +72,7 @@ const AnimalMap = (props) => {
             initialCenter={{lat:49.26127572955761, lng:-123.23869115661624}}
             center = {activeMarker.position}
         >
-            {data.map((ele,index) => 
+            {data.map((ele,index) =>
                 <Marker
                     name = {ele.name}
                     position = {ele.position}
@@ -82,7 +82,7 @@ const AnimalMap = (props) => {
             )}
             <InfoWindow
                 marker={
-                    props.aid > -1 ? 
+                    props.aid > -1 ?
                     aid2marker[props.aid].marker : null
                 }
                 visible={props.aid > -1}
@@ -95,7 +95,7 @@ const AnimalMap = (props) => {
             </InfoWindow>
         </Map>
     )
-} 
+}
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyBgao-aq8zyAUnJUCg335-tYIDAI5AJeAc'})(AnimalMap);
+    apiKey: 'AIzaSyDnMJlodY_mrnG1k--Ol-Ocm9bWgaJF18k'})(AnimalMap);

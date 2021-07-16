@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="af4e2d9c-d304-49eb-8b00-a8d7ed598dd2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/AnimalCard/AnimalCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/AnimalCard/AnimalCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/AnimalMap/Map.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/AnimalMap/Map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/User/PostAnimalForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/User/PostAnimalForm.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +23,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1tvW9eUFXH27sbibl0vTESZRSqc" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -63,6 +65,7 @@
       <workItem from="1625697826990" duration="1483000" />
       <workItem from="1625704175124" duration="500000" />
       <workItem from="1626145354268" duration="1920000" />
+      <workItem from="1626467196720" duration="3714000" />
     </task>
     <servers />
   </component>
