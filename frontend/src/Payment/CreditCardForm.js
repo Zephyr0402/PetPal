@@ -3,6 +3,7 @@ import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {Button, Typography} from "antd";
 import { CloseCircleTwoTone } from '@ant-design/icons';
 import {getHeader} from "../Services/userService";
+import {TRANSACTION_STATUS} from "../Services/transactionService"
 
 const { Title, Text } = Typography;
 const backEndURL = "http://localhost:9999/";
