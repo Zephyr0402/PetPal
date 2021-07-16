@@ -48,7 +48,7 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
     var userComments = []
     for(let c of userCommentsFromDB){
         const userInfo = await UserInfo.findOne({
-            'uuid' : cmtorid
+            'uuid' : c.cmtorid
         })
 
         userComments.push({
@@ -58,7 +58,8 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
             'content' : c.content,
             'time' : c.time,
             'likes' : c.likes,
-            'dislikes' : c.dislikes
+            'dislikes' : c.dislikes,
+            'replies' : c.replies
         })
     }
 

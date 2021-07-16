@@ -6,6 +6,8 @@ const AnimalInfo = require('../models/animalinfoModel');
 const {UserInfo} = require('../models/userModel');
 const { v4: uuidv4 } = require('uuid');
 
+let animalID = 4;
+
 // For post one animalInfo
 // request is required to be sent as a specific JSON format 
 // (details are on Google Doc)

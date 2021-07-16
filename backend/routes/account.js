@@ -8,6 +8,9 @@ const { v4: uuidv4 } = require('uuid');
 const nodeMailer = require('nodemailer')
 const smtpTransport = require('nodemailer-smtp-transport')
 const crypto = require('crypto') 
+const formidable = require("formidable");
+const fs = require('fs');
+const mineType = require('mime-types');
 
 const {User, UserInfo, UserAuth, UserReset} = require('../models/userModel');
 
@@ -321,7 +324,6 @@ router.get('/api/cur_user/info', async (req,res) => {
             })
         }
         else{
-            console.log(doc);
             res.send(doc);
         }
     })
@@ -372,24 +374,35 @@ router.post('/api/cur_user/info/update', async (req, res) => {
             city: req.body.city,
             intro: req.body.intro,
         };
-        // console.log(filter);
-        // console.log(update);
         await UserInfo.findOneAndUpdate(filter, update, {
             new: true
         }, (err, doc) => {
             if(err){
-                // console.log(err);
                 res.status(404).send({
                     message: "Something wrong when updating data"
                 })
             } else {
-                console.log(doc);
-                // console.log(newUser);
                 res.send(doc);
             }
         });
 
     }
+})
+
+router.post('/api/cur_user/avatar/update', async (req,res) => {
+    var form = new formidable.IncomingForm();
+    form.parse(req, async (error, fields, files) => {
+        let bitmap = fs.readFileSync(files.file.path);
+        let base64str = Buffer.from(bitmap, 'binary').toString('base64'); 
+        let base64 = 'data:' + files.file.type + ';base64,' + base64str
+        console.log(req.session.uuid)
+        await UserInfo.updateOne({
+            "uuid" : req.session.uuid
+        },{
+            "avatar" : base64
+        })
+    });
+    res.send("hello");
 })
 
 module.exports = router;

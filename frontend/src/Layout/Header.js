@@ -69,7 +69,7 @@ const Header = (props) => {
                             visible = {optionsVisible}
                         >
                             <div style = {{display:'inline'}}>
-                                <Avatar style = {{marginLeft:"8px"}} src = {header.avatar}/><DownOutlined/>
+                                <Avatar style = {{marginLeft:"8px", marginRight:"8px"}} src = {header.avatar}/><DownOutlined/>
                             </div>
                         </Dropdown>
                     </span>
