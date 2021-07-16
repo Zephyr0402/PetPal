@@ -101,7 +101,7 @@ const CreditCardForm = (props) => {
                     animalId: props.animal._id,
                     timestamp: new Date(),
                     price: props.animal.price,
-                    status: "pending",
+                    status: TRANSACTION_STATUS.PENDING,
                     tag: props.animal.kind,
                 };
 
