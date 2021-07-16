@@ -12,50 +12,14 @@ const Header = (props) => {
     useEffect(()=>{
         getHeader()
             .then(async res => {
-                console.log(res)
                 if(typeof res.uuid === 'string'){
                     await getUserInfo().
                         then(
                             res => setHeader(res)
                         )
-                    }
-                else{
-                    console.log(res.message)
                 }
             })
     },[]);
-
-    const onOptionClick = (e) => {
-        switch (e.key) {
-            case "profile":
-                return <Redirect to = {{pathname : '/user', state: {id:"1"}}}/>
-                break;
-
-            case "posts":
-                <Redirect to = {{pathname : '/user', state: {id:"2"}}}/>
-            break;
-
-            case "transactions":
-                <Redirect to = {{pathname : '/user', state: {id:"3"}}}/>
-            break;
-        }
-    }
-
-    var optionsOnNameClick = (
-        <Menu onClick = {onOptionClick}>
-          <Menu.Item>Logged in as <b>{header.name}</b></Menu.Item>
-          <Divider></Divider>
-          <Menu.Item key = "profile"><Link to = {{pathname:'/user', state : {key:"1"}}}>My Profile</Link></Menu.Item>
-          <Menu.Item key="posts"><Link to = {{pathname:'/user', state : {key:"2"}}}>My Posts</Link></Menu.Item>
-          <Menu.Item key="transactions"><Link to = {{pathname:'/user', state : {key:"3"}}}>My Transactions</Link></Menu.Item>
-          <Divider></Divider>
-          <Menu.Item key="logout" danger>Log out</Menu.Item>
-        </Menu>
-      );
-
-    const onMenuVisibleChange = () => {
-        setOptionsVisible(!optionsVisible);
-    }
 
     const onLogout = async () => {
         await logout().then(
@@ -63,7 +27,23 @@ const Header = (props) => {
         )
         window.location.href = "/";
     }
-    console.log("hello");
+
+    const onMenuVisibleChange = () => {
+        setOptionsVisible(!optionsVisible);
+    }
+
+    var optionsOnNameClick = (
+        <Menu>
+          <Menu.Item>Logged in as <b>{header.name}</b></Menu.Item>
+          <Divider/>
+          <Menu.Item key = "profile"><Link to = {{pathname:'/user', state : { key:"1" }}}>My Profile</Link></Menu.Item>
+          <Menu.Item key="posts"><Link to = {{pathname:'/user', state : { key:"2" }}}>My Posts</Link></Menu.Item>
+          <Menu.Item key="transactions"><Link to = {{pathname:'/user', state : { key:"3" }}}>My Transactions</Link></Menu.Item>
+          <Divider/>
+          <Menu.Item key="logout" danger onClick = {onLogout}>Log out</Menu.Item>
+        </Menu>
+      );
+
     return (
         <header className = "header">
             <a href="http://localhost:3000/map">
@@ -89,7 +69,7 @@ const Header = (props) => {
                             visible = {optionsVisible}
                         >
                             <div style = {{display:'inline'}}>
-                                <Avatar style = {{marginLeft:"8px"}} src = {header.avatar}/><DownOutlined/>
+                                <Avatar style = {{marginLeft:"8px", marginRight:"8px"}} src = {header.avatar}/><DownOutlined/>
                             </div>
                         </Dropdown>
                     </span>
