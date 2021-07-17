@@ -31,7 +31,7 @@ const LoginForm = (props) => {
                         if(res.success){
                             message.error({
                                 content: res.message, 
-                                duration: 3, 
+                                duration: 2, 
                                 icon: <InfoCircleTwoTone twoToneColor = "#52c41a"/>,
                                 onClose: () => {
                                     window.location.href = '/';

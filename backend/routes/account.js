@@ -242,7 +242,7 @@ router.post('/api/reset_pwd/:token', encryptPWD, async (req, res) => {
     })
 
     return res.send({
-        messsage: "You have successfully reset your password!. Please log in again"
+        message: "You have successfully reset your password! Please log in again"
     })
 })
 
@@ -277,13 +277,11 @@ router.post('/api/login',  async (req, res) => {
       });
     }
     
-    req.session.uuid = uuid;
-    res.cookie({signed: true});
     //return uuid
     res.send({
         success: true,
         uuid: user.uuid,
-        message: "Log in successfully! You will be redirected to main page in 3 seconds"
+        message: "Log in successfully! You will be redirected to main page in 2 seconds"
     });
   });
 
