@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {Button, Tooltip, Avatar, Typography, Dropdown, Menu, Divider} from 'antd';
+import {Button, Tooltip, Avatar, Typography, Dropdown, Menu, Divider, message, Alert} from 'antd';
 import './Header.css';
 import {Link, Redirect} from 'react-router-dom';
-import { FormOutlined, DownOutlined} from '@ant-design/icons';
+import { FormOutlined, DownOutlined, CheckCircleFilled, CheckCircleTwoTone, InfoCircleTwoTone} from '@ant-design/icons';
 import { getHeader, getUserInfo, logout } from '../Services/userService';
 
 const Header = (props) => {
@@ -23,9 +23,16 @@ const Header = (props) => {
 
     const onLogout = async () => {
         await logout().then(
-            res => alert(res.message)
+            (res) => message.error({
+                content: "Log out successfully. You will be redirected to main page in 3 seconds", 
+                duration: 3, 
+                icon: <InfoCircleTwoTone twoToneColor="#52c41a"/>,
+                onClose: () => {
+                window.location.href = "/";
+            }
+            })
         )
-        window.location.href = "/";
+        
     }
 
     const onMenuVisibleChange = () => {

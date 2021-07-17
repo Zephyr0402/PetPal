@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import './forms.css';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
-import { UploadOutlined, WindowsFilled } from '@ant-design/icons';
+import { Button, Form, Input, InputNumber, DatePicker, Select, message} from 'antd';
 import axios from 'axios';
-import Uploader from './Uploader'
+import { Upload, Modal } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import Header from "../Layout/Header";
+import { getUserInfo } from '../Services/userService';
+import { postAnimalInfo } from '../Services/postAnimalInfo';
+import { getBase64 } from '../Services/utils';
+import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
+
 axios.defaults.withCredentials = true;
 
 function PostAnimalForm() {
@@ -21,8 +26,9 @@ function PostAnimalForm() {
     const [price, setPrice] = useState(null);
     const [fileList, setFileList] = useState([]);
     const [description, setDescription] = useState(null);
-
-    const backEndURL = "http://localhost:9999/animalinfo/post";
+    const [previewVisible, setPreviewVisible] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+    const [previewTitle, setPreviewTitle] = useState('');
 
     const layout = {
         labelCol: { span: 6 },
@@ -33,48 +39,99 @@ function PostAnimalForm() {
         wrapperCol: { offset: 6, span: 18 },
     };
 
-    const handlePostAnimal = (e) => {
+    const handlePostAnimal = async (e) => {
         e.preventDefault();
         //TODO: replace with actual handlePostAnimal functionality
         console.log("handlePostAnimal");
-        let canPost = true;
-        if (category === null) {
-            canPost = false;
+
+        if (category === null || location.value.description === undefined || animalAgeYear === null || animalAgeMonth === null || dateFound === null || description === null || category === null || animalName === null || price === null) {
+            window.alert('Have empty field!');
+            return;
         }
-        console.log(location.value.description);
-        console.log(animalName);
-        console.log(animalAgeYear);
-        console.log(animalAgeMonth);
-        console.log(dateFound);
-        console.log(category);
-        console.log(price);
-        console.log(description);
+
+        const address = location.value.description;
+
+        // get current user's info
+        const userInfo = await getUserInfo().then(
+            res => {
+                return res;
+            }
+        );
+
+        console.log(userInfo);
+
+        if (userInfo.message !== undefined) {
+            window.alert('Not login, redirecting...');
+            window.location.href = '/login';
+        }
+        
+        // get GPS coordinates from address
+        const geoInfo = await geocodeByAddress(address)
+            .then(results => getLatLng(results[0]))
+            .then(({ lat, lng }) => {
+                console.log('Successfully got latitude and longitude', { lat, lng });
+                let info = { lat: lat, lng: lng };
+                return info;
+            }
+        );
+
+        if (geoInfo.lat === undefined || geoInfo.lng === undefined) {
+            window.alert('Cannot get GPS coordinates!');
+            return;
+        }
+
+        if (fileList.fileList === undefined || fileList.fileList.length <= 0) {
+            window.alert('You should at least upload one image!');
+            return;
+        } else {
+            for (let i = 0; i < fileList.fileList.length; i++) {
+                if (!beforeUpload(fileList.fileList[i])) {
+                    let message = "Number " + i + " is not a JPG/PNG file!";
+                    window.alert(message);
+                    return;
+                }
+            }
+        }
+        
         const animalInfo = {
             "id": "",
             "name": animalName,
-            "location": location.value.description,
+            "address": address,
             "animalAgeYear": animalAgeYear,
             "animalAgeMonth": animalAgeMonth,
             "dateFound": dateFound,
             "kind": category,
             "price": price,
             "description": description,
-            "userAvatar": "testuser",
-            "image": 'http://localhost:9999/public/images/'+fileList[0].name,
-        }
-        fetch(backEndURL, {
-            method: 'POST',
-            body: JSON.stringify(animalInfo),
-            headers: new Headers({
-                'Accept': 'application/json',
-                "Content-Type": "application/json",
-            })
-        }).then(res => res);
+            "image": fileList.fileList[0].thumbUrl,
+            "userinfo": userInfo._id,
+            "position": {
+                "lat": geoInfo.lat,
+                "lng": geoInfo.lng,
+            }
+        };
 
-        if (canPost) {
-            resetInput();
-            window.location.href = '/'
+        console.log(animalInfo);
+
+        const req = {
+            "animalinfo": animalInfo,
+            "userUUID": userInfo.uuid
         }
+        
+        await postAnimalInfo(req);
+        resetInput();
+        alert('Posted!');
+        
+        window.location.href = '/';
+    };
+
+    const handlePreview = async file => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewVisible(true);
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+        setPreviewImage(file.url || file.preview);
     };
 
     const handleResetForm = (e) => {
@@ -98,17 +155,25 @@ function PostAnimalForm() {
     };
 
     const beforeUpload = (file) => {
+        console.log(file);
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
+            return false;
         }
-        return isJpgOrPng;
+        return true;
     };
 
-    const handleUpload = (info) => {
-        //TODO: replace with actual handleUpload functionality
-        console.log("handleUpload");
-    };
+    const handleChange = ({ fileList }) => { setFileList({ fileList }) };
+
+    const handleCancel = () => { setPreviewVisible(false) };
+
+    const uploadButton = (
+        <div>
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Upload</div>
+        </div>
+    );
 
     return (
         <div>
@@ -207,7 +272,21 @@ function PostAnimalForm() {
                         label="Image"
                         name="animal_image"
                     >
-                        <Uploader fileList = {fileList} setFileList = {setFileList}/>
+                            <Upload
+                                listType="picture-card"
+                                onPreview={handlePreview}
+                                onChange={handleChange}
+                            >
+                                {fileList.length >= 8 ? null : uploadButton}
+                            </Upload>
+                            <Modal
+                                visible={previewVisible}
+                                title={previewTitle}
+                                footer={null}
+                                onCancel={handleCancel}
+                            >
+                                <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                            </Modal>
                     </Form.Item>
 
                     <Form.Item
@@ -218,7 +297,7 @@ function PostAnimalForm() {
                     </Form.Item>
 
                     <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit" onClick={(e) => handlePostAnimal(e)}>Post</Button>
+                        <Button type="primary" htmlType="submit" onClick={async (e) => handlePostAnimal(e)}>Post</Button>
                         <Button htmlType="reset" onClick={(e) => handleResetForm(e)}>Reset</Button>
                     </Form.Item>
                 </Form>

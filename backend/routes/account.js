@@ -2,7 +2,6 @@ var express = require('express');
 var bcypt = require('bcrypt');
 var router = express.Router();
 router.use(express.json())
-var session = require('express-session');
 var cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
 const nodeMailer = require('nodemailer')
@@ -15,10 +14,8 @@ const mineType = require('mime-types');
 const {User, UserInfo, UserAuth, UserReset} = require('../models/userModel');
 
 const defaultAvatar = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADHElEQVRYR9WXO2gUYRDH/7Mb5QobsUoURAQFC0EUERRRiNqolQ9ERRsTFFSMt/Nl01wszPnNXUghgo9CEBsjVgoxikQDdknno/WFKGgXG737RhbuwmZzr1XD4QfX7H0z89t5L6HNh9psH/8XgIjsBrALwFYAnQC6APwA8AXAVwBPVfWJMWaqVc+25AEROQLgvKouJaKH5XL5ke/7HzOZzKeZmZklnud1eZ63BsBeAPsAPPY8byibzb5pBtIUQERGAaxS1VvGmJvNFFpru4ioF0D0Y2a+00imIYCIvALwhpkPNTOc/L9YLK5zzo0S0UQQBGfrydcFsNZGcb1ujBlMazx+X0QmAPxk5j219NQEEJFxIpoOgmDgb4xXZSsQU8wcJPXNA7DWHieiU8y8PabgNYB1AF6oarZelltrjxLR5Up1XGDma5GOfD6/wfO8SQCbjTFv4xDzAETku3PuWH9//1gMQGNCJQAPiGhcVavPVxPRPlVdAWBZdFdVp40xm6pyhUIhdM6tN8ZEFTV75gAUCoX1qjrGzMsTcYwDtBqVl8y8LaHnPTOvrAsgIgNEtCgIgkv/AOAZM3fH9Vhrp5xzvWEYTlefz/GAiCgz1wrLn3jgETNHTWn2iMhBAAfjZb1gAKo6aow5HAfI5/M7fN8/UxOgWCxuLJfLN+KJUycJW82B+8kGFgF0dHT0BUGwf14IhoeH15RKpYfGmLVJC1FoWrUau3eHmU/U8ECOmXcueA6oatRFT/81gIicBHA7rQdUddI5lwvD8HkslE2TcEBVF1f7f8X1d6MZT0QNp1oC8JeqDhHRYVW9V9XXtAyTjShKGgAffN+/EpVPCi98B9CXHMUi0rgRRQaSrbhSOuecc2Oe5zXdBwB8ds4N+r7fHQTBbBm21IojgFrDqPrm1totAC4S0YEa3iir6lXf9y9ns9lvieRrfRhVvNBwHOdyuY5MJhMNntkThuG7eiFKNY5jb9u+hSRWNu1byWIQqZbSkZGRzlKp1KOqPQCGqktJvfA03YorOdG+tTxO3rYPkxQNKPXVlkKQWmsKgbYD/AY9Y8AwjKjyOAAAAABJRU5ErkJggg==";
-const cookieMaxAge = 60*60*1000;//30 seconds
 const codeMaxAge = 1000*60*1;//1 minute
 const resetTokenMaxAge = 1000*60*1;//1 minute
-const SECRET = "znhy";
 
 const corsOptions = {
     origin: 'http://localhost:3000',
@@ -36,18 +33,6 @@ const randomFns=()=> {
 const regEmail=/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
 
 router.use(cors(corsOptions));
-
-router.use(session({
-    name: "sid",
-    secret: SECRET,
-    resave: true,
-    saveUninitialized: true,
-    rolling: true,
-    cookie: {
-        maxAge: cookieMaxAge, 
-        secure:false
-    }
-}));
 
 router.post('/api/auth',async(req, res) =>{
     const EMAIL=req.body.email
@@ -270,6 +255,7 @@ router.post('/api/login',  async (req, res) => {
 
     if(!userinfo){
       return res.status(422).send({
+          success: false,
           message : "user does not exist!"
       });
     }
@@ -286,13 +272,18 @@ router.post('/api/login',  async (req, res) => {
   
     if(!isPwdValid){
       return res.status(422).send({
+            success: false,
           message : "incorrect password!"
       });
     }
     
+    req.session.uuid = uuid;
+    res.cookie({signed: true});
     //return uuid
     res.send({
-        uuid: user.uuid
+        success: true,
+        uuid: user.uuid,
+        message: "Log in successfully! You will be redirected to main page in 3 seconds"
     });
   });
 
@@ -323,7 +314,7 @@ router.get('/api/cur_user/info', async (req,res) => {
                 message: "User does not exist!"
             })
         }
-        else{
+        else {
             res.send(doc);
         }
     })
@@ -364,13 +355,11 @@ router.post('/api/cur_user/info/update', async (req, res) => {
             message : "Your session has expired. Please log in again!"
         })
     } else {
-        console.log("start update");
         // update user info
         const filter = { 'uuid': req.session.uuid };
         const update = { 
             name: req.body.name,
             phone: req.body.phone,
-            email: req.body.mail,
             city: req.body.city,
             intro: req.body.intro,
         };

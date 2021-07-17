@@ -21,6 +21,7 @@ const Main = (props) => {
         fetchAnimalList().then(res => {
             console.log("fetchAnimalList", res);
             setAnimalInfos(res);
+            console.log(typeof (animalInfos));
         });
     }, [display]);
 
@@ -37,7 +38,7 @@ const Main = (props) => {
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>
-                        <AnimalMap aid = {display} setDisplay = {setMyDisplay}/>
+                        <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay = {setMyDisplay}/>
                     </Layout.Content>
                 </Layout>
             </Layout>

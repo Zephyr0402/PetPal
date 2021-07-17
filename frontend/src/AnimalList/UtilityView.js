@@ -29,13 +29,15 @@ const UtilityView = (props) => {
             return;
         }
         console.log(thumbnails);
+        let counter = -1;
         for (let thumbnail of thumbnails) {
-            if (animalInfos[thumbnail.id] === undefined) {
+            counter++;
+            if (animalInfos[counter] === undefined) {
                 console.log("Ignoring...", thumbnail.id);
                 continue;
             }
-
-            if (animalInfos[thumbnail.id].name.toUpperCase().indexOf(filter) == -1 && filter != "") {
+            console.log(animalInfos[thumbnail.id]);
+            if (animalInfos[counter].name.toUpperCase().indexOf(filter) == -1 && filter != "") {
                 thumbnail.style.display = 'none';
             }
             else {

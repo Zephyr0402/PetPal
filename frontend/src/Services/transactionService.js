@@ -1,4 +1,7 @@
 import backendURL from "./backendURL";
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 const millisecInAndHour = 3600000;
 const pendingStatusTimeLimit = 2;
@@ -56,3 +59,8 @@ export const updateTransactionStatusToCompleted = async () => {
         })
     });
 };
+
+export const getTransactionHistory = async () => {
+    return await axios.get(backendURL+'/api/transaction/uuid')
+        .then(res => res.data);
+}
