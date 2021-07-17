@@ -22,7 +22,6 @@ router.post("/", cors(), async (req, res) => {
             success: true
         });
     }catch (err) {
-        console.log("Error", err);
         await res.json({
             message: "Payment Failed",
             success: false

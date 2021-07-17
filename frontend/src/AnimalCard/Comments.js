@@ -24,7 +24,7 @@ const CommentCollection = (props) => {
   }
 
   return (
-    <div style = {{paddingLeft:"12px"}}>
+    <div className="comments-wrapper">
       <CommentArea id = {props.id} type = {props.commentType} onCommentSubmit = {onCommentSubmit} onSubmitFinish = {() => {}}/>
       <List
         dataSource = {comments}
@@ -40,7 +40,7 @@ const CommentCollection = (props) => {
               id = {comment.ucid}
               type = "comment"
               replies = {comment.replies.map(reply =>
-                <SingleComment 
+                <SingleComment
                   commentDetail = {reply}
                   onCommentSubmit = {onCommentSubmit}
                   id = {comment.ucid}

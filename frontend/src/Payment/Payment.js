@@ -11,7 +11,7 @@ const Payment = (props) => {
     const selectedAnimal = props.animalInfos[props.aid];
 
     const [paymentSuccess, setPaymentSuccess] = useState(false);
-    const [orderNumber, setOrderNumber] = useState("");
+    const [newTransaction, setNewTransaction] = useState(null);
 
     const setAllDisplayValues = () => {
         if(paymentSuccess) {
@@ -44,8 +44,8 @@ const Payment = (props) => {
                 }
             >
                 {!paymentSuccess ?
-                    <StripeContainer animal={selectedAnimal} setPaymentSuccess={setPaymentSuccess} setOrderNumber={setOrderNumber}/> :
-                    <OrderConfirmation animal={selectedAnimal} orderNumber={orderNumber}/>
+                    <StripeContainer animal={selectedAnimal} setPaymentSuccess={setPaymentSuccess} setNewTransaction={setNewTransaction}/> :
+                    <OrderConfirmation animal={selectedAnimal} newTransaction={newTransaction}/>
                 }
             </Card>
         </div>

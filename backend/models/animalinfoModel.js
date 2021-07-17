@@ -4,14 +4,12 @@ const database = require('../database/database');
 // database.connect('mongodb://' + database.configs.URL + '/' + database.configs.Name);
 
 const AnimalInfo = database.model('AnimalInfo', new database.Schema({
-    id: Number,
+    id: String,
     name: String,
     image: String,
     age: String,
     price: Number,
-    user: String,
     userinfo: { type: String, ref: 'UserInfo' },
-    userAvatar: String,
     kind: String,
     description: String,
     address: String,

@@ -1,7 +1,6 @@
 const AnimalInfo = require('../models/animalinfoModel');
+const { User, UserInfo, UserAuth } = require('../models/userModel');
 const database = require('../database/database');
-
-console.log(AnimalInfo);
 
 AnimalInfo.create({
     id: "0",
@@ -14,6 +13,7 @@ AnimalInfo.create({
     kind: "cat",
     description: "A cute cat!!!",
     address: "2725 Osoyoos Cres\nVancouver\nBC V6T 1X7\nCanada",
+    status: "available",
     position: {
         lat: "49.26127572955761",
         lng: "-123.23869115661624",
@@ -31,7 +31,6 @@ AnimalInfo.create({
     age: "3",
     price: "200",
     user: "Nawa",
-    userID: "",
     userAvatar: "userAvatars/nawa.png",
     kind: "dog",
     description: "A cute dog!!!",
@@ -70,6 +69,7 @@ AnimalInfo.create({
     age: "3",
     price: "30",
     user: "Shijun",
+    userinfo: "60ed087d2273fb54e1491f48",
     userAvatar: "userAvatars/shijun.jpg",
     kind: "Fish",
     description: "A cute fish!!!",

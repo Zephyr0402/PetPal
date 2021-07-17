@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import './forms.css';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import { Button, Form, Input, InputNumber, DatePicker, Select, Upload, message} from 'antd';
-import { UploadOutlined, WindowsFilled } from '@ant-design/icons';
+import { Button, Form, Input, InputNumber, DatePicker, Select, message} from 'antd';
 import axios from 'axios';
-import Uploader from './Uploader'
+import { Upload, Modal } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import Header from "../Layout/Header";
+import { getUserInfo } from '../Services/userService';
+import { postAnimalInfo } from '../Services/postAnimalInfo';
+import { getBase64 } from '../Services/utils';
+
 axios.defaults.withCredentials = true;
 
 function PostAnimalForm() {
@@ -21,8 +25,9 @@ function PostAnimalForm() {
     const [price, setPrice] = useState(null);
     const [fileList, setFileList] = useState([]);
     const [description, setDescription] = useState(null);
-
-    const backEndURL = "http://localhost:9999/animalinfo/post";
+    const [previewVisible, setPreviewVisible] = useState(false);
+    const [previewImage, setPreviewImage] = useState('');
+    const [previewTitle, setPreviewTitle] = useState('');
 
     const layout = {
         labelCol: { span: 6 },
@@ -33,7 +38,7 @@ function PostAnimalForm() {
         wrapperCol: { offset: 6, span: 18 },
     };
 
-    const handlePostAnimal = (e) => {
+    const handlePostAnimal = async (e) => {
         e.preventDefault();
         //TODO: replace with actual handlePostAnimal functionality
         console.log("handlePostAnimal");
@@ -41,40 +46,64 @@ function PostAnimalForm() {
         if (category === null) {
             canPost = false;
         }
-        console.log(location.value.description);
-        console.log(animalName);
-        console.log(animalAgeYear);
-        console.log(animalAgeMonth);
-        console.log(dateFound);
-        console.log(category);
-        console.log(price);
-        console.log(description);
+        console.log(location);
+
+        const userInfo = await getUserInfo().
+            then(
+                res => {
+                    return res;
+                }
+            );
+
+        console.log("Get current user")
+
+        console.log(userInfo);
+
+        console.log(fileList.fileList[0]);
+        console.log(userInfo);
+        
         const animalInfo = {
             "id": "",
             "name": animalName,
-            "location": location.value.description,
+            "address": location.value.description,
             "animalAgeYear": animalAgeYear,
             "animalAgeMonth": animalAgeMonth,
             "dateFound": dateFound,
             "kind": category,
             "price": price,
             "description": description,
-            "userAvatar": "testuser",
-            "image": 'http://localhost:9999/public/images/'+fileList[0].name,
+            "image": fileList.fileList[0].thumbUrl,
+            "userinfo": userInfo._id,
+            "position": {
+                lat: "49.26127572955761",
+                lng: "-123.23869115661624",
+            }
+        };
+
+        console.log(animalInfo);
+
+
+        const req = {
+            "animalinfo": animalInfo,
+            "userUUID": userInfo.uuid
         }
-        fetch(backEndURL, {
-            method: 'POST',
-            body: JSON.stringify(animalInfo),
-            headers: new Headers({
-                'Accept': 'application/json',
-                "Content-Type": "application/json",
-            })
-        }).then(res => res);
+        
+        await postAnimalInfo(req);
 
         if (canPost) {
+            window.alert('Posted!');
             resetInput();
             window.location.href = '/'
         }
+    };
+
+    const handlePreview = async file => {
+        if (!file.url && !file.preview) {
+            file.preview = await getBase64(file.originFileObj);
+        }
+        setPreviewVisible(true);
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+        setPreviewImage(file.url || file.preview);
     };
 
     const handleResetForm = (e) => {
@@ -102,13 +131,24 @@ function PostAnimalForm() {
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
         }
-        return isJpgOrPng;
+        return false;
     };
+
+    const handleChange = ({ fileList }) => { setFileList({ fileList }) };
+
+    const handleCancel = () => { setPreviewVisible(false) };
 
     const handleUpload = (info) => {
         //TODO: replace with actual handleUpload functionality
         console.log("handleUpload");
     };
+
+    const uploadButton = (
+        <div>
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Upload</div>
+        </div>
+    );
 
     return (
         <div>
@@ -155,7 +195,7 @@ function PostAnimalForm() {
 
                     <Form.Item label="Location">
                         <GooglePlacesAutocomplete
-                            apiKey="AIzaSyC8w_bEe3IlzsbyjWJ96uOhlSADfrhh7gQ"
+                            apiKey="AIzaSyDnMJlodY_mrnG1k--Ol-Ocm9bWgaJF18k"
                             selectProps={{
                                 location,
                                 onChange: setLocation,
@@ -207,7 +247,22 @@ function PostAnimalForm() {
                         label="Image"
                         name="animal_image"
                     >
-                        <Uploader fileList = {fileList} setFileList = {setFileList}/>
+                            <Upload
+                                beforeUpload
+                                listType="picture-card"
+                                onPreview={handlePreview}
+                                onChange={handleChange}
+                            >
+                                {fileList.length >= 8 ? null : uploadButton}
+                            </Upload>
+                            <Modal
+                                visible={previewVisible}
+                                title={previewTitle}
+                                footer={null}
+                                onCancel={handleCancel}
+                            >
+                                <img alt="example" style={{ width: '100%' }} src={previewImage} />
+                            </Modal>
                     </Form.Item>
 
                     <Form.Item
@@ -218,7 +273,7 @@ function PostAnimalForm() {
                     </Form.Item>
 
                     <Form.Item {...tailLayout}>
-                        <Button type="primary" htmlType="submit" onClick={(e) => handlePostAnimal(e)}>Post</Button>
+                        <Button type="primary" htmlType="submit" onClick={async (e) => handlePostAnimal(e)}>Post</Button>
                         <Button htmlType="reset" onClick={(e) => handleResetForm(e)}>Reset</Button>
                     </Form.Item>
                 </Form>

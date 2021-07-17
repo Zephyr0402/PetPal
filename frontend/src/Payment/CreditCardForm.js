@@ -1,23 +1,45 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {Button, Typography} from "antd";
 import { CloseCircleTwoTone } from '@ant-design/icons';
 import {getHeader} from "../Services/userService";
+import {TRANSACTION_STATUS} from "../Services/transactionService"
 
 const { Title, Text } = Typography;
-const backEndURL = "http://localhost:9999/api/";
+const backEndURL = "http://localhost:9999/";
 
 const CreditCardForm = (props) => {
     const [errorMsg, setErrorMsg] = useState("");
     const [isProcessing, setIsProcessing] = useState(false);
+    const [userId, setUserId] = useState(null);
+    const [sellerId, setSellerId] = useState(null);
     const stripe = useStripe();
     const elements = useElements();
 
-    const [userId, setUserId] = useState(null);
+    useEffect(() => {
+        const animalId = { id : props.animal.id };
+
+        fetch( backEndURL + "animalinfo/userinfo", {
+            method: "POST",
+            headers: new Headers({
+                "Content-Type": "application/json",
+            }),
+            body: JSON.stringify(animalId)
+        }).then(res => {
+            if(res.status === 200) {
+                return res.json();
+            }else if(res.status >= 400){
+                console.log("cannot get user info");
+            }
+        }).then(data => {
+            if(data) {
+                setSellerId(data.uuid);
+            }
+        });
+    },[]);
 
     getHeader()
         .then(async res => {
-            console.log("uuid: " + res.uuid);
             setUserId(res.uuid);
         });
 
@@ -58,10 +80,11 @@ const CreditCardForm = (props) => {
                     amount: props.animal.price * 100,
                     id
                 };
-                fetch(backEndURL + "payment", {
+
+                //Post Stripe payment
+                fetch(backEndURL + "api/payment", {
                     method: "POST",
                     headers: new Headers({
-                        'Accept': 'application/json',
                         "Content-Type": "application/json",
                     }),
                     body: JSON.stringify(payment)
@@ -75,32 +98,43 @@ const CreditCardForm = (props) => {
 
                 const transaction = {
                     buyerId: userId,
-                    //TODO: update to id
-                    sellerId: props.animal.user,
+                    sellerId: sellerId,
                     animalId: props.animal._id,
                     timestamp: new Date(),
                     price: props.animal.price,
-                    status: "Pending",
+                    status: TRANSACTION_STATUS.PENDING,
                     tag: props.animal.kind,
-                    id
                 };
 
-
-                fetch(backEndURL + "transaction/add", {
+                //Post transaction
+                fetch(backEndURL + "api/transaction/add", {
                     method: "POST",
                     headers: new Headers({
-                        'Accept': 'application/json',
                         "Content-Type": "application/json",
                     }),
                     body: JSON.stringify(transaction)
                 }).then(res => {
                     if(res.status === 200) {
-                        console.log("transaction successfully added to DB");
                         res.json().then(result => {
-                            props.setOrderNumber(result.data.toString());
+                            props.setNewTransaction(result.data);
                         });
                     }else if(res.status >= 400){
                         res.text().then(text => setErrorMsg(text));
+                    }
+                });
+
+                const animalStatus = { id : props.animal.id, status: "sold" };
+                fetch(backEndURL + "animalinfo/changestatus", {
+                    method: "POST",
+                    headers: new Headers({
+                        "Content-Type": "application/json",
+                    }),
+                    body: JSON.stringify(animalStatus)
+                }).then(res => {
+                    if(res.status === 200) {
+                        console.log("animal status successfully updated");
+                    }else if(res.status >= 400){
+                        console.log("Fail to update animal status");
                     }
                 });
 

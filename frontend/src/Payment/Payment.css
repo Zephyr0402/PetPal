@@ -80,3 +80,8 @@ svg[data-icon="check-circle"] {
     width: 4em;
     height: 4em;
 }
+
+.link-block {
+    display: block;
+    margin-bottom: 1rem;
+}
