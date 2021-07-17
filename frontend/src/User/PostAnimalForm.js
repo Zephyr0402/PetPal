@@ -120,7 +120,8 @@ function PostAnimalForm() {
         
         await postAnimalInfo(req);
         resetInput();
-        window.alert('Posted!');
+        alert('Posted!');
+        
         window.location.href = '/';
     };
 

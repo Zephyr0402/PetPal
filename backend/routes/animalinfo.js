@@ -19,6 +19,7 @@ router.post('/post', async function (req, res) {
         AnimalInfo.create(newEntry, (err, docs) => {
             if (!err) {
                 console.log('Inserted successfully' + docs);
+                res.send(200);
             } else {
                 console.log(err);
                 res.status(500);
