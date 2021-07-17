@@ -56,9 +56,6 @@ const AnimalMap = (props) => {
     }
 
     const onMarkerClick = (marker) => {
-        console.log(marker)
-        console.log("marker");
-        console.log(marker2aid(marker));
         props.setDisplay(marker2aid(marker));
         setShowInfoWindow(true);
         setActiveMarker(marker);
