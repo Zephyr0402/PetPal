@@ -54,7 +54,7 @@ function TransactionHistory(){
     return(
         <>
         <br />
-        <Table expandable={{expandedRowRender: record =><p>Transaction ID: {record._id}</p>}} dataSource={tdata}>
+        <Table rowKey={record => record.orderNumber} expandable={{expandedRowRender: record =><p>Transaction ID: {record._id}</p>}} dataSource={tdata}>
             <Column title="" dataIndex="orderNumber" key="orderNumber" />
             <Column title="Order Placed" dataIndex="timestamp" key="timestamp" />
             <Column title="From" dataIndex="sellerId" key="sellerId" />
