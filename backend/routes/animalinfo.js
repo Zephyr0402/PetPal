@@ -49,9 +49,8 @@ router.get("/", async function (req, res) {
 // get posted animals according to user's uuid
 router.get("/uuid", async function (req, res) {
     if(req.session.uuid === undefined){
-        res.send({
-            message : "Your session has expired. Please log in again!"
-        })
+        console.log("Session is expired")
+        res.send([])
     } else {
         console.log("Get Uploaded Animals");
 

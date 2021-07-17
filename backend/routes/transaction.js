@@ -15,9 +15,8 @@ router.get("/", cors(), async (req, res) => {
 router.get("/uuid", async (req, res) => {
     console.log("tramsaction be ", req.session);
     if(req.session.uuid === undefined){
-        res.send({
-            message : "Your session has expired. Please log in again!"
-        })
+        console.log("Session is expired")
+        res.send([])
     } else {
         console.log("start find transaction history");
         await Transaction.find({ 
