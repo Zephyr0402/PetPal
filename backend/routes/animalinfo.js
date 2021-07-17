@@ -14,9 +14,6 @@ router.post('/post', async function (req, res) {
     try {
         let newEntry = req.body.animalinfo;
         newEntry["id"] = uuidv4();
-        //const docs = await UserInfo.find({ uuid: req.body.userUUID });
-        //console.log("Doc:", docs);
-        //newEntry["userinfo"] = docs._id;
         newEntry["status"] = "available";
 
         AnimalInfo.create(newEntry, (err, docs) => {
