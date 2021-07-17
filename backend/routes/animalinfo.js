@@ -11,20 +11,19 @@ const { v4: uuidv4 } = require('uuid');
 // (details are on Google Doc)
 router.post('/post', async function (req, res) {
     console.log('handle animal post');
-
     try {
-        let newEntry = req.body;
+        let newEntry = req.body.animalinfo;
         newEntry["id"] = uuidv4();
-        console.log("User:", newEntry.user);
-        const docs = await UserInfo.find({ uuid: newEntry.user });
-        console.log("Doc:", docs);
-        newEntry["userAvatar"] = docs.avatar;
+        //const docs = await UserInfo.find({ uuid: req.body.userUUID });
+        //console.log("Doc:", docs);
+        //newEntry["userinfo"] = docs._id;
         newEntry["status"] = "available";
 
         AnimalInfo.create(newEntry, (err, docs) => {
             if (!err) {
                 console.log('Inserted successfully' + docs);
             } else {
+                console.log(err);
                 res.status(500);
                 res.send("You shall not pass!");
             }
@@ -35,31 +34,52 @@ router.post('/post', async function (req, res) {
         res.send("You shall not pass!");
     }
 
-    // try {
-    //     let rawdata = fs.readFileSync('data.json');
-    //     let jsondata = JSON.parse(rawdata);
-    //     let newEntry = req.body;
-    //     newEntry["id"] = animalID;
-    //     newEntry["userAvatar"] = "userAvatars/shijun.jpg";
-    //     jsondata['animalInfos'].push(newEntry);
-    //     console.log(jsondata['animalInfos']);
-    //     rawdata = JSON.stringify(jsondata);
-    //     fs.writeFileSync('data.json', rawdata);
-    // } catch (e) {
-    //     console.log(e);
-    // }
-
 });
 
 router.get("/", async function (req, res) {
     try {
         console.log('handle get animal information');
         const infos = await AnimalInfo.find();
-        console.log(infos);
+        //console.log(infos);
         //let rawdata = fs.readFileSync('data.json');
         res.send(infos);
     } catch (e) {
         console.log(e);
+    }
+});
+
+// get posted animals according to user's uuid
+router.get("/uuid", async function (req, res) {
+    if(req.session.uuid === undefined){
+        res.send({
+            message : "Your session has expired. Please log in again!"
+        })
+    } else {
+        console.log("Get Uploaded Animals");
+
+        await UserInfo.find({"uuid": req.session.uuid}, "_id", (err, docs) => {
+            if(err){
+                res.status(404).send({
+                    message: "Something wrong when getting user info"
+                })
+            } else {
+                var ids = docs.map(function(doc) { return doc._id; });
+                // console.log(docs)
+                // console.log(ids);
+                AnimalInfo.find({"userinfo": {$in: ids}}, "name image description", (err, docs) => {
+                    if(err){
+                        res.status(404).send({
+                            message: "Something wrong when getting animal info"
+                        })
+                    }else{
+                        // console.log(docs)
+                        res.send(docs)
+                    }
+                });
+            }
+        })
+
+        
     }
 });
 

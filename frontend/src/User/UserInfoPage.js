@@ -54,7 +54,9 @@ const UserInfoPage = (props) => {
                         <Breadcrumb style={{ margin: '16px 0' }}>
                         </Breadcrumb>
                         <Content className="site-layout-background">
-                            {switchComponent(selectedKey)}
+                            <div style = {{height:'100%', overflow :'auto'}}>
+                                {switchComponent(selectedKey)}
+                            </div>
                         </Content>
                     </Layout>
                 </Layout>
