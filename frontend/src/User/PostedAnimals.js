@@ -51,15 +51,12 @@ const cardDisplay = animalInfo.map((card) =>
 
 function PostedAnimals(){
     return (
-        <>
-        <div className="avatar">
-            <Avatar size={64} icon={<UserOutlined />} />
-        </div>
+        <div style = {{height:'100%', overflow :'auto'}}>
         <br />
         <Row gutter={16}>
             {cardDisplay}
         </Row>
-        </>
+        </div>
     );
 }
 export default PostedAnimals;

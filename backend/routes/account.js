@@ -270,6 +270,7 @@ router.post('/api/login',  async (req, res) => {
 
     if(!userinfo){
       return res.status(422).send({
+          success: false,
           message : "user does not exist!"
       });
     }
@@ -286,13 +287,18 @@ router.post('/api/login',  async (req, res) => {
   
     if(!isPwdValid){
       return res.status(422).send({
+            success: false,
           message : "incorrect password!"
       });
     }
     
+    req.session.uuid = uuid;
+    res.cookie({signed: true});
     //return uuid
     res.send({
-        uuid: user.uuid
+        success: true,
+        uuid: user.uuid,
+        message: "Log in successfully! You will be redirected to main page in 3 seconds"
     });
   });
 
@@ -364,13 +370,11 @@ router.post('/api/cur_user/info/update', async (req, res) => {
             message : "Your session has expired. Please log in again!"
         })
     } else {
-        console.log("start update");
         // update user info
         const filter = { 'uuid': req.session.uuid };
         const update = { 
             name: req.body.name,
             phone: req.body.phone,
-            email: req.body.mail,
             city: req.body.city,
             intro: req.body.intro,
         };

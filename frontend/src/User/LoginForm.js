@@ -1,7 +1,8 @@
 import React, {useRef, useState} from 'react';
 import './forms.css';
-import { Form, Input, Button, Modal } from 'antd';
+import { Form, Input, Button, Modal, message } from 'antd';
 import { getHeader, login , sendResetLink} from '../Services/userService';
+import { InfoCircleTwoTone} from '@ant-design/icons'
 import Header from '../Layout/Header'
 
 const LoginForm = (props) => {
@@ -24,15 +25,29 @@ const LoginForm = (props) => {
     const onFinish = async (values) => {
         await login(values.email, values.password)
         .then(
-            async res => {
-                await getHeader(res.uuid)
-                .then(res => {
-                    alert(res.message);
-                })
+            async (res) => {
+                await getHeader(res.uuid).then(
+                    () =>{ 
+                        if(res.success){
+                            message.error({
+                                content: res.message, 
+                                duration: 3, 
+                                icon: <InfoCircleTwoTone twoToneColor = "#52c41a"/>,
+                                onClose: () => {
+                                    window.location.href = '/';
+                                 }
+                            })
+                        }
+                        else{
+                            message.error({
+                                content: res.message, 
+                                duration: 3
+                            })
+                        }
+                    }
+                );
             }
-        );
-
-        window.location.href = '/';
+        )
     };
 
     const onResetLinkSent = () => {

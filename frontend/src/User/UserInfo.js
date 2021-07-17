@@ -12,8 +12,8 @@ function UserInfo(){
     const [edit, setEdit] = useState(false);
     const [update, setUpdate] = useState(false);
     const [inputName, setInputName] = useState('');
+    const [inputMail, setInputMail] = useState('')
     const [inputPNumber, setInputPNumber] = useState('');
-    const [inputMail, setInputMail] = useState('');
     const [inputCity, setInputCity] = useState('');
     const [inputIntro, setInputIntro] = useState('');
     const [avatar, setAvatar] = useState('')
@@ -21,7 +21,7 @@ function UserInfo(){
     const [comment, showComment] = useState(false)
 
     useEffect(async () => {
-      getUserInfo()
+      await getUserInfo()
         .then((res) => {
           setUUid(res.uuid);
           setInputName(res.name);
@@ -32,7 +32,7 @@ function UserInfo(){
           setAvatar(res.avatar);
           showComment(true);
         })
-    }, [update]);
+      }, [update, upload, avatar]);
 
     const inputChangeName = (e) => {
       setInputName(e.target.value);
@@ -40,10 +40,6 @@ function UserInfo(){
 
     const inputChangePNumber = (e) => {
       setInputPNumber(e.target.value);
-    }
-
-    const inputChangeMail = (e) => {
-      setInputMail(e.target.value);
     }
 
     const inputChangeCity = (e) => {
@@ -56,20 +52,16 @@ function UserInfo(){
 
     const enableEdit = () => {
       setEdit(!edit);
-      console.log(edit);
       if (edit) {
         const userInfoUpdated = {
           inputName,
           inputPNumber,
-          inputMail,
           inputCity,
           inputIntro,
         }
-        console.log(userInfoUpdated);
         updateUserInfo(userInfoUpdated)
-          .then( () => {
+          .then(() => {
             setUpdate(!update);
-            console.log("User info has updated");
           })
       }
     };
@@ -96,6 +88,7 @@ function UserInfo(){
                       />}
               />
           </div>
+          <div style = {{textAlign:'end', paddingRight:'3%', paddingTop:'0.5%', fontSize:'20px'}}>Account: <b>{inputMail}</b></div>
           <Modal
             title = "Update your avatar!"
             visible = {upload}
@@ -103,11 +96,11 @@ function UserInfo(){
             width = {250}
             footer = {null}
           >
-            <Uploader/>
+            <Uploader hideUploadModal = {() => {showUpload(false)}}/>
           </Modal>
 
 
-          <Card title="User Info" bordered={false}>
+          <Card title="Profile" bordered={false}>
           
           <br />
           <Descriptions title="" bordered>
@@ -116,9 +109,6 @@ function UserInfo(){
               </Descriptions.Item>
               <Descriptions.Item label="Phone Number" span={3}>
                   {edit ? <Input value = {inputPNumber} type = "text" onChange = {inputChangePNumber.bind(this)} />: <Input value = {inputPNumber} type = "text" disabled = 'true' />}
-              </Descriptions.Item>
-              <Descriptions.Item label="Email" span={3}>
-                  {edit ? <Input value = {inputMail} type = "text" onChange = {inputChangeMail.bind(this)} />: <Input value = {inputMail} type = "text" disabled = 'true' />}
               </Descriptions.Item>
               <Descriptions.Item label="City" span={3}>
                   {edit ? <Input value = {inputCity} type = "text" onChange = {inputChangeCity.bind(this)} />: <Input value = {inputCity} type = "text" disabled = 'true' />}

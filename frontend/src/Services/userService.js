@@ -89,7 +89,6 @@ export const updateUserInfo = async (userInfo) => {
         body: JSON.stringify({
             "name": userInfo.inputName,
             "phone": userInfo.inputPNumber,
-            "mail": userInfo.inputMail,
             "city": userInfo.inputCity,
             "intro": userInfo.inputIntro,
         }),

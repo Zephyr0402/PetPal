@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
+import { PresetColorTypes } from 'antd/lib/_util/colors';
 
 var imgUrlBase64 = [];
 
@@ -9,8 +10,6 @@ const Uploader = (props) => {
   const [fileList, setFileList] = useState([])
 
   const onFileListChange = (e) => {
-    console.log(e)
-    //setFileList(newFileList);
     return "http://localhost:9999/api/cur_user/avatar/update"
   };
 
@@ -24,6 +23,7 @@ const Uploader = (props) => {
         withCredentials = {true}
         listType="picture-card"
         fileList={fileList}
+        onChange = {props.hideUploadModal}
       >
         {fileList.length < 2 && '+ Upload'}
       </Upload>

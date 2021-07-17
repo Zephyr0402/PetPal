@@ -62,9 +62,6 @@ function TransactionHistory(){
 
     return(
         <>
-        <div className="avatar">
-            <Avatar size={64} icon={<UserOutlined />} />
-        </div>
         <br />
         <Table rowKey={record => record.key} expandable={{expandedRowRender: record =><p>Transaction ID: {record.tid}</p>}} dataSource={data}>
             <Column title="" dataIndex="key" key="key" />
