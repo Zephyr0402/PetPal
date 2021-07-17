@@ -32,7 +32,7 @@ const AnimalCard = (props) => {
 
     const showLoginAlert = () => {
         if (window.confirm("Please log in to make the payment.")) {
-            window.location.href="http://localhost:3000/login";
+            window.location.href="/login";
         }
     };
 

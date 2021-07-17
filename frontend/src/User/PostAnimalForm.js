@@ -9,6 +9,7 @@ import Header from "../Layout/Header";
 import { getUserInfo } from '../Services/userService';
 import { postAnimalInfo } from '../Services/postAnimalInfo';
 import { getBase64 } from '../Services/utils';
+import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 
 axios.defaults.withCredentials = true;
 
@@ -42,30 +43,60 @@ function PostAnimalForm() {
         e.preventDefault();
         //TODO: replace with actual handlePostAnimal functionality
         console.log("handlePostAnimal");
-        let canPost = true;
-        if (category === null) {
-            canPost = false;
+
+        if (category === null || location.value.description === undefined || animalAgeYear === null || animalAgeMonth === null || dateFound === null || description === null || category === null || animalName === null || price === null) {
+            window.alert('Have empty field!');
+            return;
         }
-        console.log(location);
 
-        const userInfo = await getUserInfo().
-            then(
-                res => {
-                    return res;
+        const address = location.value.description;
+
+        // get current user's info
+        const userInfo = await getUserInfo().then(
+            res => {
+                return res;
+            }
+        );
+
+        console.log(userInfo);
+
+        if (userInfo.message !== undefined) {
+            window.alert('Not login, redirecting...');
+            window.location.href = '/login';
+        }
+        
+        // get GPS coordinates from address
+        const geoInfo = await geocodeByAddress(address)
+            .then(results => getLatLng(results[0]))
+            .then(({ lat, lng }) => {
+                console.log('Successfully got latitude and longitude', { lat, lng });
+                let info = { lat: lat, lng: lng };
+                return info;
+            }
+        );
+
+        if (geoInfo.lat === undefined || geoInfo.lng === undefined) {
+            window.alert('Cannot get GPS coordinates!');
+            return;
+        }
+
+        if (fileList.fileList === undefined || fileList.fileList.length <= 0) {
+            window.alert('You should at least upload one image!');
+            return;
+        } else {
+            for (let i = 0; i < fileList.fileList.length; i++) {
+                if (!beforeUpload(fileList.fileList[i])) {
+                    let message = "Number " + i + " is not a JPG/PNG file!";
+                    window.alert(message);
+                    return;
                 }
-            );
-
-        console.log("Get current user")
-
-        console.log(userInfo);
-
-        console.log(fileList.fileList[0]);
-        console.log(userInfo);
+            }
+        }
         
         const animalInfo = {
             "id": "",
             "name": animalName,
-            "address": location.value.description,
+            "address": address,
             "animalAgeYear": animalAgeYear,
             "animalAgeMonth": animalAgeMonth,
             "dateFound": dateFound,
@@ -73,11 +104,14 @@ function PostAnimalForm() {
             "price": price,
             "description": description,
             "image": fileList.fileList[0].thumbUrl,
-            "userinfo": userInfo._id
+            "userinfo": userInfo._id,
+            "position": {
+                "lat": geoInfo.lat,
+                "lng": geoInfo.lng,
+            }
         };
 
         console.log(animalInfo);
-
 
         const req = {
             "animalinfo": animalInfo,
@@ -85,12 +119,9 @@ function PostAnimalForm() {
         }
         
         await postAnimalInfo(req);
-
-        if (canPost) {
-            window.alert('Posted!');
-            resetInput();
-            window.location.href = '/'
-        }
+        resetInput();
+        window.alert('Posted!');
+        window.location.href = '/';
     };
 
     const handlePreview = async file => {
@@ -123,21 +154,18 @@ function PostAnimalForm() {
     };
 
     const beforeUpload = (file) => {
+        console.log(file);
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
+            return false;
         }
-        return false;
+        return true;
     };
 
     const handleChange = ({ fileList }) => { setFileList({ fileList }) };
 
     const handleCancel = () => { setPreviewVisible(false) };
-
-    const handleUpload = (info) => {
-        //TODO: replace with actual handleUpload functionality
-        console.log("handleUpload");
-    };
 
     const uploadButton = (
         <div>
@@ -191,7 +219,7 @@ function PostAnimalForm() {
 
                     <Form.Item label="Location">
                         <GooglePlacesAutocomplete
-                            apiKey="AIzaSyC8w_bEe3IlzsbyjWJ96uOhlSADfrhh7gQ"
+                                apiKey="AIzaSyDnMJlodY_mrnG1k--Ol-Ocm9bWgaJF18k"
                             selectProps={{
                                 location,
                                 onChange: setLocation,
@@ -244,7 +272,6 @@ function PostAnimalForm() {
                         name="animal_image"
                     >
                             <Upload
-                                beforeUpload
                                 listType="picture-card"
                                 onPreview={handlePreview}
                                 onChange={handleChange}
