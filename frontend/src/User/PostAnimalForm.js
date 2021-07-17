@@ -73,7 +73,11 @@ function PostAnimalForm() {
             "price": price,
             "description": description,
             "image": fileList.fileList[0].thumbUrl,
-            "userinfo": userInfo._id
+            "userinfo": userInfo._id,
+            "position": {
+                lat: "49.26127572955761",
+                lng: "-123.23869115661624",
+            }
         };
 
         console.log(animalInfo);

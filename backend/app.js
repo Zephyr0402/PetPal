@@ -13,7 +13,7 @@ var paymentRouter = require('./routes/payment');
 var postRouter = require('./routes/animalinfo');
 var transactionRouter = require('./routes/transaction')
 
-const cookieMaxAge = 60*60*1000;//30 seconds
+const cookieMaxAge = 60*60*1000;
 const SECRET = "znhy";
 
 const corsOptions = {

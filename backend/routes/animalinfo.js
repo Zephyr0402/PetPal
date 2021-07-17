@@ -51,7 +51,6 @@ router.get("/", async function (req, res) {
 });
 
 // get posted animals according to user's uuid
-// TODO: talk with shijun about userinfo references with type string
 router.get("/uuid", async function (req, res) {
     if(req.session.uuid === undefined){
         res.send({
@@ -60,7 +59,29 @@ router.get("/uuid", async function (req, res) {
     } else {
         console.log("Get Uploaded Animals");
 
-        await AnimalInfo.find();
+        await UserInfo.find({"uuid": req.session.uuid}, "_id", (err, docs) => {
+            if(err){
+                res.status(404).send({
+                    message: "Something wrong when getting user info"
+                })
+            } else {
+                var ids = docs.map(function(doc) { return doc._id; });
+                // console.log(docs)
+                // console.log(ids);
+                AnimalInfo.find({"userinfo": {$in: ids}}, "name image description", (err, docs) => {
+                    if(err){
+                        res.status(404).send({
+                            message: "Something wrong when getting animal info"
+                        })
+                    }else{
+                        // console.log(docs)
+                        res.send(docs)
+                    }
+                });
+            }
+        })
+
+        
     }
 });
 
