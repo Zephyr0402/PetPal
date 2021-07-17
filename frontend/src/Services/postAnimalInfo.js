@@ -1,4 +1,7 @@
 import backendURL from './backendURL';
+import axios from 'axios';
+
+axios.defaults.withCredentials = true;
 
 export const postAnimalInfo = async (req) => {
     const info = await fetch(backendURL + '/animalInfo/post', {
@@ -10,4 +13,9 @@ export const postAnimalInfo = async (req) => {
         })
     });
     console.log(info);
+}
+
+export const getPostedAnimals = async () => {
+    return await axios.get(backendURL+'/animalInfo/uuid')
+        .then(res => res.data);
 }

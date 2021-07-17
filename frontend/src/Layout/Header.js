@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {Button, Tooltip, Avatar, Typography, Dropdown, Menu, Divider} from 'antd';
+import {Button, Tooltip, Avatar, Typography, Dropdown, Menu, Divider, message, Alert} from 'antd';
 import './Header.css';
 import {Link, Redirect} from 'react-router-dom';
-import { FormOutlined, DownOutlined} from '@ant-design/icons';
+import { FormOutlined, DownOutlined, CheckCircleFilled, CheckCircleTwoTone, InfoCircleTwoTone} from '@ant-design/icons';
 import { getHeader, getUserInfo, logout } from '../Services/userService';
 
 const Header = (props) => {
@@ -12,58 +12,45 @@ const Header = (props) => {
     useEffect(()=>{
         getHeader()
             .then(async res => {
-                console.log(res)
                 if(typeof res.uuid === 'string'){
                     await getUserInfo().
                         then(
                             res => setHeader(res)
                         )
-                    }
-                else{
-                    console.log(res.message)
                 }
             })
     },[]);
 
-    const onOptionClick = (e) => {
-        switch (e.key) {
-            case "profile":
-                return <Redirect to = {{pathname : '/user', state: {id:"1"}}}/>
-                break;
-
-            case "posts":
-                <Redirect to = {{pathname : '/user', state: {id:"2"}}}/>
-            break;
-
-            case "transactions":
-                <Redirect to = {{pathname : '/user', state: {id:"3"}}}/>
-            break;
-        }
+    const onLogout = async () => {
+        await logout().then(
+            (res) => message.error({
+                content: "Log out successfully. You will be redirected to main page in 3 seconds", 
+                duration: 3, 
+                icon: <InfoCircleTwoTone twoToneColor="#52c41a"/>,
+                onClose: () => {
+                window.location.href = "/";
+            }
+            })
+        )
+        
     }
-
-    var optionsOnNameClick = (
-        <Menu onClick = {onOptionClick}>
-          <Menu.Item>Logged in as <b>{header.name}</b></Menu.Item>
-          <Divider></Divider>
-          <Menu.Item key = "profile"><Link to = {{pathname:'/user', state : {key:"1"}}}>My Profile</Link></Menu.Item>
-          <Menu.Item key="posts"><Link to = {{pathname:'/user', state : {key:"2"}}}>My Posts</Link></Menu.Item>
-          <Menu.Item key="transactions"><Link to = {{pathname:'/user', state : {key:"3"}}}>My Transactions</Link></Menu.Item>
-          <Divider></Divider>
-          <Menu.Item key="logout" danger>Log out</Menu.Item>
-        </Menu>
-      );
 
     const onMenuVisibleChange = () => {
         setOptionsVisible(!optionsVisible);
     }
 
-    const onLogout = async () => {
-        await logout().then(
-            res => alert(res.message)
-        )
-        window.location.href = "/";
-    }
-    console.log("hello");
+    var optionsOnNameClick = (
+        <Menu>
+          <Menu.Item>Logged in as <b>{header.name}</b></Menu.Item>
+          <Divider/>
+          <Menu.Item key = "profile"><Link to = {{pathname:'/user', state : { key:"1" }}}>My Profile</Link></Menu.Item>
+          <Menu.Item key="posts"><Link to = {{pathname:'/user', state : { key:"2" }}}>My Posts</Link></Menu.Item>
+          <Menu.Item key="transactions"><Link to = {{pathname:'/user', state : { key:"3" }}}>My Transactions</Link></Menu.Item>
+          <Divider/>
+          <Menu.Item key="logout" danger onClick = {onLogout}>Log out</Menu.Item>
+        </Menu>
+      );
+
     return (
         <header className = "header">
             <a href="http://localhost:3000/map">
@@ -89,7 +76,7 @@ const Header = (props) => {
                             visible = {optionsVisible}
                         >
                             <div style = {{display:'inline'}}>
-                                <Avatar style = {{marginLeft:"8px"}} src = {header.avatar}/><DownOutlined/>
+                                <Avatar style = {{marginLeft:"8px", marginRight:"8px"}} src = {header.avatar}/><DownOutlined/>
                             </div>
                         </Dropdown>
                     </span>

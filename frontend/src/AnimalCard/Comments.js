@@ -1,56 +1,59 @@
-import React, { createElement, useState } from 'react';
-import UserComment from './Comment'
+import React, { createElement, useEffect, useState } from 'react';
+import SingleComment from './Comment'
 import './Comments.css';
+import {getComments, postComment} from '../Services/commentService'
+import Header from '../Layout/Header'
+import {List, Comment, Avatar, Divider} from 'antd'
+import { CommentArea } from './CommentArea';
 
-//grab comments by animalID from the back end here
-const data = [
-  {
-    user: 'Nawa',
-    userAvatar: 'userAvatars/nawa.png',
-    content: 'Jerry is sooooo cute! I sooooo love it!',
-    subComments:[
-      {
-        user: 'Julia',
-        userAvatar: 'userAvatars/julia.jpg',
-        content: 'Thank you! Jerry is my favorite!'
-      }
-    ]
-  },
-  {
-    user: 'Runze',
-    userAvatar: 'userAvatars/tsuki.jpg',
-    content: 'I\'ll raise my offer to 100 bucks! Deal?',
-    subComments: []
-  },
-  {
-    user: 'Shijun',
-    userAvatar: 'userAvatars/shijun.jpg',
-    content: 'DONT listen to Runze, I bet he\'s a dog person!',
-    subComments:[
-      {
-        user: "Runze",
-        userAvatar: 'userAvatars/tsuki.jpg',
-        content: 'Hey! Watch your language, you are a dog person!',
-      }
-    ]
+const CommentCollection = (props) => {
+
+  const [comments, setComments] = useState([]);
+
+  useEffect(async () => {
+    await getComments(props.commentType, props.id).then(
+      res => setComments(res)
+    )
+  }, [])
+
+  const onCommentSubmit = async (id, type, commentText) => {
+    await postComment(id, type, commentText).then(
+      await getComments(props.commentType, props.id).then(
+        res => setComments(res))
+    )
   }
-]
 
-const Comments = () => {
   return (
-    <div className = "comments">
-      {
-        data.map(e =>
-          <UserComment
-            commentDetail={e}
-            subComments = {e.subComments.map(sub =>
-              <UserComment commentDetail = {sub}/>
-            )}
-          />
-        )
-      }
+    <div className="comments-wrapper">
+      <CommentArea id = {props.id} type = {props.commentType} onCommentSubmit = {onCommentSubmit} onSubmitFinish = {() => {}}/>
+      <List
+        dataSource = {comments}
+        header={`${comments.length} ${comments.length > 1 ? 'comments' : 'comment'}`}
+        itemLayout="horizontal"
+        locale = {{emptyText: " "}}
+        renderItem = {
+          comment =>
+          <>
+            <SingleComment
+              commentDetail={comment}
+              onCommentSubmit = {onCommentSubmit}
+              id = {comment.ucid}
+              type = "comment"
+              replies = {comment.replies.map(reply =>
+                <SingleComment
+                  commentDetail = {reply}
+                  onCommentSubmit = {onCommentSubmit}
+                  id = {comment.ucid}
+                  type = "comment"
+                />
+              )}
+            />
+            <Divider />
+            </>
+        }
+      />
     </div>
   );
 };
 
-export default Comments
+export default CommentCollection;

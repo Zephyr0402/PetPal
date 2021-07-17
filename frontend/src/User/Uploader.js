@@ -1,40 +1,31 @@
 import React, { useState } from 'react';
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
+import { PresetColorTypes } from 'antd/lib/_util/colors';
+
+var imgUrlBase64 = [];
 
 const Uploader = (props) => {
 
-  console.log(props.fileList);
+  const [fileList, setFileList] = useState([])
 
-  const onChange = ({ fileList: newFileList }) => {
-    props.setFileList(newFileList);
-  };
-
-  const onPreview = async file => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise(resolve => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow.document.write(image.outerHTML);
+  const onFileListChange = (e) => {
+    return "http://localhost:9999/api/cur_user/avatar/update"
   };
 
   return (
-    <ImgCrop rotate>
+    <ImgCrop 
+      rotate
+      shape = 'round'
+    >
       <Upload
-        action="http://localhost:9999/api/upload"
+        action = {onFileListChange}
+        withCredentials = {true}
         listType="picture-card"
-        fileList={props.fileList}
-        onChange={onChange}
-        onPreview={onPreview}
+        fileList={fileList}
+        onChange = {props.hideUploadModal}
       >
-        {props.fileList.length < 2 && '+ Upload'}
+        {fileList.length < 2 && '+ Upload'}
       </Upload>
     </ImgCrop>
   );

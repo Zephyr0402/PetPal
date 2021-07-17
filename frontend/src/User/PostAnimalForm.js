@@ -219,7 +219,7 @@ function PostAnimalForm() {
 
                     <Form.Item label="Location">
                         <GooglePlacesAutocomplete
-                                apiKey="AIzaSyDnMJlodY_mrnG1k--Ol-Ocm9bWgaJF18k"
+                            apiKey="AIzaSyDnMJlodY_mrnG1k--Ol-Ocm9bWgaJF18k"
                             selectProps={{
                                 location,
                                 onChange: setLocation,

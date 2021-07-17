@@ -4,12 +4,23 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
+var commentRouter = require('./routes/comment')
 var accountRouter = require('./routes/account');
 var paymentRouter = require('./routes/payment');
 var postRouter = require('./routes/animalinfo');
 var transactionRouter = require('./routes/transaction')
+
+const cookieMaxAge = 60*60*1000;
+const SECRET = "znhy";
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  methods: "GET,PUT,PATCH,POST,DELETE",
+  credentials: true
+}
 
 var app = express();
 
@@ -17,19 +28,32 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  name: "sid",
+  secret: SECRET,
+  resave: true,
+  saveUninitialized: true,
+  rolling: true,
+  cookie: {
+      maxAge: cookieMaxAge, 
+      secure:false
+  }
+}));
 
 
 app.use('/', indexRouter);
 app.use('/', accountRouter);
+app.use('/', commentRouter);
 app.use('/api/payment', paymentRouter);
 app.use('/animalinfo', postRouter);
 app.use('/api/transaction', transactionRouter);
+
 
 
 // app.post('/postAnimal', function (req, res) {

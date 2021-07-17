@@ -11,7 +11,7 @@ function OrderConfirmation(props) {
             <CheckCircleTwoTone twoToneColor="#00b8b0" />
             <Title level={3}>Successful Payment</Title>
             <div className="order-info">
-                <Title level={4}>Order Number: {props.orderNumber}</Title>
+                <Title level={4}>Order Number: {props.newTransaction.orderNumber}</Title>
                 <Text>{new Date().toLocaleString('en-CA')}</Text>
                 <hr/>
                 <Title level={4} className="payment-summary"><span>{props.animal.name}</span><span>${props.animal.price}</span></Title>
@@ -22,10 +22,9 @@ function OrderConfirmation(props) {
                 <Text>Have a lovely day <SmileTwoTone /></Text>
             </div>
 
-            <Link href="http://localhost:3000/user">
+            <Link href="http://localhost:3000/user" className="link-block">
                 View your order
             </Link>
-
         </div>
     )
 }
