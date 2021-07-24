@@ -1,10 +1,11 @@
 import React, { useState,useEffect } from 'react';
-import { HeartOutlined, ShoppingCartOutlined, CommentOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-import {Card, Avatar, Descriptions, Button} from 'antd';
+import { ExclamationCircleOutlined, HeartOutlined, ShoppingCartOutlined, CommentOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import {Modal, Card, Avatar, Descriptions, Button} from 'antd';
 import CommentCollection from './Comments';
 import './AnimalCard.css';
 import {getHeader} from "../Services/userService";
 const { Meta } = Card;
+const { confirm } = Modal;
 
 const AnimalCard = (props) => {
     const [userId, setUserId] = useState(null);
@@ -30,10 +31,16 @@ const AnimalCard = (props) => {
         };
     }
 
-    const showLoginAlert = () => {
-        if (window.confirm("Please log in to make the payment.")) {
-            window.location.href="/login";
-        }
+    const showModal = () => {
+        confirm({
+            title: 'Please login to make a purchase',
+            icon: <ExclamationCircleOutlined />,
+            onOk() {
+                window.location.href="/login";
+            },
+            okText: 'Login',
+            cancelText: 'Cancel',
+        });
     };
 
     return(
@@ -74,7 +81,7 @@ const AnimalCard = (props) => {
                 </Card>
                 <CommentCollection commentType = "animal" id = {props.aid}/>
                 <div className="shopping-cart-wrapper">
-                    <span className="cta-button-round" onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showLoginAlert()}>
+                    <span className="cta-button-round" onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showModal()}>
                         <ShoppingCartOutlined />
                     </span>
                 </div>
