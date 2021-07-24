@@ -7,10 +7,12 @@ const TransactionSchema = new mongoose.Schema({
     buyerId: String,
     sellerId: String,
     animalId: String,
+    animalIndex: Number,
     timestamp: Date,
     price: Number,
     status: String, //Completed, Pending, Sold
-    tag: String //Type of animal
+    tag: String, //Type of animal
+    stripeId: String
 });
 
 TransactionSchema.plugin(AutoIncrement, {id:'order_seq', inc_field: 'orderNumber', start_seq: 1000});
