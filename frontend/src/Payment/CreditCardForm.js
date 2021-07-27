@@ -79,7 +79,6 @@ const CreditCardForm = (props) => {
                     buyerId: userId,
                     sellerId: sellerId,
                     animalId: props.animal._id,
-                    animalIndex: props.animal.id,
                     timestamp: new Date(),
                     price: props.animal.price,
                     status: "pending",

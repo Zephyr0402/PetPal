@@ -7,7 +7,6 @@ const TransactionSchema = new mongoose.Schema({
     buyerId: String,
     sellerId: String,
     animalId: String,
-    animalIndex: Number,
     timestamp: Date,
     price: Number,
     status: String, //Completed, Pending, Sold

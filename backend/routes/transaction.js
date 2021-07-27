@@ -59,7 +59,6 @@ router.post("/add", cors(), async (req, res) => {
             buyerId: transaction.buyerId,
             sellerId: transaction.sellerId,
             animalId: transaction.animalId,
-            animalIndex: transaction.animalIndex,
             timestamp: transaction.timestamp,
             price: transaction.price,
             status: transaction.status,
@@ -76,7 +75,7 @@ router.post("/add", cors(), async (req, res) => {
             }))
             .catch(error => res.status(400).json('Fail to add transaction: ' + error));
 
-        AnimalInfo.updateOne({id: transaction.animalIndex}, {status: "sold"})
+        AnimalInfo.updateOne({_id: transaction.animalId}, {status: "sold"})
             .then(() => console.log("Animal status updated to 'available'"))
             .catch(err => console.log("Fail to update animal status: " + err));
 
@@ -95,7 +94,7 @@ request body example:
  {
      "id": TRANSACTION_ID,
      "stripeId": STRIPE_ID,
-     "animalIndex": ANIMAL_INDEX
+     "animalId": ANIMAL_ID
  }
  */
 router.patch("/cancel", cors(), async (req, res) => {
@@ -112,7 +111,7 @@ router.patch("/cancel", cors(), async (req, res) => {
                 .then(() => {
 
                     //change animal status back to 'available'
-                    AnimalInfo.updateOne({id: transaction.animalIndex}, {status: "available"})
+                    AnimalInfo.updateOne({_id: transaction.animalId}, {status: "available"})
                         .then(() => res.status(200).json("Transaction successfully 'canceled'"))
                         .catch(error => console.log("Fail to update animal status: " + error));
                 })
