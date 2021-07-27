@@ -27,6 +27,11 @@
     width: 36%;
     display: flex;
     justify-content: flex-end;
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 svg[data-icon="shopping-cart"] {
@@ -39,7 +44,7 @@ svg[data-icon="shopping-cart"] {
 .cta-button-round {
     height: 50px;
     width: 50px;
-    background-color: #1890ff;
+    background-color: #fa9e14;
     border-radius: 50%;
     display: inline-flex;
     justify-content: center;

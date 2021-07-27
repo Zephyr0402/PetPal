@@ -3,7 +3,7 @@ import { ExclamationCircleOutlined, HeartOutlined, ShoppingCartOutlined, Comment
 import {Modal, Card, Avatar, Descriptions, Button} from 'antd';
 import CommentCollection from './Comments';
 import './AnimalCard.css';
-import {getHeader} from "../Services/userService";
+import {getUserInfo} from "../Services/userService";
 const { Meta } = Card;
 const { confirm } = Modal;
 
@@ -11,9 +11,9 @@ const AnimalCard = (props) => {
     const [userId, setUserId] = useState(null);
 
     useEffect(() => {
-        getHeader()
+        getUserInfo()
         .then(async res => {
-            setUserId(res.uuid);
+            setUserId(res._id);
         });
     }, [])
 
@@ -80,9 +80,12 @@ const AnimalCard = (props) => {
                     </Descriptions>
                 </Card>
                 <CommentCollection commentType = "animal" id = {props.aid}/>
-                <div className="shopping-cart-wrapper">
-                    <span className="cta-button-round" onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showModal()}>
-                        <ShoppingCartOutlined />
+                <div className={userId !== thisCard.userinfo ?
+                    "shopping-cart-wrapper" :
+                    "shopping-cart-wrapper hidden" }>
+                    <span className="cta-button-round"
+                          onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showModal()}>
+                        <ShoppingCartOutlined/>
                     </span>
                 </div>
             </div>
