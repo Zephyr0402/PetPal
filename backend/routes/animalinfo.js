@@ -37,9 +37,7 @@ router.post('/post', async function (req, res) {
 router.get("/", async function (req, res) {
     try {
         console.log('handle get animal information');
-        const infos = await AnimalInfo.find();
-        //console.log(infos);
-        //let rawdata = fs.readFileSync('data.json');
+        const infos = await AnimalInfo.find({"status":"available"});
         res.send(infos);
     } catch (e) {
         console.log(e);
