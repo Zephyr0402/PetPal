@@ -39,8 +39,8 @@ const AnimalMap = (props) => {
     //const inputEl = useRef(null);
 
     useEffect(() => {
-        console.log("test");
-        console.log(data);
+        //console.log("test");
+        //console.log(data);
         if(props.aid > -1){
             aid2marker[props.aid].marker.click();
         }
@@ -82,7 +82,7 @@ const AnimalMap = (props) => {
                 <Marker
                     name = {ele.name}
                     position = {ele.position}
-                    onClick = {onMarkerClick}   
+                    onClick = {onMarkerClick}
                     ref = {(marker) => aid2marker[index] = marker}
                 />
             )}
