@@ -1,21 +1,19 @@
 import React, { useState,useEffect } from 'react';
-import { ExclamationCircleOutlined, HeartOutlined, ShoppingCartOutlined, CommentOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-import {Modal, Card, Avatar, Descriptions, Button} from 'antd';
+import {HeartTwoTone, ShoppingCartOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import {Card, Avatar, Descriptions, Button} from 'antd';
 import CommentCollection from './Comments';
 import './AnimalCard.css';
 import {getUserInfo} from "../Services/userService";
+import {addToWishList, isInWishList, removeFromWishList} from "../Services/wishlistService";
+import backendURL from "../Services/backendURL";
+import {showLoginRequiredModal} from "../Services/modal";
+
 const { Meta } = Card;
-const { confirm } = Modal;
 
 const AnimalCard = (props) => {
-    const [userId, setUserId] = useState(null);
-
-    useEffect(() => {
-        getUserInfo()
-        .then(async res => {
-            setUserId(res._id);
-        });
-    }, [])
+    const [userId, setUserId] = useState("");
+    const [isAddedToWishList, setIsAddedToWishList] = useState(false);
+    const [isTheSameUser, setIsTheSameUser] = useState(false);
 
     let thisCard = props.animalCardInfo;
     if (thisCard === undefined) {
@@ -31,16 +29,56 @@ const AnimalCard = (props) => {
         };
     }
 
-    const showModal = () => {
-        confirm({
-            title: 'Please login to make a purchase',
-            icon: <ExclamationCircleOutlined />,
-            onOk() {
-                window.location.href="/login";
-            },
-            okText: 'Login',
-            cancelText: 'Cancel',
+    useEffect(() => {
+        getUserInfo()
+        .then(res => {
+            setUserId(res.uuid);
+
+            fetch( backendURL + "/animalinfo/userinfo", {
+                method: "POST",
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                }),
+                body: JSON.stringify({ id : thisCard.id })
+            }).then(res => {
+                if(res.status === 200) {
+                    return res.json();
+                }else if(res.status >= 400){
+                    console.log("cannot get user info");
+                }
+            }).then(data => {
+                if(data) {
+                    setIsTheSameUser(res.uuid === data.uuid);
+                }
+            });
+
+            isInWishList(thisCard._id, res.uuid)
+                .then(inWishlist => {
+                if(inWishlist) {
+                    setIsAddedToWishList(true);
+                }
+            });
         });
+
+    }, []);
+
+    const isLogin = userId !== null && userId !== undefined;
+
+    const handleAddToWishlist = () => {
+
+        if(!isAddedToWishList){
+            addToWishList(thisCard._id, userId).then(success => {
+                if(success) {
+                    setIsAddedToWishList(true);
+                }
+            });
+        }else{
+            removeFromWishList(thisCard._id, userId).then(success => {
+                if(success) {
+                    setIsAddedToWishList(false);
+                }
+            });
+        }
     };
 
     return(
@@ -61,10 +99,6 @@ const AnimalCard = (props) => {
                             src={thisCard.image}
                         />
                     }
-                    actions={[
-                        <CommentOutlined />,
-                        <HeartOutlined />,
-                    ]}
                 >
 
                     <hr color = "white"/>
@@ -78,17 +112,25 @@ const AnimalCard = (props) => {
                         <Descriptions.Item label = "Price (CAD)" span={3}>{thisCard.price}</Descriptions.Item>
                         <Descriptions.Item label="Description">{thisCard.description}</Descriptions.Item>
                     </Descriptions>
+                    <CommentCollection commentType = "animal" id = {props.aid}/>
                 </Card>
-                <CommentCollection commentType = "animal" id = {props.aid}/>
-                <div className={userId !== thisCard.userinfo ?
-                    "shopping-cart-wrapper" :
-                    "shopping-cart-wrapper hidden" }>
-                    <span className="cta-button-round"
-                          onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showModal()}>
-                        <ShoppingCartOutlined/>
-                    </span>
-                </div>
             </div>
+            {isTheSameUser ?
+                <div></div> :
+                <div className="icon-button-wrapper">
+                    <HeartTwoTone className={isAddedToWishList ? "icon-highlighted" : ""}
+                                 onClick={() => isLogin ?
+                                     handleAddToWishlist() :
+                                     showLoginRequiredModal("Please login to add " + thisCard.name + " to your wishlist")}
+                    />
+                    <ShoppingCartOutlined
+                        onClick={() => isLogin ?
+                            props.setDisplayCheckout(true) :
+                            showLoginRequiredModal("Please login to make a purchase")
+                        }
+                    />
+                </div>
+            }
         </div>
     );
 };

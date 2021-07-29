@@ -41,7 +41,7 @@ svg[data-icon="heart"] path:hover, svg[data-icon="shopping-cart"]:hover {
     fill: #1890ff;
 }
 
-.icon-highlighted svg[data-icon="heart"] path:last-child{
+.icon-highlighted svg[data-icon="heart"] path{
     fill: #1890ff;
 }
 
