@@ -1,5 +1,6 @@
 import { Input, Form, Button, Avatar, Comment } from 'antd'
 import React,{useEffect, useRef, useState} from 'react'
+import UserAvatar from '../Layout/Avatar';
 import { getUserInfo } from '../Services/userService';
 
 export const CommentArea = (props) => {
@@ -26,10 +27,11 @@ export const CommentArea = (props) => {
     return(
         <Comment
           avatar={
-            <Avatar
-              src={avatar}
-              alt="Han Solo"
-            />
+            // <Avatar
+            //   src={avatar}
+            //   alt="Han Solo"
+            // />
+            <UserAvatar size = {20} src = {avatar}/>
           }
           content={
             <Form
