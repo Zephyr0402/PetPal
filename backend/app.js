@@ -11,6 +11,7 @@ var commentRouter = require('./routes/comment')
 var accountRouter = require('./routes/account');
 var postRouter = require('./routes/animalinfo');
 var transactionRouter = require('./routes/transaction');
+var wishListRouter = require('./routes/wishlist');
 
 var updateTransactionStatus = require('./backgroundTasks/updateTransactionStatus');
 
@@ -53,6 +54,7 @@ app.use('/', accountRouter);
 app.use('/', commentRouter);
 app.use('/animalinfo', postRouter);
 app.use('/api/transaction', transactionRouter);
+app.use('/api/wishlist', wishListRouter);
 
 
 
@@ -80,7 +82,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//TODO: update timeout
-setInterval(updateTransactionStatus, 60*1000);
+setInterval(updateTransactionStatus, 1800000);
 
 module.exports = app;
