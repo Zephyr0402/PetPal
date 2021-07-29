@@ -8,8 +8,8 @@ export const getTransactionHistory = async () => {
         .then(res => res.data);
 };
 
-export const cancelTransaction = (transaction, stripe, animal) => {
-    axios.patch(backendURL+'/api/transaction/cancel', {
+export const cancelTransaction = async (transaction, stripe, animal) => {
+     await axios.patch(backendURL+'/api/transaction/cancel', {
         id: transaction,
         stripeId: stripe,
         animalId: animal

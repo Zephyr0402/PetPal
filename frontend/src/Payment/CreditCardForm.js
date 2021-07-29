@@ -33,7 +33,6 @@ const CreditCardForm = (props) => {
         }).then(data => {
             if(data) {
                 setSellerId(data.uuid);
-                console.log("uuid: " + data.uuid);
             }
         });
     },[]);
@@ -64,7 +63,6 @@ const CreditCardForm = (props) => {
     };
 
     const handleSubmit = async (e) => {
-        console.log("handleSubmit");
         e.preventDefault();
 
         const {error, paymentMethod} = await stripe.createPaymentMethod({
