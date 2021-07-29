@@ -76,7 +76,7 @@ router.post("/add", cors(), async (req, res) => {
             .catch(error => res.status(400).json('Fail to add transaction: ' + error));
 
         AnimalInfo.updateOne({_id: transaction.animalId}, {status: "sold"})
-            .then(() => console.log("Animal status updated to 'available'"))
+            .then(() => console.log("Animal status updated to 'sold'"))
             .catch(err => console.log("Fail to update animal status: " + err));
 
     }catch (error) {
