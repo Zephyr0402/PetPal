@@ -33,28 +33,28 @@ export const CommentArea = (props) => {
 
     return(
         <Comment
-            avatar={
-                <Avatar
-                    src={avatar}
-                    alt="Han Solo"
-                />
-            }
-            content={
-                <Form
-                    form = {form}
-                    onFinish = {onCommentSubmit}
-                >
-                    <Form.Item name="commentText">
-                        <Input.TextArea ref = {commentInput} id = "comment-text" rows={3} style = {{maxWidth:'90%', resize:'none'}}/>
-                    </Form.Item>
-                    <Form.Item>
-                        <Button htmlType="submit" type="primary" >
-                            Add Comment
-                        </Button>
-                    </Form.Item>
-                </Form>
-            }
+          avatar={
+            <Avatar
+              src={avatar}
+              alt="Han Solo"
+            />
+          }
+          content={
+            <Form
+                form = {form}
+                onFinish = {onCommentSubmit}
+            >
+                <Form.Item name="commentText">
+                    <Input.TextArea ref = {commentInput} id = "comment-text" rows={3} style = {{maxWidth:'90%', resize:'none'}}/>
+                </Form.Item>
+                <Form.Item>
+                    <Button htmlType="submit" type="primary" >
+                        Add Comment
+                    </Button>
+                </Form.Item>
+            </Form>
+          }
         />
 
     )
-};
+}

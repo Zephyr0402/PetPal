@@ -38,8 +38,6 @@ router.get("/", async function (req, res) {
     try {
         console.log('handle get animal information');
         const infos = await AnimalInfo.find({"status":"available"});
-        //console.log(infos);
-        //let rawdata = fs.readFileSync('data.json');
         res.send(infos);
     } catch (e) {
         console.log(e);
@@ -49,9 +47,8 @@ router.get("/", async function (req, res) {
 // get posted animals according to user's uuid
 router.get("/uuid", async function (req, res) {
     if(req.session.uuid === undefined){
-        res.send({
-            message : "Your session has expired. Please log in again!"
-        })
+        console.log("Session is expired")
+        res.send([])
     } else {
         console.log("Get Uploaded Animals");
 

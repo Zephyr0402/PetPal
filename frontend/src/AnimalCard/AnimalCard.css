@@ -1,3 +1,10 @@
+.card-wrapper {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    position: absolute;
+}
+
 .card-header{
     display: flex;
     justify-content: space-between;
