@@ -19,7 +19,7 @@ const cookieMaxAge = 60*60*1000;
 const SECRET = "znhy";
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'https://petpal-cpsc455.herokuapp.com:9999',
   methods: "GET,PUT,PATCH,POST,DELETE",
   credentials: true
 }
@@ -35,7 +35,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.set('port', (process.env.PORT || 9999));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
 app.use(session({
   name: "sid",
   secret: SECRET,

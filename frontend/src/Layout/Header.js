@@ -53,7 +53,7 @@ const Header = (props) => {
 
     return (
         <header className = "header">
-            <a href="http://localhost:3000/map">
+            <a href="https://petpal-cpsc455.herokuapp.com/map">
                 <img src="https://i.ibb.co/k3rqzWb/Petpal-logo.png" alt="Petpal-logo" border="0" width={200}/>
             </a>
             {
