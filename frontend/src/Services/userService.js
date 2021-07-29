@@ -4,7 +4,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 export const login = async (username, password) => {
-   return await fetch('http://localhost:9999/api/login', {
+   return await fetch(backendURL + '/api/login', {
         method: 'POST',
         body: JSON.stringify({
             "email":username,
@@ -22,7 +22,7 @@ export const logout = async (username, password) => {
 }
 
 export const register = async (name, email, password, code) => {
-    return await fetch('http://localhost:9999/api/register', {
+    return await fetch(backendURL + '/api/register', {
         method: 'POST',
         body: JSON.stringify({
             "name":name,
@@ -37,7 +37,7 @@ export const register = async (name, email, password, code) => {
 }
 
 export const verify = async (email) => {
-    return fetch('http://localhost:9999/api/auth', {
+    return fetch(backendURL + '/api/auth', {
         method: 'POST',
         body: JSON.stringify({
             "email":email
@@ -49,7 +49,7 @@ export const verify = async (email) => {
 }
 
 export const sendResetLink = async (email) => {
-    return fetch('http://localhost:9999/api/reset_token',{
+    return fetch(backendURL + '/api/reset_token',{
         method: 'POST',
         body: JSON.stringify({
             "email":email
@@ -61,7 +61,7 @@ export const sendResetLink = async (email) => {
 }
 
 export const resetPassword = async (token, password) => {
-    return await fetch('http://localhost:9999/api/reset_pwd/'+token, {
+    return await fetch(backendURL + '/api/reset_pwd/' + token, {
         method: 'POST',
         body: JSON.stringify({
             "password" : password
@@ -73,12 +73,12 @@ export const resetPassword = async (token, password) => {
 }
 
 export const getHeader = async ( uuid = "" ) => {
-    return await axios.get('http://localhost:9999/api/cur_user/'+uuid)
+    return await axios.get(backendURL + '/api/cur_user/'+uuid)
         .then(res => res.data);
 }
 
 export const getUserInfo = async () => {
-    return await axios.get('http://localhost:9999/api/cur_user/info')
+    return await axios.get(backendURL + '/api/cur_user/info')
         .then(res => res.data);
 }
 

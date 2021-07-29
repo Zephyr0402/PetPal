@@ -17,7 +17,7 @@ const cookieMaxAge = 60*60*1000;
 const SECRET = "znhy";
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'https://petpal-cpsc455.herokuapp.com:9999',
   methods: "GET,PUT,PATCH,POST,DELETE",
   credentials: true
 }

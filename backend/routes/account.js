@@ -18,7 +18,7 @@ const codeMaxAge = 1000*60*1;//1 minute
 const resetTokenMaxAge = 1000*60*1;//1 minute
 
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'https://petpal-cpsc455.herokuapp.com:9999',
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true
 }
@@ -165,7 +165,7 @@ router.post('/api/reset_token/', async (req, res) => {
 
     //send code
     let token = crypto.randomBytes(20).toString('hex')
-    let resetURL = "http://localhost:3000/reset_pwd/"+token
+    let resetURL = "https://petpal-cpsc455.herokuapp.com:9999/reset_pwd/"+token
     transporter.sendMail({
         from: 'petpal455official@gmail.com',
         to: EMAIL,
