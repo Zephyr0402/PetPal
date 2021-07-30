@@ -4,7 +4,7 @@ import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 const mapStyles = {
     position: 'absolute',
     width: '62%',
-    height: '92%'
+    height: '90.5%'
 };
 
 var aid2marker = [];

@@ -1,5 +1,6 @@
 import {Input, Form, Button, Avatar, Comment} from 'antd'
 import React,{useEffect, useRef, useState} from 'react'
+import UserAvatar from '../Layout/Avatar';
 import { getUserInfo } from '../Services/userService';
 import {showLoginRequiredModal} from "../Services/modal";
 
@@ -33,27 +34,28 @@ export const CommentArea = (props) => {
 
     return(
         <Comment
-            avatar={
-                <Avatar
-                    src={avatar}
-                    alt="Han Solo"
-                />
-            }
-            content={
-                <Form
-                    form = {form}
-                    onFinish = {onCommentSubmit}
-                >
-                    <Form.Item name="commentText">
-                        <Input.TextArea ref = {commentInput} id = "comment-text" rows={3} style = {{maxWidth:'90%', resize:'none'}}/>
-                    </Form.Item>
-                    <Form.Item>
-                        <Button htmlType="submit" type="primary" >
-                            Add Comment
-                        </Button>
-                    </Form.Item>
-                </Form>
-            }
+          avatar={
+            <Avatar
+              src={avatar}
+              alt="Han Solo"
+            />
+            //<UserAvatar size = {20} src = {avatar}/>
+          }
+          content={
+            <Form
+                form = {form}
+                onFinish = {onCommentSubmit}
+            >
+                <Form.Item name="commentText">
+                    <Input.TextArea ref = {commentInput} id = "comment-text" rows={3} style = {{maxWidth:'90%', resize:'none'}}/>
+                </Form.Item>
+                <Form.Item>
+                    <Button htmlType="submit" type="primary" >
+                        Add Comment
+                    </Button>
+                </Form.Item>
+            </Form>
+          }
         />
 
     )

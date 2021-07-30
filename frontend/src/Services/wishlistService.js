@@ -62,4 +62,9 @@ export const removeFromWishList = (animal, user) => {
 
 };
 
+export const getWishList = async () => {
+    return await axios.get(backendURL+'/api/wishlist/uuid')
+        .then(res => res.data);
+}
+
 
