@@ -1,3 +1,10 @@
+.card-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    position: absolute;
+}
+
 .card-header{
     display: flex;
     justify-content: space-between;
@@ -20,8 +27,53 @@
     align-items: center;
 }
 
+.visible {
+    visibility: visible;
+}
 
-.shopping-cart-wrapper {
+.hidden {
+    visibility: hidden;
+}
+
+svg[data-icon="heart"] path:first-child  {
+    fill: #4c4c4c;
+}
+
+svg[data-icon="heart"] path:last-child  {
+    fill: transparent;
+}
+
+
+svg[data-icon="heart"] path:hover, svg[data-icon="shopping-cart"]:hover {
+    fill: #1890ff;
+}
+
+.icon-highlighted svg[data-icon="heart"] path{
+    fill: #1890ff;
+}
+
+
+svg[data-icon="heart"] {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+svg[data-icon="shopping-cart"] {
+    width: 1.8em;
+    height: 1.8em;
+}
+
+span[aria-label="heart"] {
+    border-radius: 50px 0 0 50px;
+}
+
+span[aria-label="shopping-cart"]{
+    border-radius: 0 50px 50px 0;
+}
+
+
+.icon-button-wrapper {
+    z-index: 9999999;
     position: fixed;
     bottom: 30px;
     width: 36%;
@@ -29,20 +81,10 @@
     justify-content: flex-end;
 }
 
-svg[data-icon="shopping-cart"] {
-    width: 2em;
-    height: 2em;
-    color: white;
-    margin-left: -2px;
-}
-
-.cta-button-round {
-    height: 50px;
-    width: 50px;
-    background-color: #1890ff;
-    border-radius: 50%;
-    display: inline-flex;
-    justify-content: center;
+.icon-button-wrapper span {
+    padding: 10px 20px;
+    background-color: #fad314;
+    display: flex;
     align-items: center;
     -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
     box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);

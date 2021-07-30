@@ -33,7 +33,7 @@ const AnimalMap = (props) => {
         props.setDisplay(marker2aid(marker));
         //setShowInfoWindow(true);
         setActiveMarker(marker);
-    } 
+    }
 
     const onInfoWindowClose = (props) => {
         // if(showInfoWindow){

@@ -1,8 +1,10 @@
 import React from 'react';
 import {SmileTwoTone, CheckCircleTwoTone} from "@ant-design/icons";
 import {Typography} from "antd";
+import {Link} from 'react-router-dom';
 
-const { Title, Text, Link } = Typography;
+
+const { Title, Text } = Typography;
 
 function OrderConfirmation(props) {
 
@@ -22,7 +24,7 @@ function OrderConfirmation(props) {
                 <Text>Have a lovely day <SmileTwoTone /></Text>
             </div>
 
-            <Link href="http://localhost:3000/user" className="link-block">
+            <Link to = {{pathname:'/user', state : { key:"3" }}}>
                 View your order
             </Link>
         </div>
