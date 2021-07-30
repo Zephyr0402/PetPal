@@ -57,7 +57,9 @@ app.use('/api/payment', paymentRouter);
 app.use('/animalinfo', postRouter);
 app.use('/api/transaction', transactionRouter);
 
-
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
+})
 
 // app.post('/postAnimal', function (req, res) {
 //   console.log('Get post');
