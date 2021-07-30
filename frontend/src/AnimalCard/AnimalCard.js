@@ -83,7 +83,7 @@ const AnimalCard = (props) => {
 
     return(
         <div>
-            <div style = {{height:'100%', overflow:'auto', position:'absolute'}}>
+            <div className="card-wrapper">
                 <div className="card-header">
                     <Button type = 'text' onClick = {() => props.setDisplay(-1)}><ArrowLeftOutlined/></Button>
                     <Meta
