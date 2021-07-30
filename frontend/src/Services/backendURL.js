@@ -1,3 +1,3 @@
-const backendURL = "https://petpal-cpsc455.herokuapp.com:9999";
+const backendURL = "https://petpal-cpsc455.herokuapp.com";
 
 export default backendURL;
