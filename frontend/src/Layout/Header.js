@@ -24,8 +24,8 @@ const Header = (props) => {
     const onLogout = async () => {
         await logout().then(
             (res) => message.error({
-                content: "Log out successfully. You will be redirected to main page in 3 seconds", 
-                duration: 3, 
+                content: "Log out successfully. You will be redirected to main page in 1 seconds", 
+                duration: 1, 
                 icon: <InfoCircleTwoTone twoToneColor="#52c41a"/>,
                 onClose: () => {
                 window.location.href = "/";

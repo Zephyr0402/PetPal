@@ -8,31 +8,32 @@ const ResetPwdForm = (props) => {
         wrapperCol: { span: 18 },
     };
     const tailLayout = {
-        wrapperCol: { offset: 6, span: 18 },
+        wrapperCol: { offset: 1, span: 18 },
     };
 
     const onResetPassword = async (values) => {
         await resetPassword(props.match.params.token, values.password).then(
             res => alert(res.message)
         )
+        window.location.href = "/login"
     }
     console.log(props.match.params.token)
     return (
         <div className = "form_container">
             <div id="register_form_wrapper">
-                <h1 className="form_title">Sign Up</h1>
+                <h1 className="form_title">Reset Password</h1>
                 <Form
                     {...layout}
                     onFinish = {onResetPassword}
                 >
                     <Form.Item
-                        lable = "new password"
+                        label = "New password:"
                         name = "password"
                     >
                         <Input.Password/>
                     </Form.Item>
 
-                    <Form.Item {...tailLayout}>
+                    <Form.Item wrapperCol = {{ offset: 10, span: 18 }}>
                         <Button type="primary" htmlType="submit">Submit</Button>
                     </Form.Item>
                 </Form>
