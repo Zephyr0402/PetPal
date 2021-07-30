@@ -30,7 +30,7 @@ function PostedAnimals(props){
     
     const cardDisplay = animalinfo.map((card) =>
     <Col xs={24} md={12} lg={8} xl={6} xxl={4}>
-        <Link to = {{pathname:'/map', state : { display: card.id }}}>
+        <Link to = {{pathname:'/map', query : { display: card.id }}}>
             <Card
             hoverable
             style={{ height: "95%", objectFit: 'cover', width: 200}}
