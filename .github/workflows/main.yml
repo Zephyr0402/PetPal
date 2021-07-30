@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - production # Changing the branch here would also work
+      - release # Changing the branch here would also work
 
 jobs:
   build:
@@ -15,4 +15,4 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "petpal-cpsc455" #Must be unique in Heroku
           heroku_email: "petpal.cpsc455@gmail.com"
-          branch: "production"
+          branch: "release"
