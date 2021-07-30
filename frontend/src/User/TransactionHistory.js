@@ -2,6 +2,7 @@ import { Avatar, Table, Tag, Dropdown, Space, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { UserOutlined, DownOutlined } from '@ant-design/icons';
 import { getTransactionHistory, cancelTransaction } from '../Services/transactionService';
+import {displayErrorMessage, displaySuccessMessage} from '../Services/modal';
 import './UserInfoPage.css';
 
 const { Column, ColumnGroup } = Table;
@@ -41,7 +42,7 @@ const { Column, ColumnGroup } = Table;
 
 function TransactionHistory(){
 
-    const [tdata, settdata] = useState([])
+    const [tdata, settdata] = useState([]);
 
     useEffect(async () => {
         getTransactionHistory()
@@ -77,8 +78,19 @@ function TransactionHistory(){
                 title="Action"
                 dataIndex=""
                 key="cancel"
-                render={rec => rec.status === "pending" ?
-                    <Button type="text" danger onClick={() => cancelTransaction(rec._id, rec.stripeId, rec.animalId)}>Cancel</Button> :
+                render={rec => rec.status === "pending"?
+                    <Button type="text" danger
+                            onClick={() => cancelTransaction(rec._id, rec.stripeId, rec.animalId)
+                                .then(success => {
+                                    if(success) {
+                                        displaySuccessMessage("Transaction is canceled successfully", 3);
+                                    }else{
+                                        displayErrorMessage("There an error cancelling your transaction. Please try" +
+                                            " again.", 3);
+                                    }
+                                })}>
+                        Cancel
+                    </Button> :
                     <span>-</span>
                 }
             />

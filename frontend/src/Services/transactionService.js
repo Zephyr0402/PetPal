@@ -9,9 +9,23 @@ export const getTransactionHistory = async () => {
 };
 
 export const cancelTransaction = async (transaction, stripe, animal) => {
-     await axios.patch(backendURL+'/api/transaction/cancel', {
+    const toBeCanceled = {
         id: transaction,
         stripeId: stripe,
         animalId: animal
-    }).then(() => console.log("transaction canceled")).catch(err => console.log(err))
+    };
+
+    return fetch(backendURL + "/api/transaction/cancel", {
+        method: "PATCH",
+        headers: new Headers({
+            "Content-Type": "application/json",
+        }),
+        body: JSON.stringify(toBeCanceled)
+    }).then(res => {
+        if(res.status === 200) {
+            return true;
+        }else if(res.status >= 400){
+            throw new Error("Fail to remove animal from wishlist");
+        }
+    });
 };

@@ -1,6 +1,6 @@
 import {ExclamationCircleOutlined} from "@ant-design/icons";
 import React from "react";
-import {Modal} from 'antd';
+import {Modal, message} from 'antd';
 
 const { confirm } = Modal;
 
@@ -14,4 +14,14 @@ export const showLoginRequiredModal = (text) => {
         okText: 'Login',
         cancelText: 'Cancel',
     });
+};
+
+
+export const displaySuccessMessage = (text, duration) => {
+    message.success(text, duration);
+};
+
+
+export const displayErrorMessage = (text, duration) => {
+    message.error(text, duration);
 };

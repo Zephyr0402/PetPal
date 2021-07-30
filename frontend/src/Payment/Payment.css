@@ -20,7 +20,6 @@
 .payment-summary {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0;
     margin-bottom: 3rem;
 }
 
@@ -77,7 +76,7 @@
     margin: 2rem 0;
 }
 
-svg[data-icon="check-circle"] {
+.order-confirmation svg[data-icon="check-circle"] {
     width: 4em;
     height: 4em;
 }
