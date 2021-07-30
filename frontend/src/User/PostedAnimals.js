@@ -2,20 +2,31 @@ import React, { useState, useEffect } from 'react';
 import {Card, Col, Row} from 'antd';
 import {Link} from 'react-router-dom';
 import { getPostedAnimals } from '../Services/postAnimalInfo';
+import { getWishList } from '../Services/wishlistService'
 import './UserInfoPage.css'
 
 const { Meta } = Card;
 
-function PostedAnimals(){
+function PostedAnimals(props){
+    // console.log(props);
 
     const [animalinfo, setanimalinfo] = useState([])
 
-    useEffect(async () => {
+    useEffect(() => {
+        console.log(props);
+        props.filter === "1" ? 
         getPostedAnimals()
             .then((res) => {
+                console.log("1");
+                setanimalinfo(res);
+            }) 
+        :
+        getWishList()
+            .then((res) => {
+                console.log("2")
                 setanimalinfo(res);
             })
-    },[]);
+    },[props.filter]);
     
     const cardDisplay = animalinfo.map((card) =>
     <Col xs={24} md={12} lg={8} xl={6} xxl={4}>

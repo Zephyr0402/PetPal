@@ -22,9 +22,9 @@ const UserInfoPage = (props) => {
             case "1":
                 return(<UserInfo />);
             case "2":
-                return(<PostedAnimals key="1"/>);
+                return(<PostedAnimals filter="1"/>);
             case "2.5":
-                return(<PostedAnimals key="2"/>);
+                return(<PostedAnimals filter="2"/>);
             case "3":
                 return(<TransactionHistory />);
             default:

@@ -82,45 +82,38 @@ const AnimalCard = (props) => {
     };
 
     return(
-        <div style = {{height:'100%',  width :"100%", overflow:'auto', position:'absolute'}}>
-            <div className="card-header">
-                <Button type = 'text' onClick = {() => props.setDisplay(-1)}><ArrowLeftOutlined/></Button>
-                <Meta
-                    avatar={<Avatar src={thisCard.userAvatar} />}
-                    title={thisCard.user}
-                />
-            </div>
-            <Card
-                style={{ width: '100%', marginBottom:"20px"}}
-                cover={
-                    <img
-                        alt="example"
-                        src={thisCard.image}
+        <div>
+            <div className="card-wrapper">
+                <div className="card-header">
+                    <Button type = 'text' onClick = {() => props.setDisplay(-1)}><ArrowLeftOutlined/></Button>
+                    <Meta
+                        avatar={<Avatar src={thisCard.userAvatar} />}
+                        title={thisCard.user}
                     />
-                }
-                actions={[
-                    <CommentOutlined />,
-                    <HeartOutlined />,
-                ]}
-            >
+                </div>
+                <Card
+                    style={{ width: '100%', marginBottom:"20px" }}
+                    cover={
+                        <img
+                            alt="example"
+                            src={thisCard.image}
+                        />
+                    }
+                >
 
-                <hr color = "white"/>
-                <hr color = "white"/>
-                <Descriptions bordered>
-                    <Descriptions.Item label = "Name" span={3}>{thisCard.name}</Descriptions.Item>
-                    <Descriptions.Item label = "Age" span={3}>{thisCard.age}</Descriptions.Item>
-                    <Descriptions.Item label = "Kind" span={3}>{thisCard.kind}</Descriptions.Item>
-                    <Descriptions.Item label = "Street" span={1.5}>3338 Webber Lane</Descriptions.Item>
-                    <Descriptions.Item label = "City" span = {1.5}>Vancouver</Descriptions.Item>
-                    <Descriptions.Item label = "Price (CAD)" span={3}>{thisCard.price}</Descriptions.Item>
-                    <Descriptions.Item label="Description">{thisCard.description}</Descriptions.Item>
-                </Descriptions>
-            </Card>
-            <CommentCollection commentType = "animal" id = {props.aid}/>
-            <div className="shopping-cart-wrapper">
-                <span className="cta-button-round" onClick={() => userId !== null && userId !== undefined ? props.setDisplayCheckout(true) : showLoginAlert()}>
-                    <ShoppingCartOutlined />
-                </span>
+                    <hr color = "white"/>
+                    <hr color = "white"/>
+                    <Descriptions bordered>
+                        <Descriptions.Item label = "Name" span={3}>{thisCard.name}</Descriptions.Item>
+                        <Descriptions.Item label = "Age" span={3}>{thisCard.age}</Descriptions.Item>
+                        <Descriptions.Item label = "Kind" span={3}>{thisCard.kind}</Descriptions.Item>
+                        <Descriptions.Item label = "Street" span={1.5}>3338 Webber Lane</Descriptions.Item>
+                        <Descriptions.Item label = "City" span = {1.5}>Vancouver</Descriptions.Item>
+                        <Descriptions.Item label = "Price (CAD)" span={3}>{thisCard.price}</Descriptions.Item>
+                        <Descriptions.Item label="Description">{thisCard.description}</Descriptions.Item>
+                    </Descriptions>
+                    <CommentCollection commentType = "animal" id = {props.aid}/>
+                </Card>
             </div>
             {isTheSameUser ?
                 <div></div> :
