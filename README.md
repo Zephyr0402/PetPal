@@ -67,7 +67,7 @@ Our application acts as a platform that allows people to adopt, sell and buy ani
 |              | User can make a comment on other users once the transaction is completed |           |
 |              | Buyer can leave comments on each animal info                            |     ✅      |
 | **Stretch**  | Chatroom(between buyer and seller)                                                                    |           |
-|              | A favorite list that store all the animal that you clicked “Like” button                              |           |
+|              | A favorite list that store all the animal that you clicked “Like” button                              |   ✅      |
 |              | Buyers can confirm the payment after receiving the animal                                             |           |
 |              | Seller will get a notification when a buyer submits an order                                          |           |
 
@@ -101,3 +101,6 @@ Note: Originally one of our requirements is "Administrator actions (add/delete u
 ![alt text](https://github.com/Zephyr0402/PetPal/blob/main/PetPal_homepage.png?raw=true)
 
 ![alt text](https://github.com/Zephyr0402/PetPal/blob/main/PetPal_post-animal-page.png?raw=true)
+
+## Wireframe
+![alt text](https://github.com/Zephyr0402/PetPal/blob/main/PetPal_Wireframe.png?raw=true)
