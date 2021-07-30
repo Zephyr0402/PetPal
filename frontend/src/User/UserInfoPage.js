@@ -12,7 +12,9 @@ import { withRouter } from 'react-router-dom'
 const {Content, Sider } = Layout;
 
 const UserInfoPage = (props) => {
-    const [selectedKey, setSelectedKey] = useState(props.location.state.key)
+    console.log(props)
+    var initialKey = props.location == undefined ? 1 : props.location.state.key
+    const [selectedKey, setSelectedKey] = useState(initialKey)
 
     const switchComponent = (key) => {
         switch (key){

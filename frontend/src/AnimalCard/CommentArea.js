@@ -27,11 +27,11 @@ export const CommentArea = (props) => {
     return(
         <Comment
           avatar={
-            // <Avatar
-            //   src={avatar}
-            //   alt="Han Solo"
-            // />
-            <UserAvatar size = {20} src = {avatar}/>
+            <Avatar
+              src={avatar}
+              alt="Han Solo"
+            />
+            //<UserAvatar size = {20} src = {avatar}/>
           }
           content={
             <Form
