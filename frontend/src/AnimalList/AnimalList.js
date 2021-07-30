@@ -12,11 +12,11 @@ const AnimalList = (props) => {
 
     return (
         <div>
-            <List style={{ width: "100%", height: 0 }}
+            <List style={{ width: "100%"}}
                 itemLayout="horizontal"
                 dataSource={animalInfos}
                 renderItem={(item, index) => (
-                    <List.Item className='animal-list-item' id={item.id} style={{ width: "100%", padding: 8 }}>
+                    <List.Item className='animal-list-item' id={item.id} style={{ width: "100%" }}>
                         <AnimalThumbnail content={item} index={index} setDisplay={props.setDisplay} />
                     </List.Item>
                 )}
