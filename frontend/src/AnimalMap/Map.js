@@ -10,21 +10,18 @@ const mapStyles = {
 var aid2marker = [];
 
 const AnimalMap = (props) => {
-    const [showInfoWindow, setShowInfoWindow] = useState(false);
+   // const [showInfoWindow, setShowInfoWindow] = useState(false);
     const [activeMarker, setActiveMarker] = useState({});
     const data = props.animalCardInfo;
-    //const inputEl = useRef(null);
+    console.log("aid is:", props.aid);
 
     useEffect(() => {
-        console.log("test");
-        console.log(data);
-        if(props.aid > -1){
+        if (props.aid > -1) {
             aid2marker[props.aid].marker.click();
         }
-    },[])
+    }, []);
 
     const marker2aid = (marker) => {
-        console.log(marker);
         for (let i in aid2marker) {
             if(aid2marker[i].props.position === marker.position){
                 return i;
@@ -34,14 +31,14 @@ const AnimalMap = (props) => {
 
     const onMarkerClick = (marker) => {
         props.setDisplay(marker2aid(marker));
-        setShowInfoWindow(true);
+        //setShowInfoWindow(true);
         setActiveMarker(marker);
     }
 
     const onInfoWindowClose = (props) => {
-        if(showInfoWindow){
-            setShowInfoWindow(false);
-        }
+        // if(showInfoWindow){
+        //     setShowInfoWindow(false);
+        // }
     }
 
     return(
@@ -56,7 +53,7 @@ const AnimalMap = (props) => {
                 <Marker
                     name = {ele.name}
                     position = {ele.position}
-                    onClick = {onMarkerClick}   
+                    onClick={onMarkerClick}
                     ref = {(marker) => aid2marker[index] = marker}
                 />
             )}
@@ -68,7 +65,7 @@ const AnimalMap = (props) => {
                 visible={props.aid > -1}
                 onClose={onInfoWindowClose}
             >
-                <div className = "hello">
+                <div className="hello">
                     <h3>{props.aid > -1 ? data[props.aid].name : ""}</h3>
                     <pre>{props.aid > -1 ? data[props.aid].address : ""}</pre>
                 </div>

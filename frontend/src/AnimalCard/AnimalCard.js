@@ -1,20 +1,19 @@
 import React, { useState,useEffect } from 'react';
-import { HeartOutlined, ShoppingCartOutlined, CommentOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import {HeartTwoTone, ShoppingCartOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import {Card, Avatar, Descriptions, Button} from 'antd';
 import CommentCollection from './Comments';
 import './AnimalCard.css';
-import {getHeader} from "../Services/userService";
+import {getUserInfo} from "../Services/userService";
+import {addToWishList, isInWishList, removeFromWishList} from "../Services/wishlistService";
+import backendURL from "../Services/backendURL";
+import {showLoginRequiredModal} from "../Services/modal";
+
 const { Meta } = Card;
 
 const AnimalCard = (props) => {
-    const [userId, setUserId] = useState(null);
-
-    useEffect(() => {
-        getHeader()
-        .then(async res => {
-            setUserId(res.uuid);
-        });
-    }, [])
+    const [userId, setUserId] = useState("");
+    const [isAddedToWishList, setIsAddedToWishList] = useState(false);
+    const [isTheSameUser, setIsTheSameUser] = useState(false);
 
     let thisCard = props.animalCardInfo;
     if (thisCard === undefined) {
@@ -30,9 +29,55 @@ const AnimalCard = (props) => {
         };
     }
 
-    const showLoginAlert = () => {
-        if (window.confirm("Please log in to make the payment.")) {
-            window.location.href="/login";
+    useEffect(() => {
+        getUserInfo()
+        .then(res => {
+            setUserId(res.uuid);
+
+            fetch( backendURL + "/animalinfo/userinfo", {
+                method: "POST",
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                }),
+                body: JSON.stringify({ id : thisCard.id })
+            }).then(res => {
+                if(res.status === 200) {
+                    return res.json();
+                }else if(res.status >= 400){
+                    console.log("cannot get user info");
+                }
+            }).then(data => {
+                if(data) {
+                    setIsTheSameUser(res.uuid === data.uuid);
+                }
+            });
+
+            isInWishList(thisCard._id, res.uuid)
+                .then(inWishlist => {
+                if(inWishlist) {
+                    setIsAddedToWishList(true);
+                }
+            });
+        });
+
+    }, []);
+
+    const isLogin = userId !== null && userId !== undefined;
+
+    const handleAddToWishlist = () => {
+
+        if(!isAddedToWishList){
+            addToWishList(thisCard._id, userId).then(success => {
+                if(success) {
+                    setIsAddedToWishList(true);
+                }
+            });
+        }else{
+            removeFromWishList(thisCard._id, userId).then(success => {
+                if(success) {
+                    setIsAddedToWishList(false);
+                }
+            });
         }
     };
 
@@ -77,6 +122,22 @@ const AnimalCard = (props) => {
                     <ShoppingCartOutlined />
                 </span>
             </div>
+            {isTheSameUser ?
+                <div></div> :
+                <div className="icon-button-wrapper">
+                    <HeartTwoTone className={isAddedToWishList ? "icon-highlighted" : ""}
+                                 onClick={() => isLogin ?
+                                     handleAddToWishlist() :
+                                     showLoginRequiredModal("Please login to add " + thisCard.name + " to your wishlist")}
+                    />
+                    <ShoppingCartOutlined
+                        onClick={() => isLogin ?
+                            props.setDisplayCheckout(true) :
+                            showLoginRequiredModal("Please login to make a purchase")
+                        }
+                    />
+                </div>
+            }
         </div>
     );
 };
