@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Avatar, Card, Col, Row } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import {Card, Col, Row} from 'antd';
+import {Link} from 'react-router-dom';
 import { getPostedAnimals } from '../Services/postAnimalInfo';
 import './UserInfoPage.css'
 
@@ -19,13 +19,15 @@ function PostedAnimals(){
     
     const cardDisplay = animalinfo.map((card) =>
     <Col xs={24} md={12} lg={8} xl={6} xxl={4}>
-        <Card
-        hoverable
-        style={{ height: "95%", objectFit: 'cover', width: 200}}
-        cover={<img alt={card.name} src={card.image} width="200" height="180"/>}
-        >
-        <Meta title={card.name} description={card.description} />
-        </Card>
+        <Link to = {{pathname:'/map', state : { display: card.id }}}>
+            <Card
+            hoverable
+            style={{ height: "95%", objectFit: 'cover', width: 200}}
+            cover={<img alt={card.name} src={card.image} width="200" height="180"/>}
+            >
+            <Meta title={card.name} description={card.description} />
+            </Card>
+        </Link>
     </Col>
 )
 

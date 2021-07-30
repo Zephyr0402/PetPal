@@ -63,7 +63,7 @@ router.get("/uuid", async function (req, res) {
                 var ids = docs.map(function(doc) { return doc._id; });
                 // console.log(docs)
                 // console.log(ids);
-                AnimalInfo.find({"userinfo": {$in: ids}}, "name image description", (err, docs) => {
+                AnimalInfo.find({"userinfo": {$in: ids}}, "id name image description", (err, docs) => {
                     if(err){
                         res.status(404).send({
                             message: "Something wrong when getting animal info"

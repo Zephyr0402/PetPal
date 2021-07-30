@@ -6,6 +6,7 @@ import AnimalCard from '../AnimalCard/AnimalCard'
 import AnimalMap from '../AnimalMap/Map';
 import Payment from "../Payment/Payment";
 import { fetchAnimalList } from '../Services/fetchData';
+import { withRouter } from 'react-router-dom'
 
 const Main = (props) => {
     const [display, setDisplay] = useState(-1);
@@ -25,6 +26,7 @@ const Main = (props) => {
         });
     }, [display]);
 
+    console.log(props)
     return(
         <Layout>
             <Header/>
@@ -46,4 +48,4 @@ const Main = (props) => {
     );
 }
 
-export default Main;
+export default withRouter(Main);
