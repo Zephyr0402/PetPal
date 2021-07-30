@@ -9,7 +9,7 @@ import { fetchAnimalList } from '../Services/fetchData';
 import { withRouter } from 'react-router-dom'
 
 const Main = (props) => {
-    var initialDisplay = props.location == undefined ? -1 : props.location.state.display
+    var initialDisplay = props.location.state != undefined ? props.location.state.display : -1
     const [display, setDisplay] = useState(initialDisplay);
     const [displayCheckout, setDisplayCheckout] = useState(false);
     const [animalInfos, setAnimalInfos] = useState([]);
