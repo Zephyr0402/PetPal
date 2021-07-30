@@ -19,3 +19,7 @@
     margin: 10px;
     color: black;
 }
+
+.header-btns .ant-btn-primary.header-btn {
+    color: white;
+}
