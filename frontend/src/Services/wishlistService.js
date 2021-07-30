@@ -1,7 +1,4 @@
 import backendURL from "./backendURL";
-import axios from 'axios';
-
-axios.defaults.withCredentials = true;
 
 export const addToWishList = (animal, user) => {
     const newItem = {

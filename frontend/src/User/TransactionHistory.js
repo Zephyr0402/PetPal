@@ -84,6 +84,7 @@ function TransactionHistory(){
                                 .then(success => {
                                     if(success) {
                                         displaySuccessMessage("Transaction is canceled successfully", 3);
+                                        window.location.reload();
                                     }else{
                                         displayErrorMessage("There an error cancelling your transaction. Please try" +
                                             " again.", 3);
