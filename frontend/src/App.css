@@ -1,8 +1,4 @@
-html{
-    height: 100vw;
-}
-
-body {
+html, body {
     height: 100%;
 }
 
