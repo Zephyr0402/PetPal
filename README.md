@@ -103,4 +103,4 @@ Note: Originally one of our requirements is "Administrator actions (add/delete u
 ![alt text](https://github.com/Zephyr0402/PetPal/blob/main/PetPal_post-animal-page.png?raw=true)
 
 ## Wireframe
-![alt text](https://github.com/Zephyr0402/PetPal/blob/main/PetPal_Wireframe.png?raw=true)
+![alt text](https://github.com/Zephyr0402/PetPal/blob/nawa/PetPal_Wireframe.png)
