@@ -7,13 +7,14 @@ import {getUserInfo} from "../Services/userService";
 import {addToWishList, isInWishList, removeFromWishList} from "../Services/wishlistService";
 import backendURL from "../Services/backendURL";
 import {showLoginRequiredModal} from "../Services/modal";
+import {getUserByAnimalId} from "../Services/animalService"
 
 const { Meta } = Card;
 
 const AnimalCard = (props) => {
     const [userId, setUserId] = useState("");
     const [isAddedToWishList, setIsAddedToWishList] = useState(false);
-    const [isTheSameUser, setIsTheSameUser] = useState(false);
+    const [isTheSameUser, setIsTheSameUser] = useState(true);
 
     let thisCard = props.animalCardInfo;
     if (thisCard === undefined) {
@@ -34,23 +35,7 @@ const AnimalCard = (props) => {
         .then(res => {
             setUserId(res.uuid);
 
-            fetch( backendURL + "/animalinfo/userinfo", {
-                method: "POST",
-                headers: new Headers({
-                    "Content-Type": "application/json",
-                }),
-                body: JSON.stringify({ id : thisCard.id })
-            }).then(res => {
-                if(res.status === 200) {
-                    return res.json();
-                }else if(res.status >= 400){
-                    console.log("cannot get user info");
-                }
-            }).then(data => {
-                if(data) {
-                    setIsTheSameUser(res.uuid === data.uuid);
-                }
-            });
+            getUserByAnimalId(thisCard.id).then(seller => setIsTheSameUser(res.uuid === seller));
 
             isInWishList(thisCard._id, res.uuid)
                 .then(inWishlist => {
@@ -115,22 +100,20 @@ const AnimalCard = (props) => {
                     <CommentCollection commentType = "animal" id = {props.aid}/>
                 </Card>
             </div>
-            {isTheSameUser ?
-                <div></div> :
-                <div className="icon-button-wrapper">
-                    <HeartTwoTone className={isAddedToWishList ? "icon-highlighted" : ""}
-                                 onClick={() => isLogin ?
-                                     handleAddToWishlist() :
-                                     showLoginRequiredModal("Please login to add " + thisCard.name + " to your wishlist")}
-                    />
-                    <ShoppingCartOutlined
-                        onClick={() => isLogin ?
-                            props.setDisplayCheckout(true) :
-                            showLoginRequiredModal("Please login to make a purchase")
-                        }
-                    />
-                </div>
-            }
+            <div className={isTheSameUser ? "icon-button-wrapper hidden" : "icon-button-wrapper visible"}>
+                <HeartTwoTone className={isAddedToWishList ? "icon-highlighted" : ""}
+                             onClick={() => isLogin ?
+                                 handleAddToWishlist() :
+                                 showLoginRequiredModal("Please login to add " + thisCard.name + " to your wishlist")}
+                />
+                <ShoppingCartOutlined
+                    onClick={() => isLogin ?
+                        props.setDisplayCheckout(true) :
+                        showLoginRequiredModal("Please login to make a purchase")
+                    }
+                />
+            </div>
+
         </div>
     );
 };
