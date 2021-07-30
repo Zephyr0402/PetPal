@@ -9,23 +9,27 @@ import { fetchAnimalList } from '../Services/fetchData';
 import { withRouter } from 'react-router-dom'
 
 const Main = (props) => {
-    var initialDisplay = props.location.state != undefined ? props.location.state.display : -1
-    const [display, setDisplay] = useState(initialDisplay);
-    const [displayCheckout, setDisplayCheckout] = useState(false);
     const [animalInfos, setAnimalInfos] = useState([]);
+    const [display, setDisplay] = useState(-1);
+    const [displayCheckout, setDisplayCheckout] = useState(false);
 
     const setMyDisplay = (e) => {
         setDisplay(e);
     }
 
     useEffect(() => {
-        // fetch animal info from backend
         fetchAnimalList().then(res => {
             setAnimalInfos(res);
+            if(props.location.query != undefined){
+                for(var i = 0; i< res.length; i++){
+                    if(res[i].id == props.location.query.display){
+                        setDisplay(i)
+                        break
+                    }       
+                }
+            }
         });
     }, [display]);
-
-    console.log(props)
     return(
         <Layout>
             <Header/>
