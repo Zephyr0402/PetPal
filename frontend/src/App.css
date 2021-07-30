@@ -1,7 +1,10 @@
-html, body{
+html{
     height: 100vw;
 }
 
+body {
+    height: 100%;
+}
 
 #root{
     height: 100%;
