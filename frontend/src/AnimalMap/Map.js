@@ -4,7 +4,7 @@ import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 const mapStyles = {
     position: 'absolute',
     width: '62%',
-    height: '92%'
+    height: '90.5%'
 };
 
 var aid2marker = [];
@@ -33,7 +33,7 @@ const AnimalMap = (props) => {
         props.setDisplay(marker2aid(marker));
         //setShowInfoWindow(true);
         setActiveMarker(marker);
-    } 
+    }
 
     const onInfoWindowClose = (props) => {
         // if(showInfoWindow){

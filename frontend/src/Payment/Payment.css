@@ -1,4 +1,5 @@
 .payment-wrapper {
+    width: 100%;
     height: 100%;
     overflow: auto;
     position: absolute;
@@ -13,13 +14,18 @@
 }
 
 .payment-wrapper .ant-card-cover{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 500px;
+    overflow: hidden;
     margin: 0;
 }
 
 .payment-summary {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0;
     margin-bottom: 3rem;
 }
 
@@ -76,7 +82,7 @@
     margin: 2rem 0;
 }
 
-svg[data-icon="check-circle"] {
+.order-confirmation svg[data-icon="check-circle"] {
     width: 4em;
     height: 4em;
 }
