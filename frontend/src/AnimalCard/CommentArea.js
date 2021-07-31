@@ -1,27 +1,36 @@
-import { Input, Form, Button, Avatar, Comment } from 'antd'
+import {Input, Form, Button, Avatar, Comment} from 'antd'
 import React,{useEffect, useRef, useState} from 'react'
+import UserAvatar from '../Layout/Avatar';
 import { getUserInfo } from '../Services/userService';
+import {showLoginRequiredModal} from "../Services/modal";
+
 
 export const CommentArea = (props) => {
     const [form] = Form.useForm();
     const [avatar, setAvatar] = useState("");
+    const [userId, setUserId] = useState("");
 
     const commentInput = useRef("");
 
     useEffect(() => {
-      getUserInfo().then(
-        res => setAvatar(res.avatar)
+      getUserInfo().then(res => {
+          setAvatar(res.avatar);
+          setUserId(res.uuid);
+      }
       )
-    },[])
+    },[]);
 
     const onCommentSubmit = (values) => {
-        const commentText = values.commentText;
-        form.resetFields();
-        props.onSubmitFinish(false);
-        props.onCommentSubmit(props.id, props.type, commentText);
-    }
+        if(userId === "" || userId === undefined) {
+            showLoginRequiredModal("Please login to add your comment");
+        }else{
+            const commentText = values.commentText;
+            form.resetFields();
+            props.onSubmitFinish(false);
+            props.onCommentSubmit(props.id, props.type, commentText);
+        }
 
-
+    };
 
     return(
         <Comment
@@ -30,6 +39,7 @@ export const CommentArea = (props) => {
               src={avatar}
               alt="Han Solo"
             />
+            //<UserAvatar size = {20} src = {avatar}/>
           }
           content={
             <Form
@@ -49,4 +59,4 @@ export const CommentArea = (props) => {
         />
 
     )
-}
+};

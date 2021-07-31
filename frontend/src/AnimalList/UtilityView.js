@@ -63,16 +63,16 @@ const UtilityView = (props) => {
 
     return (
         <div className="animal-list" style={{ height: '100%' }}>
-            <Space direction="vertical" style={{ width: "100%", height: "100%", overflow: 'scroll', padding: 8 }}>
+            <Space direction="vertical" style={{ width: "100%", height: "100%", overflow: 'auto', padding: 8 }}>
                 <Input
                     placeholder=" Search animal names, descriptions here..."
                     allowClear
                     onKeyUp={onSearch.bind(this)}
-                    style={{ marginLeft: "4px", width: '96%', height: '30px', padding: 0 }}
+                    style={{ marginLeft: "1%", width :"98%", height: '120%'}}
                     suffix={<SearchOutlined style={{ marginRight: "5px" }} />}
                 />
-                <div className="filterView">
-                    <b style={{ margin: '2px', fontSize: '16px' }}>Filter:</b>
+                <div className="filterView" style = {{marginTop : '1%'}}>
+                    <b style={{ margin: '2px', fontSize: '14px' }}>Filters:</b>
                     <Button className="filter-type" shape="round" onClick={onFilterClick.bind(this)}>Kind</Button>
                     <Button className="filter-type" shape="round" onClick={onFilterClick.bind(this)}>Price</Button>
                 </div>

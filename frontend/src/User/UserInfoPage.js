@@ -1,25 +1,30 @@
 import { Layout, Menu, Breadcrumb} from 'antd';
 import React, { useState } from 'react';
 import './UserInfoPage.css'
-import { UserOutlined, TransactionOutlined, SmileOutlined} from '@ant-design/icons';
+import { UserOutlined, TransactionOutlined, BookOutlined} from '@ant-design/icons';
 import UserInfo from './UserInfo';
 import Header from '../Layout/Header';
 import '../Layout/Header.css'
 import PostedAnimals from './PostedAnimals';
 import TransactionHistory from './TransactionHistory';
 import { withRouter } from 'react-router-dom'
+import SubMenu from 'antd/lib/menu/SubMenu';
 
 const {Content, Sider } = Layout;
 
 const UserInfoPage = (props) => {
-    const [selectedKey, setSelectedKey] = useState(props.location.state.key)
+    console.log(props)
+    var initialKey = props.location == undefined ? 1 : props.location.state.key
+    const [selectedKey, setSelectedKey] = useState(initialKey)
 
     const switchComponent = (key) => {
         switch (key){
             case "1":
                 return(<UserInfo />);
             case "2":
-                return(<PostedAnimals />);
+                return(<PostedAnimals filter="1"/>);
+            case "2.5":
+                return(<PostedAnimals filter="2"/>);
             case "3":
                 return(<TransactionHistory />);
             default:
@@ -42,9 +47,10 @@ const UserInfoPage = (props) => {
                             <Menu.Item key="1" icon={<UserOutlined />}>
                                 Basic Information
                             </Menu.Item>
-                            <Menu.Item key="2" icon={<SmileOutlined />}>
-                                Posted Animals
-                            </Menu.Item>
+                            <SubMenu icon={<BookOutlined />} title="Posts">
+                                <Menu.Item key="2">My Posted Animals</Menu.Item>
+                                <Menu.Item key="2.5">My Favourite List</Menu.Item>
+                            </SubMenu>
                             <Menu.Item key="3" icon={<TransactionOutlined />}>
                                 Transaction History
                             </Menu.Item>

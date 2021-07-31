@@ -2,12 +2,17 @@ var express = require('express');
 var router = express.Router();
 const cors = require("cors");
 
+require("dotenv").config();
+//Must set environment variable STRIPE_SECRET_TEST in your OS to test this
+const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
+
 const Transaction = require('../models/transactionModel');
+const AnimalInfo = require('../models/animalinfoModel');
 
 //GET all transactions
 router.get("/", cors(), async (req, res) => {
     Transaction.find()
-        .then(transactions => res.json(transactions))
+        .then(transactions => res.status(200).json(transactions))
         .catch(error => res.status(400).json('Error: ' + error));
 });
 
@@ -19,8 +24,8 @@ router.get("/uuid", async (req, res) => {
         res.send([])
     } else {
         console.log("start find transaction history");
-        await Transaction.find({ 
-            $or:[ { 'buyerId': req.session.uuid }, { 'sellerId': req.session.uuid } ] 
+        await Transaction.find({
+            $or:[ { 'buyerId': req.session.uuid }, { 'sellerId': req.session.uuid } ]
         }, (err, doc) => {
             if(err){
                 res.status(404).send({
@@ -37,47 +42,94 @@ router.get("/uuid", async (req, res) => {
 router.post("/add", cors(), async (req, res) => {
     let transaction = req.body;
 
-    try {
-        const newTransaction = new Transaction({
-            buyerId: transaction.buyerId,
-            sellerId: transaction.sellerId,
-            animalId: transaction.animalId,
-            timestamp: transaction.timestamp,
-            price: transaction.price,
-            status: transaction.status,
-            tag: transaction.tag
+    const stripePaymentPromise = stripe.paymentIntents.create({
+        amount: transaction.price * 100,
+        currency: "CAD",
+        description: "PetPal",
+        payment_method: transaction.id,
+        //confirm will be set to true after 2 hours
+        confirm: false
+    });
+
+    const txPromise = stripePaymentPromise
+        .then((stripePayment) => {
+            console.log("Payment", stripePayment.id);
+
+            return new Transaction({
+                buyerId: transaction.buyerId,
+                sellerId: transaction.sellerId,
+                animalId: transaction.animalId,
+                timestamp: transaction.timestamp,
+                price: transaction.price,
+                status: transaction.status,
+                tag: transaction.tag,
+                stripeId: stripePayment.id
+            });
         });
 
-        await newTransaction.save()
-            .then(() => res.json({
-                message: "Transaction Successfully Created",
-                success: true,
-                data: newTransaction
-            }))
-            .catch(error => res.status(400).json('Error: ' + error));
-
-    }catch (err) {
-        await res.json({
-            message: "Failed to add transaction",
-            success: false
+    const result = txPromise
+        .then((newTransaction) => {
+            newTransaction.save()
+                .then(() => {
+                    return AnimalInfo.updateOne({_id: transaction.animalId}, {status: "sold"})
+                        .then(() => console.log("Animal status updated to 'sold'"))
+                        .catch(err => console.log("Fail to update animal status: " + err));
+                })
+                .then(() => {
+                    return res.json({
+                        message: "Successfully add transaction",
+                        success: true,
+                        data: newTransaction
+                    })
+                })
+                .catch(error => {
+                    console.log("Error adding transaction to DB: " + error);
+                    return res.status(400).json('Fail to add transaction: ' + error)
+                });
+        })
+        .catch(error => {
+            console.log("Failed to process payment: " + error);
+            return res.status(400).json({
+                message: "Fail to process payment: " + error,
+                success: false
+            });
         });
-    }
+
+    return result;
 });
 
-//update payment status
-// request body example:
-// {
-//     "id": TRANSACTION_ID,
-//     "status": NEW_STATUS
-// }
-router.patch("/update_status", cors(), async (req, res) => {
-    Transaction.updateOne({_id : req.body.id}, {status : req.body.status.trim().toLowerCase()}, function (err, docs) {
-        if (err){
-            res.status(400).json('Error: ' + error)
-        } else{
-            res.status(200).json("Successfully updated transaction status")
-        }
-    });
+/*
+Cancel payment
+
+request body example:
+ {
+     "id": TRANSACTION_ID,
+     "stripeId": STRIPE_ID,
+     "animalId": ANIMAL_ID
+ }
+ */
+router.patch("/cancel", cors(), async (req, res) => {
+    let transaction = req.body;
+
+    //cancel Stripe payment
+    const stripePayment = stripe.paymentIntents.cancel(transaction.stripeId);
+    stripePayment
+        .then(() => {
+            console.log("Stripe payment canceled");
+
+            //Update transaction status to "canceled"
+            Transaction.updateOne({_id : transaction.id}, {status : "canceled"})
+                .then(() => {
+
+                    //change animal status back to 'available'
+                    AnimalInfo.updateOne({_id: transaction.animalId}, {status: "available"})
+                        .then(() => res.status(200).json("Transaction successfully 'canceled'"))
+                        .catch(error => console.log("Fail to update animal status: " + error));
+                })
+                .catch(error => console.log("Fail to update transaction status: " + error))
+        })
+        .catch(error => console.log("Fail to cancel Stripe payment: " + error));
+
 });
 
 module.exports = router;

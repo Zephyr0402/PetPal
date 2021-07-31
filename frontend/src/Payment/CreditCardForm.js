@@ -3,10 +3,9 @@ import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {Button, Typography} from "antd";
 import { CloseCircleTwoTone } from '@ant-design/icons';
 import {getHeader} from "../Services/userService";
-import {TRANSACTION_STATUS} from "../Services/transactionService"
+import backendURL from "../Services/backendURL";
 
 const { Title, Text } = Typography;
-const backEndURL = "http://localhost:9999/";
 
 const CreditCardForm = (props) => {
     const [errorMsg, setErrorMsg] = useState("");
@@ -19,7 +18,7 @@ const CreditCardForm = (props) => {
     useEffect(() => {
         const animalId = { id : props.animal.id };
 
-        fetch( backEndURL + "animalinfo/userinfo", {
+        fetch( backendURL + "/animalinfo/userinfo", {
             method: "POST",
             headers: new Headers({
                 "Content-Type": "application/json",
@@ -76,38 +75,18 @@ const CreditCardForm = (props) => {
                 setIsProcessing(true);
                 const {id} = paymentMethod;
 
-                const payment = {
-                    amount: props.animal.price * 100,
-                    id
-                };
-
-                //Post Stripe payment
-                fetch(backEndURL + "api/payment", {
-                    method: "POST",
-                    headers: new Headers({
-                        "Content-Type": "application/json",
-                    }),
-                    body: JSON.stringify(payment)
-                }).then(res => {
-                    if(res.status === 200) {
-                        props.setPaymentSuccess(true);
-                    }else if(res.status >= 400){
-                        res.text().then(text => setErrorMsg(text));
-                    }
-                });
-
                 const transaction = {
                     buyerId: userId,
                     sellerId: sellerId,
                     animalId: props.animal._id,
                     timestamp: new Date(),
                     price: props.animal.price,
-                    status: TRANSACTION_STATUS.PENDING,
+                    status: "pending",
                     tag: props.animal.kind,
+                    id
                 };
 
-                //Post transaction
-                fetch(backEndURL + "api/transaction/add", {
+                fetch(backendURL + "/api/transaction/add", {
                     method: "POST",
                     headers: new Headers({
                         "Content-Type": "application/json",
@@ -117,24 +96,10 @@ const CreditCardForm = (props) => {
                     if(res.status === 200) {
                         res.json().then(result => {
                             props.setNewTransaction(result.data);
+                            props.setPaymentSuccess(true);
                         });
                     }else if(res.status >= 400){
                         res.text().then(text => setErrorMsg(text));
-                    }
-                });
-
-                const animalStatus = { id : props.animal.id, status: "sold" };
-                fetch(backEndURL + "animalinfo/changestatus", {
-                    method: "POST",
-                    headers: new Headers({
-                        "Content-Type": "application/json",
-                    }),
-                    body: JSON.stringify(animalStatus)
-                }).then(res => {
-                    if(res.status === 200) {
-                        console.log("animal status successfully updated");
-                    }else if(res.status >= 400){
-                        console.log("Fail to update animal status");
                     }
                 });
 

@@ -34,12 +34,11 @@ export const KindFilter = (props) => {
 
     return(
         <div className = "filter-border">
-            Kind:<br/>
             <div>
-                <Button className = "kind-filter-option" shape="round" onClick = {onKindChange}>Cat</Button>
-                <Button className = "kind-filter-option" shape="round" onClick = {onKindChange}>Dog</Button>
-                <Button className = "kind-filter-option" shape="round" onClick = {onKindChange}>Bird</Button>
-                <Button className = "kind-filter-option" shape="round" onClick = {onKindChange}>Fish</Button>
+                <Button className = "kind-filter-option" onClick = {onKindChange}>Cat</Button>
+                <Button className = "kind-filter-option" onClick = {onKindChange}>Dog</Button>
+                <Button className = "kind-filter-option" onClick = {onKindChange}>Bird</Button>
+                <Button className = "kind-filter-option" onClick = {onKindChange}>Fish</Button>
             </div>
         </div>
     )
@@ -101,7 +100,6 @@ export const PriceFilter = (props) => {
 
     return(
         <div className = "filter-border">
-            Price Range:<br/>
             <InputNumber 
                 id = "minPriceInput" 
                 min = {range.min} max = {curRange.max} defaultValue = {range.min} value = {curRange.min} 
@@ -109,7 +107,9 @@ export const PriceFilter = (props) => {
                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} parser={value => value.replace(/\$\s?|(,*)/g, '')}
                 onChange = {onRangeMinInputChange}/>
             <LineOutlined />
+            <LineOutlined />
             <InputNumber 
+                style = {{marginLeft : "8px"}}
                 id = "maxPriceInput" 
                 min = {curRange.min} max = {range.max} defaultValue = {range.max} value = {curRange.max} 
                 bordered = {false} size = 'large'
