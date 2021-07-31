@@ -3,9 +3,9 @@ import {CardElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {Button, Typography} from "antd";
 import { CloseCircleTwoTone } from '@ant-design/icons';
 import {getHeader} from "../Services/userService";
+import backendURL from "../Services/backendURL";
 
 const { Title, Text } = Typography;
-const backEndURL = "http://localhost:9999/";
 
 const CreditCardForm = (props) => {
     const [errorMsg, setErrorMsg] = useState("");
@@ -18,7 +18,7 @@ const CreditCardForm = (props) => {
     useEffect(() => {
         const animalId = { id : props.animal.id };
 
-        fetch( backEndURL + "animalinfo/userinfo", {
+        fetch( backendURL + "/animalinfo/userinfo", {
             method: "POST",
             headers: new Headers({
                 "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const CreditCardForm = (props) => {
                     id
                 };
 
-                fetch(backEndURL + "api/transaction/add", {
+                fetch(backendURL + "/api/transaction/add", {
                     method: "POST",
                     headers: new Headers({
                         "Content-Type": "application/json",
