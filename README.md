@@ -1,6 +1,7 @@
 # PetPal
 *CPSC 455 Group Project: 2021 Summer* 
 
+PetPal is an online trading platform that specifically desgin for animal lovers. In here you can look up the pets being sold nearby, make transactions and share your comments. If you are selling your pets, you can just simply make a post on PetPal then wait for a good match!  
 
 ## Group members
 
