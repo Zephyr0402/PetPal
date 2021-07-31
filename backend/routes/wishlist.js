@@ -11,7 +11,7 @@ router.get("/:animalId&:uuid", cors(), async (req, res) => {
         userId: req.params.uuid,
     })
         .then(item => {
-            res.json(item);
+            res.status(200).json(item);
         })
         .catch(error => res.status(400).json('Fail to get animal from the wishlist: ' + error));
 });
@@ -21,7 +21,7 @@ router.get("/:uuid", cors(), async (req, res) => {
     WishList.find({
         userId: req.params.uuid,
     })
-        .then(wishList => res.json(wishList))
+        .then(wishList => res.status(200).json(wishList))
         .catch(error => res.status(400).json('Fail to get the wishlist: ' + error));
 });
 
@@ -36,7 +36,7 @@ router.post("/add", cors(), async (req, res) => {
 
     await newItem.save()
         .then(() =>
-            res.json({
+            res.status(200).json({
                 message: "Successfully add animal to the wishlist",
                 data: newItem
             }))
@@ -51,7 +51,7 @@ router.delete("/delete", cors(), async (req, res) => {
         animalId: wishList.animalId,
         userId: wishList.userId
     }).then(() =>
-        res.json({
+        res.status(200).json({
             message: "Successfully delete animal from the wishlist",
         }))
         .catch(error => res.status(400).json('Fail to delete animal from the wishlist: ' + error));
