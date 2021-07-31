@@ -17,6 +17,8 @@ const AnimalCard = (props) => {
     }, [])
 
     let thisCard = props.animalCardInfo;
+
+    console.log('thisCard' + thisCard.userinfo);
     if (thisCard === undefined) {
         thisCard = {
             name: 'None',
@@ -42,7 +44,7 @@ const AnimalCard = (props) => {
                 <div className="card-header">
                     <Button type = 'text' onClick = {() => props.setDisplay(-1)}><ArrowLeftOutlined/></Button>
                     <Meta
-                        avatar={<Avatar src={thisCard.userAvatar} />}
+                        avatar={<Avatar src={thisCard.userinfo.avatar} />}
                         title={thisCard.user}
                     />
                 </div>
@@ -64,10 +66,9 @@ const AnimalCard = (props) => {
                     <hr color = "white"/>
                     <Descriptions bordered>
                         <Descriptions.Item label = "Name" span={3}>{thisCard.name}</Descriptions.Item>
-                        <Descriptions.Item label = "Age" span={3}>{thisCard.age}</Descriptions.Item>
+                        <Descriptions.Item label="Age" span={3}>{thisCard.animalAgeYear + " year " + thisCard.animalAgeMonth + " month"}</Descriptions.Item>
                         <Descriptions.Item label = "Kind" span={3}>{thisCard.kind}</Descriptions.Item>
-                        <Descriptions.Item label = "Street" span={1.5}>3338 Webber Lane</Descriptions.Item>
-                        <Descriptions.Item label = "City" span = {1.5}>Vancouver</Descriptions.Item>
+                        <Descriptions.Item label = "Address" span={3}>{thisCard.address}</Descriptions.Item>
                         <Descriptions.Item label = "Price (CAD)" span={3}>{thisCard.price}</Descriptions.Item>
                         <Descriptions.Item label="Description">{thisCard.description}</Descriptions.Item>
                     </Descriptions>
