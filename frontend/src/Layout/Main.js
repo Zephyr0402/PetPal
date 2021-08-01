@@ -6,25 +6,30 @@ import AnimalCard from '../AnimalCard/AnimalCard'
 import AnimalMap from '../AnimalMap/Map';
 import Payment from "../Payment/Payment";
 import { fetchAnimalList } from '../Services/fetchData';
+import { withRouter } from 'react-router-dom'
 
 const Main = (props) => {
+    const [animalInfos, setAnimalInfos] = useState([]);
     const [display, setDisplay] = useState(-1);
     const [displayCheckout, setDisplayCheckout] = useState(false);
-    const [animalInfos, setAnimalInfos] = useState([]);
 
     const setMyDisplay = (e) => {
         setDisplay(e);
     }
 
     useEffect(() => {
-        // fetch animal info from backend
         fetchAnimalList().then(res => {
-            //console.log("fetchAnimalList", res);
             setAnimalInfos(res);
-            //console.log(typeof (animalInfos));
+            if(props.location.query != undefined){
+                for(var i = 0; i< res.length; i++){
+                    if(res[i].id == props.location.query.display){
+                        setDisplay(i)
+                        break
+                    }       
+                }
+            }
         });
     }, [display]);
-
     return(
         <Layout>
             <Header/>
@@ -46,4 +51,4 @@ const Main = (props) => {
     );
 }
 
-export default Main;
+export default withRouter(Main);

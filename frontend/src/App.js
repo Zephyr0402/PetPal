@@ -7,7 +7,7 @@ import SignUpForm from './User/SignUpForm'
 import UserInfoPage from './User/UserInfoPage'
 import "antd/dist/antd.css";
 import ResetPwdForm from './User/ResetPwdForm'
-import CommentCollection from './AnimalCard/Comments';
+import UserAvatar from './Layout/Avatar';
 
 function App() {
 
@@ -34,8 +34,8 @@ function App() {
         </Route>
         <Route path = "/reset_pwd/:token" component = {ResetPwdForm}>
         </Route>
-        <Route path = "/commenttest">
-          <CommentCollection commentType = "animal" id = "0"/>
+        <Route path = "/avatartest">
+          <UserAvatar size = {401} src = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></UserAvatar>
         </Route>
       </Switch>
     </BrowserRouter>

@@ -8,7 +8,7 @@
 .card-header{
     display: flex;
     justify-content: space-between;
-    padding: 0.8rem 0.8rem 0.8rem 0;
+    padding: 0.8rem 0.8rem 0.8rem 0rem;
     position: sticky;
     top: 0;
     z-index: 999;

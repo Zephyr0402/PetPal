@@ -1,4 +1,5 @@
 import backendURL from "./backendURL";
+import axios from 'axios';
 
 export const addToWishList = (animal, user) => {
     const newItem = {
@@ -61,5 +62,10 @@ export const removeFromWishList = (animal, user) => {
     });
 
 };
+
+export const getWishList = async () => {
+    return await axios.get(backendURL+'/api/wishlist/uuid')
+        .then(res => res.data);
+}
 
 

@@ -3,6 +3,7 @@ var router = express.Router();
 const cors = require("cors");
 
 const WishList = require('../models/wishlistModel');
+const AnimalInfo = require('../models/animalinfoModel')
 
 //find wishlist by user uuid and animal id
 router.get("/:animalId&:uuid", cors(), async (req, res) => {
@@ -17,12 +18,35 @@ router.get("/:animalId&:uuid", cors(), async (req, res) => {
 });
 
 //get wishList by user uuid
-router.get("/:uuid", cors(), async (req, res) => {
-    WishList.find({
-        userId: req.params.uuid,
-    })
-        .then(wishList => res.status(200).json(wishList))
-        .catch(error => res.status(400).json('Fail to get the wishlist: ' + error));
+router.get("/uuid", async (req, res) => {
+    console.log(req.session)
+    if(req.session.uuid === undefined){
+        console.log("Session is expired")
+    }else{
+        WishList.find({
+            userId: req.session.uuid,
+        }, (err, docs) => {
+            if(err){
+                res.status(404).send({
+                    message: 'Fail to get the wishlist: ' + err
+                })
+            } else {
+                var ids = docs.map((doc) => { return doc.animalId; });
+                // console.log(doc);
+                // res.send(doc);
+                AnimalInfo.find({"_id": {$in: ids}}, "id name image description", (err, docs) => {
+                    if(err){
+                        res.status(404).send({
+                            message: "Something wrong when getting animal info"
+                        })
+                    }else{
+                        console.log(docs)
+                        res.send(docs)
+                    }
+                });
+            }
+        })
+    }
 });
 
 //add animal to wishList
