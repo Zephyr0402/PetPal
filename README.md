@@ -1,7 +1,10 @@
 # PetPal
 *CPSC 455 Group Project: 2021 Summer* 
 
-PetPal is an online trading platform that specifically desgin for animal lovers. In here you can look up the pets being sold nearby, make transactions and share your comments. If you are selling your pets, you can just simply make a post on PetPal then wait for a good match!  
+PetPal is an online trading platform that is specifically designed for animal lovers. If you are interested in
+ adopting or buying a new pet, you can use this app to search for animals being sold in your local area, make
+  credit card payment for your purchase, create personalized wishlist and share your comments. If you are selling
+   your pets, you can simply make your post on PetPal, and then wait for a good match!  
 
 ## Group members
 
