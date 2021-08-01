@@ -27,6 +27,7 @@ function OrderConfirmation(props) {
             <Link to = {{pathname:'/user', state : { key:"3" }}}>
                 View your order
             </Link>
+            <p>You may cancel your order within 2 hours after it is processed.</p>
         </div>
     )
 }
