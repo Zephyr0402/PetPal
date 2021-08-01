@@ -17,7 +17,7 @@ export const addToWishList = (animal, user) => {
         if(res.status === 200) {
             return true;
         }else if(res.status >= 400){
-            throw new Error("Fail to add animal to wishlist");
+            console.log("Fail to add animal to wishlist");
         }
     });
 };
@@ -34,7 +34,7 @@ export const isInWishList = (animal, user) => {
                 return data.length > 0
             });
         }else if(res.status >= 400){
-            throw new Error("Fail to get animal from wishlist");
+            console.log("Fail to get animal from wishlist");
         }
     });
 };
@@ -57,7 +57,7 @@ export const removeFromWishList = (animal, user) => {
         if(res.status === 200) {
             return true;
         }else if(res.status >= 400){
-            throw new Error("Fail to remove animal from wishlist");
+            console.log("Fail to remove animal from wishlist");
         }
     });
 

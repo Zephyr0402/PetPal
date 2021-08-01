@@ -1,35 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import {Card, Col, Row} from 'antd';
+import { CloseCircleFilled } from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 import { getPostedAnimals } from '../Services/postAnimalInfo';
-import { getWishList } from '../Services/wishlistService'
+import {getWishList, removeFromWishList} from '../Services/wishlistService'
 import './UserInfoPage.css'
+import {getUserInfo} from "../Services/userService";
 
 const { Meta } = Card;
 
 function PostedAnimals(props){
     // console.log(props);
 
-    const [animalinfo, setanimalinfo] = useState([])
+    const [animalinfo, setanimalinfo] = useState([]);
+    const [userId, setUserId] = useState("");
 
     useEffect(() => {
         console.log(props);
-        props.filter === "1" ? 
+        props.filter === "1" ?
         getPostedAnimals()
             .then((res) => {
                 console.log("1");
                 setanimalinfo(res);
-            }) 
+            })
         :
         getWishList()
             .then((res) => {
                 console.log("2")
                 setanimalinfo(res);
-            })
+            });
+
+        getUserInfo()
+            .then(res => {
+                setUserId(res.uuid);
+            });
     },[props.filter]);
-    
+
+    const handleRemoveFromWishlist = (animalId, userId) => {
+        removeFromWishList(animalId, userId).then(() => {
+            window.location.reload();
+        });
+    }
+
     const cardDisplay = animalinfo.map((card) =>
-    <Col xs={24} md={12} lg={8} xl={6} xxl={4}>
+    <Col className="posts-thumbnail" xs={24} md={12} lg={8} xl={6} xxl={4}>
         <Link to = {{pathname:'/map', query : { display: card.id }}}>
             <Card
             hoverable
@@ -39,6 +53,7 @@ function PostedAnimals(props){
             <Meta title={card.name} description={card.description} />
             </Card>
         </Link>
+        <CloseCircleFilled onClick={() => handleRemoveFromWishlist(card._id, userId)}/>
     </Col>
 )
 
