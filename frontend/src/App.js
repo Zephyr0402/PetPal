@@ -29,7 +29,7 @@ function App() {
         <Route path = "/register">
           <SignUpForm/>
         </Route>
-        <Route path = "/user">
+        <Route path = "/user/:uuid">
           <UserInfoPage/>
         </Route>
         <Route path = "/reset_pwd/:token" component = {ResetPwdForm}>

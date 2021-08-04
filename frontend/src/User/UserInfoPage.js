@@ -1,5 +1,5 @@
 import { Layout, Menu, Breadcrumb} from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import './UserInfoPage.css'
 import { UserOutlined, TransactionOutlined, BookOutlined} from '@ant-design/icons';
 import UserInfo from './UserInfo';
@@ -13,9 +13,10 @@ import SubMenu from 'antd/lib/menu/SubMenu';
 const {Content, Sider } = Layout;
 
 const UserInfoPage = (props) => {
-    console.log(props)
-    var initialKey = props.location == undefined ? 1 : props.location.state.key
+    //props.match.params.uuid
+    var initialKey = props.location.query == undefined ? "1": props.location.query.key
     const [selectedKey, setSelectedKey] = useState(initialKey)
+    console.log(selectedKey)
 
     const switchComponent = (key) => {
         switch (key){
