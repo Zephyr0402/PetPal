@@ -1,6 +1,6 @@
 const database = require('../database/database');
 
-const NotificationInfo = database.model('NotificationinfoModel', new database.Schema({
+const NotificationInfo = database.model('NotificationInfo', new database.Schema({
     type: String,
     sourceUserID: String,
     destinationUserID: String,
