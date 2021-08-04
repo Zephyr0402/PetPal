@@ -52,6 +52,7 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
         })
 
         userComments.push({
+            'cmtorid' : c.cmtorid,
             'ucid' : c.ucid,
             'name': userInfo.name,
             'avatar': userInfo.avatar,
@@ -91,6 +92,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
             }, 'name avatar')
 
             replies.push({
+                'cmtorid' : resizeBy.cmtorid,
                 'ucid' : r.ucid,
                 'name' : repliesUserInfo.name,
                 'avatar': repliesUserInfo.avatar,
@@ -102,6 +104,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
         }
 
         animalComments.push({
+            'cmtorid' : c.cmtorid,
             'ucid' : c.ucid,
             'name': userInfo.name,
             'avatar': userInfo.avatar,
