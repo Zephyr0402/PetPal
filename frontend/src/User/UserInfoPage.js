@@ -14,8 +14,8 @@ const {Content, Sider } = Layout;
 
 const UserInfoPage = (props) => {
     //props.match.params.uuid
-
-    const [selectedKey, setSelectedKey] = useState(props.location.query.key)
+    var initialKey = props.location.query == undefined ? "1": props.location.query.key
+    const [selectedKey, setSelectedKey] = useState(initialKey)
     console.log(selectedKey)
 
     const switchComponent = (key) => {

@@ -1,13 +1,12 @@
 import React, {useState} from 'react'
-import {Avatar} from 'antd'
+import {Avatar, Image} from 'antd'
 
 const UserAvatar = (props) => {
-    const [url, setUrl] = useState("/user/"+props.uuid)
     return( 
-        <a href = {url}>
+        <a href = {'/user/'+props.uuid}>
             <Avatar
                 size = {props.size}
-                src = {props.src}
+                src = {<img style = {{height: props.size, width: props.size}} src={props.src}></img>}
             />
         </a>
     )

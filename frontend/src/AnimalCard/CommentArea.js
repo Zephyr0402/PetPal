@@ -5,13 +5,13 @@ import { getUserInfo } from '../Services/userService';
 
 export const CommentArea = (props) => {
     const [form] = Form.useForm();
-    const [avatar, setAvatar] = useState("");
-
+    const [avatar, setAvatar] = useState({});
+    console.log(avatar.uuid)
     const commentInput = useRef("");
 
     useEffect(() => {
       getUserInfo().then(
-        res => setAvatar(res.avatar)
+        res => setAvatar(res)
       )
     },[])
 
@@ -27,11 +27,7 @@ export const CommentArea = (props) => {
     return(
         <Comment
           avatar={
-            <Avatar
-              src={avatar}
-              alt="Han Solo"
-            />
-            //<UserAvatar size = {20} src = {avatar}/>
+            <UserAvatar size = {20} src = {avatar.avatar} uuid = {avatar.uuid}/>
           }
           content={
             <Form
