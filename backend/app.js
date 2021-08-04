@@ -12,6 +12,8 @@ var accountRouter = require('./routes/account');
 var paymentRouter = require('./routes/payment');
 var postRouter = require('./routes/animalinfo');
 var transactionRouter = require('./routes/transaction')
+var notificationRouter = require('./routes/notification')
+var messageRouter = require('./routes/message')
 
 const cookieMaxAge = 60*60*1000;
 const SECRET = "znhy";
@@ -53,6 +55,8 @@ app.use('/', commentRouter);
 app.use('/api/payment', paymentRouter);
 app.use('/animalinfo', postRouter);
 app.use('/api/transaction', transactionRouter);
+app.use('/api/notify', notificationRouter);
+app.use('/api/message', messageRouter);
 
 
 
