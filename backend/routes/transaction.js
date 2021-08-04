@@ -12,7 +12,7 @@ const AnimalInfo = require('../models/animalinfoModel');
 //GET all transactions
 router.get("/", cors(), async (req, res) => {
     Transaction.find()
-        .then(transactions => res.json(transactions))
+        .then(transactions => res.status(200).json(transactions))
         .catch(error => res.status(400).json('Error: ' + error));
 });
 
@@ -42,48 +42,60 @@ router.get("/uuid", async (req, res) => {
 router.post("/add", cors(), async (req, res) => {
     let transaction = req.body;
 
-    try {
-        const stripePayment = await stripe.paymentIntents.create({
-            amount: transaction.price * 100,
-            currency: "CAD",
-            description: "PetPal",
-            payment_method: transaction.id,
-            //confirm will be set to true after 2 hours
-            confirm: false
+    const stripePaymentPromise = stripe.paymentIntents.create({
+        amount: transaction.price * 100,
+        currency: "CAD",
+        description: "PetPal",
+        payment_method: transaction.id,
+        //confirm will be set to true after 2 hours
+        confirm: false
+    });
+
+    const txPromise = stripePaymentPromise
+        .then((stripePayment) => {
+            console.log("Payment", stripePayment.id);
+
+            return new Transaction({
+                buyerId: transaction.buyerId,
+                sellerId: transaction.sellerId,
+                animalId: transaction.animalId,
+                timestamp: transaction.timestamp,
+                price: transaction.price,
+                status: transaction.status,
+                tag: transaction.tag,
+                stripeId: stripePayment.id
+            });
         });
 
-        console.log("Payment", stripePayment.id);
-
-        const newTransaction = new Transaction({
-            buyerId: transaction.buyerId,
-            sellerId: transaction.sellerId,
-            animalId: transaction.animalId,
-            timestamp: transaction.timestamp,
-            price: transaction.price,
-            status: transaction.status,
-            tag: transaction.tag,
-            stripeId: stripePayment.id
-        });
-
-        await newTransaction.save()
-            .then(() =>
-                res.json({
-                message: "Successfully add transaction",
-                success: true,
-                data: newTransaction
-            }))
-            .catch(error => res.status(400).json('Fail to add transaction: ' + error));
-
-        AnimalInfo.updateOne({_id: transaction.animalId}, {status: "sold"})
-            .then(() => console.log("Animal status updated to 'sold'"))
-            .catch(err => console.log("Fail to update animal status: " + err));
-
-    }catch (error) {
-        await res.json({
-            message: "Fail to post Stripe payment: " + error,
-            success: false
+    const result = txPromise
+        .then((newTransaction) => {
+            newTransaction.save()
+                .then(() => {
+                    return AnimalInfo.updateOne({_id: transaction.animalId}, {status: "sold"})
+                        .then(() => console.log("Animal status updated to 'sold'"))
+                        .catch(err => console.log("Fail to update animal status: " + err));
+                })
+                .then(() => {
+                    return res.json({
+                        message: "Successfully add transaction",
+                        success: true,
+                        data: newTransaction
+                    })
+                })
+                .catch(error => {
+                    console.log("Error adding transaction to DB: " + error);
+                    return res.status(400).json('Fail to add transaction: ' + error)
+                });
         })
-    }
+        .catch(error => {
+            console.log("Failed to process payment: " + error);
+            return res.status(400).json({
+                message: "Fail to process payment: " + error,
+                success: false
+            });
+        });
+
+    return result;
 });
 
 /*
