@@ -12,7 +12,7 @@ const AnimalThumbnail = (props) => {
     }, [props.name]);
 
     return (
-        <Card className="animal-thumbnail" hoverable cover={<img alt="example" style={{ height: "100%", objectFit: 'cover', width: 300 }} src={props.content.image} />} onClick={() => props.setDisplay(props.index)}>
+        <Card className="animal-thumbnail" hoverable cover={<img alt={name + " image"} src={props.content.image} />} onClick={() => props.setDisplay(props.index)}>
             <Meta
                 title={name}
                 description={'$' + props.content.price}

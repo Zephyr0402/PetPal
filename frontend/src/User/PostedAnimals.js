@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Card, Col, Row} from 'antd';
-import { CloseCircleFilled } from '@ant-design/icons';
+import { CloseCircleTwoTone } from '@ant-design/icons';
 import {Link} from 'react-router-dom';
 import { getPostedAnimals } from '../Services/postAnimalInfo';
 import {getWishList, removeFromWishList} from '../Services/wishlistService'
@@ -47,13 +47,16 @@ function PostedAnimals(props){
         <Link to = {{pathname:'/map', query : { display: card.id }}}>
             <Card
             hoverable
-            style={{ height: "95%", objectFit: 'cover', width: 200}}
+            style={{ height: "97%", objectFit: 'cover', width: 200}}
             cover={<img alt={card.name} src={card.image} width="200" height="180"/>}
             >
             <Meta title={card.name} description={card.description} />
             </Card>
         </Link>
-        <CloseCircleFilled onClick={() => handleRemoveFromWishlist(card._id, userId)}/>
+        {props.filter === "2" ?
+            <CloseCircleTwoTone onClick={() => handleRemoveFromWishlist(card._id, userId)}/> :
+            <></>
+        }
     </Col>
 )
 

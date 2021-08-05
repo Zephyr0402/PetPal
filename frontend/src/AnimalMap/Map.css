@@ -1,0 +1,21 @@
+.map-container .gm-svpc {
+    top: 15px !important;
+}
+
+
+@media only screen and (max-width: 650px) {
+    .map-container {
+        width: 100% !important;
+    }
+
+    .map-container .gm-bundled-control-on-bottom {
+        bottom: 200px !important;
+    }
+
+    .map-container .gm-style-mtc button {
+        font-size: 14px !important;
+        height: 30px !important;
+        padding: 0px 16px !important;
+    }
+
+}

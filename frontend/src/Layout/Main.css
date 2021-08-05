@@ -1,0 +1,47 @@
+.aside-wrapper {
+    background-color: white;
+    flex: 0 0 38% !important;
+    max-width: 700px !important;
+    min-width: 0 !important;
+    width: 38% !important;
+}
+
+.toggle-map-list-button {
+    width: 36px;
+    height: 36px;
+    z-index: 9999;
+    position: absolute;
+    bottom: 5px;
+    right: 9px;
+    background-color: #3c3b3b;
+    border-radius: 100%;
+    -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+.toggle-map-list-button svg {
+    fill: #ffffff;
+}
+
+.show-map, .show-list {
+    display: block;
+}
+
+.hide-map, .hide-list {
+    display: none;
+}
+
+
+@media only screen and (max-width: 650px) {
+   .aside-wrapper {
+        flex: none !important;
+        width: 100% !important;
+    }
+
+    .toggle-map-list-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

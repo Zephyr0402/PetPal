@@ -18,10 +18,20 @@
     position: relative;
 }
 
+.posts-thumbnail .ant-card-cover{
+    height: 150px;
+}
+
+
+.posts-thumbnail .ant-card-cover img {
+    object-fit: cover;
+    height: 150px;
+}
+
 .posts-thumbnail span[aria-label="close-circle"] {
     position: absolute;
-    top: -5px;
-    right: 7px;
+    top: 5px;
+    left: 13px;
     cursor: pointer;
 }
 

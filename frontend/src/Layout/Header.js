@@ -24,15 +24,15 @@ const Header = (props) => {
     const onLogout = async () => {
         await logout().then(
             (res) => message.error({
-                content: "Log out successfully. You will be redirected to main page in 1 seconds", 
-                duration: 1, 
+                content: "Log out successfully. You will be redirected to main page in 1 seconds",
+                duration: 1,
                 icon: <InfoCircleTwoTone twoToneColor="#52c41a"/>,
                 onClose: () => {
                 window.location.href = "/";
             }
             })
         )
-        
+
     }
 
     const onMenuVisibleChange = () => {
@@ -55,7 +55,7 @@ const Header = (props) => {
     return (
         <header className = "header">
             <a href="http://localhost:3000/map">
-                <img src="https://i.ibb.co/k3rqzWb/Petpal-logo.png" alt="Petpal-logo" border="0" width={200}/>
+                <img src="https://i.ibb.co/k3rqzWb/Petpal-logo.png" alt="Petpal-logo" border="0" width={180}/>
             </a>
             {
                 header.name === undefined ?
