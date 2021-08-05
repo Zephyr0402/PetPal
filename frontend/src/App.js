@@ -7,7 +7,7 @@ import SignUpForm from './User/SignUpForm'
 import UserInfoPage from './User/UserInfoPage'
 import "antd/dist/antd.css";
 import ResetPwdForm from './User/ResetPwdForm'
-import UserAvatar from './Layout/Avatar';
+import Chat from './Chat/Chat';
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path = "/">
-          <Redirect to = "/map"/>
+          <Redirect to = "/chat"/>
         </Route>
         <Route path = "/map">
           <Main/>
@@ -32,11 +32,8 @@ function App() {
         <Route path = "/user/:uuid">
           <UserInfoPage/>
         </Route>
-        <Route path = "/reset_pwd/:token" component = {ResetPwdForm}>
-        </Route>
-        <Route path = "/avatartest">
-          <UserAvatar size = {401} src = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></UserAvatar>
-        </Route>
+        <Route path = "/reset_pwd/:token" component = {ResetPwdForm}/>
+        <Route path = "/chat" component = {Chat}/>
       </Switch>
     </BrowserRouter>
   );

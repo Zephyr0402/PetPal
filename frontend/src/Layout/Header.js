@@ -4,6 +4,7 @@ import './Header.css';
 import {Link, Redirect} from 'react-router-dom';
 import { FormOutlined, DownOutlined, CheckCircleFilled, CheckCircleTwoTone, InfoCircleTwoTone} from '@ant-design/icons';
 import { getHeader, getUserInfo, logout } from '../Services/userService';
+import { closeSocket } from '../Chat/Socket';
 
 const Header = (props) => {
     const [header, setHeader] = useState({});
