@@ -3,6 +3,7 @@ import { Comment, Tooltip, Avatar, Divider } from 'antd';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import {LikeComment, DislikeComment} from '../Services/commentService'
 import {CommentArea} from './CommentArea'
+import UserAvatar from '../Layout/Avatar';
 
 const SingleComment = (props) => {
     const cmtDetail = props.commentDetail;
@@ -12,6 +13,7 @@ const SingleComment = (props) => {
     const [disliked, setDisliked] = useState(false);
 
     const [showCommentArea,setShowCommentArea] = useState(false)
+    console.log(cmtDetail)
 
     const like = () => {
       setLiked(true);
@@ -96,10 +98,11 @@ const SingleComment = (props) => {
             actions={actions}
             author={<a>{cmtDetail.name}</a>}
             avatar={
-                <Avatar
-                src={cmtDetail.avatar}
-                alt="Username loading..."
-                />
+                // <Avatar
+                // src={cmtDetail.avatar}
+                // alt="Username loading..."
+                // />
+                <UserAvatar size = {35} src = {cmtDetail.avatar} uuid = {cmtDetail.cmtorid}/>
             }
             content={
                 <p>

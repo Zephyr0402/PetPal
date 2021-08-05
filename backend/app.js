@@ -14,6 +14,8 @@ var transactionRouter = require('./routes/transaction');
 var wishListRouter = require('./routes/wishlist');
 
 var updateTransactionStatus = require('./backgroundTasks/updateTransactionStatus');
+var notificationRouter = require('./routes/notification')
+var messageRouter = require('./routes/message')
 
 const cookieMaxAge = 60*60*1000;
 const SECRET = "znhy";
@@ -55,6 +57,8 @@ app.use('/', commentRouter);
 app.use('/animalinfo', postRouter);
 app.use('/api/transaction', transactionRouter);
 app.use('/api/wishlist', wishListRouter);
+app.use('/api/notify', notificationRouter);
+app.use('/api/message', messageRouter);
 
 
 
