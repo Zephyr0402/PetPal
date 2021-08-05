@@ -118,7 +118,7 @@ const CreditCardForm = (props) => {
 
     return (
         <div className="credit-card-form">
-            <Title level={2} className="payment-summary"><span>Payment for {props.animal.name}</span><span>${props.animal.price}</span></Title>
+            <Title level={2} className="payment-summary"><span>{props.animal.name}</span><span>${props.animal.price}</span></Title>
             <form onSubmit={handleSubmit}>
                 <h3>Please enter your valid credit card</h3>
                 <fieldset className="form-group">
@@ -128,7 +128,7 @@ const CreditCardForm = (props) => {
                 </fieldset>
                 {isProcessing ?
                     <Text >Processing Payment</Text > :
-                    <Button type="primary" htmlType="submit">Make Payment</Button>
+                    <Button type="primary" htmlType="submit">Pay ${props.animal.price}</Button>
                 }
 
             </form>

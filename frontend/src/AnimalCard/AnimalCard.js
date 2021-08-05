@@ -82,7 +82,7 @@ const AnimalCard = (props) => {
                     style={{ width: '100%', marginBottom:"20px" }}
                     cover={
                         <img
-                            alt="example"
+                            alt={thisCard.name + " image"}
                             src={thisCard.image}
                         />
                     }

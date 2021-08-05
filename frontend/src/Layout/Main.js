@@ -55,15 +55,12 @@ const Main = (props) => {
         setDisplayList(!displayList);
     };
 
-
-    console.log(windowSize.width);
-
     return(
         <Layout>
             <Header/>
             <Layout>
                 <Layout.Sider className =
-                                  {windowSize.width > 650 || displayList ?
+                                  {windowSize.width > 750 || displayList ?
                                       "aside-wrapper show-list" :
                                       "aside-wrapper hide-list"}
                               width = "38%">
@@ -74,7 +71,7 @@ const Main = (props) => {
                             <AnimalCard aid={display} animalCardInfo={ animalInfos[display] } setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout}/> }
                 </Layout.Sider>
                 <Layout className=
-                            {windowSize.width > 650 || !displayList ?
+                            {windowSize.width > 750 || !displayList ?
                                 "map-wrapper show-map" :
                                 "map-wrapper hide-map"} >
                     <Layout.Content>
@@ -82,9 +79,12 @@ const Main = (props) => {
                     </Layout.Content>
                 </Layout>
             </Layout>
-            <div className="toggle-map-list-button" onClick={handleToggle}>
-                { displayList ? <EnvironmentFilled/> : <UnorderedListOutlined/>}
-            </div>
+            {display === -1 ?
+                <div className="toggle-map-list-button" onClick={handleToggle}>
+                    {displayList ? <EnvironmentFilled/> : <UnorderedListOutlined/>}
+                </div> :
+                <></>
+            }
         </Layout>
 
     );

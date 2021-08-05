@@ -1,9 +1,12 @@
 .aside-wrapper {
     background-color: white;
-    flex: 0 0 38% !important;
-    max-width: 700px !important;
+    flex: none !important;
+    max-width: 38% !important;
     min-width: 0 !important;
     width: 38% !important;
+    -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    z-index: 8888;
 }
 
 .toggle-map-list-button {
@@ -11,8 +14,8 @@
     height: 36px;
     z-index: 9999;
     position: absolute;
-    bottom: 5px;
-    right: 9px;
+    bottom: 10px;
+    right: 17px;
     background-color: #3c3b3b;
     border-radius: 100%;
     -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
@@ -32,10 +35,17 @@
     display: none;
 }
 
+@media only screen and (max-width: 1300px) {
+    .aside-wrapper {
+        max-width: 50% !important;
+        width: 50% !important;
+    }
+}
 
-@media only screen and (max-width: 650px) {
+
+@media only screen and (max-width: 750px) {
    .aside-wrapper {
-        flex: none !important;
+        max-width: 100% !important;
         width: 100% !important;
     }
 

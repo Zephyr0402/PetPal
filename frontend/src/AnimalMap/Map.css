@@ -2,14 +2,22 @@
     top: 15px !important;
 }
 
+@media only screen and (max-width: 1250px) {
+    .map-container {
+        width: 50% !important;
+    }
+}
+
 
 @media only screen and (max-width: 650px) {
     .map-container {
         width: 100% !important;
+        height: 93% !important;
     }
 
     .map-container .gm-bundled-control-on-bottom {
-        bottom: 200px !important;
+        bottom: 230px !important;
+        right: 40px !important;
     }
 
     .map-container .gm-style-mtc button {
