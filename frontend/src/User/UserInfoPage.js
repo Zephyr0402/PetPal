@@ -14,7 +14,7 @@ const {Content, Sider } = Layout;
 
 const UserInfoPage = (props) => {
     //props.match.params.uuid
-    var initialKey = props.location.query == undefined ? "1": props.location.query.key
+    var initialKey = props.location.state == undefined ? "1": props.location.state.key
     const [selectedKey, setSelectedKey] = useState(initialKey)
     console.log(selectedKey)
 
@@ -50,7 +50,7 @@ const UserInfoPage = (props) => {
                             </Menu.Item>
                             <SubMenu icon={<BookOutlined />} title="Posts">
                                 <Menu.Item key="2">My Posted Animals</Menu.Item>
-                                <Menu.Item key="2.5">My Favourite List</Menu.Item>
+                                <Menu.Item key="2.5">My Wish List</Menu.Item>
                             </SubMenu>
                             <Menu.Item key="3" icon={<TransactionOutlined />}>
                                 Transaction History

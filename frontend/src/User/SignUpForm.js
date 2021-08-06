@@ -65,7 +65,7 @@ const SignUpForm = () => {
                         </Form.Item>
 
                         <Form.Item {...tailLayout}>
-                            <Button type="primary" htmlType = "button" onClick = {showVerModal}>Submit</Button>
+                            <Button type="primary" htmlType = "submit" onClick = {showVerModal}>Submit</Button>
                             <Button htmlType="reset">Reset</Button>
                         </Form.Item>
 

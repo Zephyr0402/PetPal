@@ -33,7 +33,7 @@ function OrderConfirmation(props) {
                 <Text>Have a lovely day <SmileTwoTone /></Text>
             </div>
 
-            <Link to = {{pathname:'/user/'+userId, query : { key:"3" }}}>
+            <Link to = {{pathname:'/user/'+userId, state : { key:"3" }}}>
                 View your order
             </Link>
             <p>You may cancel your order within 2 hours after it is processed.</p>

@@ -43,10 +43,10 @@ const Header = (props) => {
         <Menu>
           <Menu.Item>Logged in as <b>{header.name}</b></Menu.Item>
           <Divider/>
-          <Menu.Item key = "profile"><Link to = {{pathname:'/user/'+header.uuid, query : { key:"1" }}}>My Profile</Link></Menu.Item>
-          <Menu.Item key="posts"><Link to = {{pathname:'/user/'+header.uuid, query : { key:"2" }}}>My Posts</Link></Menu.Item>
-          <Menu.Item key="favorites"><Link to = {{pathname:'/user/'+header.uuid, query : { key:"2.5" }}}>My Favorites</Link></Menu.Item>
-          <Menu.Item key="transactions"><Link to = {{pathname:'/user/'+header.uuid, query : { key:"3" }}}>My Transactions</Link></Menu.Item>
+          <Menu.Item key = "profile"><Link to = {{pathname:'/user/'+header.uuid, state : { key:"1" }}}>My Profile</Link></Menu.Item>
+          <Menu.Item key="posts"><Link to = {{pathname:'/user/'+header.uuid, state : { key:"2" }}}>My Posts</Link></Menu.Item>
+          <Menu.Item key="favorites"><Link to = {{pathname:'/user/'+header.uuid, state : { key:"2.5" }}}>My Wish List</Link></Menu.Item>
+          <Menu.Item key="transactions"><Link to = {{pathname:'/user/'+header.uuid, state : { key:"3" }}}>My Transactions</Link></Menu.Item>
           <Divider/>
           <Menu.Item key="logout" danger onClick = {onLogout}>Log out</Menu.Item>
         </Menu>
