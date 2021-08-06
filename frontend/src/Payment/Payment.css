@@ -41,17 +41,23 @@
 
 .credit-card-form form {
     margin-bottom: 1rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
 }
 
 .credit-card-form fieldset {
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .credit-card-form .form-row {
     padding: 0.6rem;
     border-bottom: solid 1px #b9b9b9;
     background-color: #eeeeee;
+}
+
+.credit-card-form button {
+    font-weight: bold;
+    min-width: 150px;
 }
 
 .error-msg {
@@ -102,11 +108,25 @@
     .payment-wrapper .ant-card-cover {
         height: 300px;
     }
+}
+
+
+
+@media only screen and (max-width: 750px) {
+    .payment-wrapper .ant-card-cover {
+        height: 400px;
+    }
+}
+
+
+@media only screen and (max-width: 500px) {
+    .payment-wrapper .ant-card-cover {
+        height: 400px;
+    }
 
     .payment-wrapper .ant-card-body {
         padding: 16px;
     }
 }
-
 
 

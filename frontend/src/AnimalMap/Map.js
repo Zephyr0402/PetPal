@@ -67,9 +67,12 @@ const AnimalMap = (props) => {
                 visible={props.aid > -1}
                 onClose={onInfoWindowClose}
             >
-                <div className="hello">
-                    <h3>{props.aid > -1 ? data[props.aid].name : ""}</h3>
-                    <pre>{props.aid > -1 ? data[props.aid].address : ""}</pre>
+                <div className="map-thumbnail">
+                    {props.aid > -1 ? <div><img alt={data[props.aid].name + " image"} src={data[props.aid].image}/></div> : <></>}
+                    <div>
+                        <h3>{props.aid > -1 ? data[props.aid].name + ": $" + data[props.aid].price : ""}</h3>
+                        <p>{props.aid > -1 ? data[props.aid].address : ""}</p>
+                    </div>
                 </div>
             </InfoWindow>
         </Map>

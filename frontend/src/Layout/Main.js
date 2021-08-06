@@ -79,12 +79,9 @@ const Main = (props) => {
                     </Layout.Content>
                 </Layout>
             </Layout>
-            {display === -1 ?
-                <div className="toggle-map-list-button" onClick={handleToggle}>
-                    {displayList ? <EnvironmentFilled/> : <UnorderedListOutlined/>}
-                </div> :
-                <></>
-            }
+            <div className="toggle-map-list-button" onClick={handleToggle}>
+                {displayList ? <EnvironmentFilled/> : <UnorderedListOutlined/>}
+            </div>
         </Layout>
 
     );

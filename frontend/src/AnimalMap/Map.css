@@ -2,6 +2,18 @@
     top: 15px !important;
 }
 
+.map-thumbnail {
+    max-width: 200px;
+}
+
+.map-thumbnail img {
+    width: 200px;
+    height: 140px;
+    object-fit: cover;
+    margin-bottom: 0.5rem;
+}
+
+
 @media only screen and (max-width: 1250px) {
     .map-container {
         width: 50% !important;
@@ -9,7 +21,7 @@
 }
 
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 750px) {
     .map-container {
         width: 100% !important;
         height: 93% !important;

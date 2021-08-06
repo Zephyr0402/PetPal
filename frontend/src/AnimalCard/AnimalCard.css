@@ -88,7 +88,7 @@ span[aria-label="shopping-cart"]{
 .icon-button-wrapper {
     z-index: 9999999;
     position: fixed;
-    bottom: 30px;
+    bottom: 14px;
     width: 36%;
     display: flex;
     justify-content: flex-end;
@@ -132,7 +132,46 @@ span[aria-label="shopping-cart"]{
 }
 
 @media only screen and (max-width: 750px) {
+    .card-wrapper .ant-card-cover {
+        height: 400px;
+    }
+
     .icon-button-wrapper {
-        width: 95%;
+        width: 57%;
     }
 }
+
+@media only screen and (max-width: 650px) {
+    .icon-button-wrapper {
+        width: 59%;
+    }
+}
+
+@media only screen and (max-width: 550px) {
+    .card-wrapper .ant-card-cover {
+        height: 300px;
+    }
+
+    .icon-button-wrapper {
+        width: 61%;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .icon-button-wrapper {
+        width: 63%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .icon-button-wrapper {
+        width: 65%;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .icon-button-wrapper {
+        width: 67%;
+    }
+}
+
