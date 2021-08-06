@@ -12,6 +12,7 @@
     "antd": "^4.16.1",
     "antd-img-crop": "^3.14.2",
     "axios": "^0.21.1",
+    "emoji-picker-react": "^3.4.8",
     "google-maps-react": "^2.0.6",
     "kill-port": "^1.6.1",
     "react": "^17.0.1",

@@ -23,34 +23,4 @@ const AnimalThumbnail = (props) => {
     );
 }
 
-// class AnimalThumbnail extends React.Component {
-
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             animalName: "Animal Name",
-//             animalDescription: "Animal Description",
-//         };
-//     }
-
-//     // Feed animal info
-//     changeState(animalName, animalDescription) {
-//         return;
-//     }
-
-//     render() {
-//         const { Meta } = Card;
-//         return (
-//             <Card className="animal-thumbnail" hoverable cover={<img alt="example" style={{ height: "100%", objectFit: 'cover', width: 300}} src={this.props.content.image} />} onClick = {() => this.props.setDisplay(this.props.content.id)}>
-//                 <Meta
-//                     title={this.props.content.name}
-//                     description={this.props.content.description}
-//                 />
-//                 <br/>
-//                 <Button type="primary" >View Info</Button>
-//             </Card>
-//         )
-//     }
-// }
-
 export default AnimalThumbnail;

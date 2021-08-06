@@ -1,4 +1,4 @@
-import {BrowserRouter,Redirect,Route, Switch} from 'react-router-dom'
+import {BrowserRouter,Redirect,Route, Switch, HashRouter} from 'react-router-dom'
 import './App.css';
 import Main from './Layout/Main'
 import LoginForm from './User/LoginForm'
@@ -7,6 +7,7 @@ import SignUpForm from './User/SignUpForm'
 import UserInfoPage from './User/UserInfoPage'
 import "antd/dist/antd.css";
 import ResetPwdForm from './User/ResetPwdForm'
+import { WhisperPanel } from './Chat/WhisperPanel';
 import Chat from './Chat/Chat';
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path = "/">
-          <Redirect to = "/chat"/>
+          <Redirect to = "/whisperpanel"/>
         </Route>
         <Route path = "/map">
           <Main/>
@@ -33,7 +34,16 @@ function App() {
           <UserInfoPage/>
         </Route>
         <Route path = "/reset_pwd/:token" component = {ResetPwdForm}/>
-        <Route path = "/chat" component = {Chat}/>
+        <Route path = "/chat/*" component = {Chat}/>
+        {/* <HashRouter
+          basename= '/chat'
+        >
+          <Chat />
+        </HashRouter> */}
+        
+        <Route path = "/whisperpanel">
+          <WhisperPanel name = "example" avatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></WhisperPanel>
+        </Route>
       </Switch>
     </BrowserRouter>
   );
