@@ -98,7 +98,7 @@ const AnimalCard = (props) => {
                         <Descriptions.Item label = "Price (CAD)" span={3}>{thisCard.price}</Descriptions.Item>
                         <Descriptions.Item label="Description">{thisCard.description}</Descriptions.Item>
                     </Descriptions>
-                    <CommentCollection commentType = "animal" id = {props.aid}/>
+                    <CommentCollection commentType="animal" id={thisCard.id} />
                 </Card>
             </div>
             <div className={isTheSameUser ? "icon-button-wrapper hidden" : "icon-button-wrapper visible"}>

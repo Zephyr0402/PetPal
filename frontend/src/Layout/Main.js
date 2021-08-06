@@ -17,6 +17,26 @@ const Main = (props) => {
         setDisplay(e);
     }
 
+    const filterAnimalInBounds = async (bounds) => {
+        console.log('filterAnimalInBounds');
+        console.log(bounds);
+        fetchAnimalList().then(res => {
+            var inboundAnimalInfo = [];
+            for (let i = 0; i < res.length; i++) {
+                const position = {
+                    "lat": Number(res[i].position.lat),
+                    "lng": Number(res[i].position.lng)
+                }
+                if (bounds.contains(position)) {
+                    inboundAnimalInfo.push(res[i]);
+                }
+            }
+            console.log('inboundAnimalInfo');
+            console.log(inboundAnimalInfo);
+            setAnimalInfos(inboundAnimalInfo);
+        });
+    }
+
     useEffect(() => {
         fetchAnimalList().then(res => {
             setAnimalInfos(res);
@@ -43,7 +63,7 @@ const Main = (props) => {
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>
-                        <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay = {setMyDisplay}/>
+                        <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay={setMyDisplay} filterAnimalInBounds={filterAnimalInBounds}/>
                     </Layout.Content>
                 </Layout>
             </Layout>

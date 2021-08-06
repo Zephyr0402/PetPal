@@ -9,6 +9,10 @@ const mapStyles = {
     height: '90.5%'
 };
 
+const initialCenter = {
+    lat: 49.26127572955761, lng: -123.23869115661624
+};
+
 var aid2marker = [];
 
 const AnimalMap = (props) => {
@@ -22,7 +26,7 @@ const AnimalMap = (props) => {
 
     useEffect(() => {
         console.log('testingggg')
-        console.log(data); 
+        console.log(data);
         const mData = [];
         console.log("aid is:", props.aid);
         if (props.aid > -1) {
@@ -66,6 +70,22 @@ const AnimalMap = (props) => {
         // }
     }
 
+    const onCenterMoved = (mapProps, map) => {
+        console.log('onCenterMoved');
+        const bounds = map.getBounds();
+        props.filterAnimalInBounds(bounds);
+        // if (bounds.contains({ lat: 49.268199, lng: -123.247630 })) {
+        //     console.log('within range!');
+        // } else {
+        //     console.log('not in range!');
+        // }
+    }
+
+    const onZoomChanged = async (mapProps, map) => {
+        const bounds = map.getBounds();
+        await props.filterAnimalInBounds(bounds);
+    }
+
     const onInfoWindowOpen = (props, e) => {
         const button = (
             <div>
@@ -93,8 +113,10 @@ const AnimalMap = (props) => {
             containerStyle={mapStyles}
             google={props.google}
             zoom={14}
-            initialCenter={{ lat: 49.26127572955761, lng: -123.23869115661624 }}
+            initialCenter={initialCenter}
             center={activeMarker.position}
+            onDragend={onCenterMoved}
+            onZoomChanged={onZoomChanged}
         >
             {
             data.map((ele, index) => {
