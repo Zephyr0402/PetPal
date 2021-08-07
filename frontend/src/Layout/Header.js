@@ -13,7 +13,7 @@ const Header = (props) => {
         getHeader()
             .then(async res => {
                 if(typeof res.uuid === 'string'){
-                    await getUserInfo().
+                    await getUserInfo(res.uuid).
                         then(
                             res => setHeader(res)
                         )

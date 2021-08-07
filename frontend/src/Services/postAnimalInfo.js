@@ -15,7 +15,7 @@ export const postAnimalInfo = async (req) => {
     console.log(info);
 }
 
-export const getPostedAnimals = async () => {
-    return await axios.get(backendURL+'/animalInfo/uuid')
+export const getPostedAnimals = async (uuid) => {
+    return await axios.get(backendURL+'/animalInfo/posted/'+ uuid)
         .then(res => res.data);
 }

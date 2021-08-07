@@ -7,7 +7,7 @@ import Form from 'antd/lib/form/Form';
 import Uploader from './Uploader';
 import CommentCollection from '../AnimalCard/Comments';
 
-function UserInfo(){
+function UserInfo(props){
     const [uuid, setUUid] = useState("");
     const [edit, setEdit] = useState(false);
     const [update, setUpdate] = useState(false);
@@ -21,7 +21,7 @@ function UserInfo(){
     const [comment, showComment] = useState(false)
 
     useEffect(async () => {
-      await getUserInfo()
+      await getUserInfo(props.uuid)
         .then((res) => {
           setUUid(res.uuid);
           setInputName(res.name);
@@ -117,7 +117,7 @@ function UserInfo(){
                   {edit ? <Input value = {inputIntro} type = "text" onChange = {inputChangeIntro.bind(this)} />: <Input value = {inputIntro} type = "text" disabled = 'true' />}
               </Descriptions.Item>
           </Descriptions>
-          {createButton()}
+          { props.isMe? createButton() : null}
           </Card>
           <br />
           <Card title="Rating" bordered={false}>

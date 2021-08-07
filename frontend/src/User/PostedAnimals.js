@@ -15,7 +15,7 @@ function PostedAnimals(props){
     useEffect(() => {
         console.log(props);
         props.filter === "1" ? 
-        getPostedAnimals()
+        getPostedAnimals(props.uuid)
             .then((res) => {
                 console.log("1");
                 setanimalinfo(res);
