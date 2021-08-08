@@ -1,40 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import UserAvatar from '../Layout/Avatar'
 import {Link} from 'react-router-dom'
 import './Channel.css'
 
-var channels = [
-    {
-        'cid' : 'channel1',
-        'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-        'name' : 'channel1'
-    },
-    {
-        'cid' : 'channel2',
-        'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-        'name' : 'channel2'
-    },
-    {
-        'cid' : 'channel3',
-        'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-        'name' : 'channel3'
-    }
-]
-
 export const ChannelList = (props) => {
+    const changeChannel = (cid) => {
+        const allChannels = document.getElementsByClassName('channel-item')
+        for(let channel of allChannels){
+            channel.style.backgroundColor = 'rgb(255,255,255)'
+        }
+        const channelSelected = document.getElementById(cid)
+        if(channelSelected != null){
+            channelSelected.style.backgroundColor = 'rgb(245,245,245)'
+        }
+        props.onChannelSwitch(cid)
+    }
+
     return(
         <div className="channel-list">
             {
-                channels.map((channel) => 
-                    <Link to = {{hash:"/"+channel.cid}}>
-                        <div className="channel-item">
+                props.channels.map((channel) => 
+                    <a href = {"#/"+channel.cid} onClick = {() => changeChannel(channel.cid)}>
+                        <div className="channel-item" id = {channel.cid}>
                             <UserAvatar
                                 size = {50}
                                 src = {channel.avatar}
                             />
                             <b style = {{marginLeft:'2%', fontSize:"100%"}}>{channel.name}</b>
                         </div>
-                    </Link>
+                    </a>
                 )
             }
         </div>

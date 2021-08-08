@@ -16,7 +16,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path = "/">
-          <Redirect to = "/whisperpanel"/>
+          <Redirect to = "/chat/"/>
         </Route>
         <Route path = "/map">
           <Main/>
@@ -34,12 +34,13 @@ function App() {
           <UserInfoPage/>
         </Route>
         <Route path = "/reset_pwd/:token" component = {ResetPwdForm}/>
-        <Route path = "/chat/*" component = {Chat}/>
-        {/* <HashRouter
+        {/* <Route path = "/chat/*" component = {Chat}/> */}
+        <HashRouter
           basename= '/chat'
         >
-          <Chat />
-        </HashRouter> */}
+          <Route path = '/:cid?' component = {Chat}>
+          </Route>
+        </HashRouter>
         
         <Route path = "/whisperpanel">
           <WhisperPanel name = "example" avatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></WhisperPanel>

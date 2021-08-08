@@ -64,7 +64,7 @@ const Header = (props) => {
                         <Tooltip title = "Post now!">
                             <Button danger shape="circle" icon={<FormOutlined />} href = "/post"/>
                         </Tooltip>
-                        <Link className = "header-btn" to = "/login">Log in</Link>
+                        <Button type = "link" className = "header-btn" href = "/login">Log in</Button>
                         <Button className = "header-btn" type = 'primary' href = "/register">Sign up</Button>
                     </span>
                 :

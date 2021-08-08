@@ -1,4 +1,5 @@
 var express = require('express');
+const { UserInfo } = require('../models/userModel');
 var router = express.Router();
 const {Whisper, Channel} = require('../models/whisperModel')
 
@@ -37,7 +38,31 @@ router.get('/api/channel', async (req, res) => {
     const channels = await Channel.find({
         'members' : {'$in' : [req.session.uuid]}
     })
-    res.send(channels)
+
+    var c = []
+    for(let channel of channels){
+        if(channel.members.length == 2){
+            
+            const u = channel.members[0]==req.session.uuid ? channel.members[1] : channel.members[0] 
+            const ui = await UserInfo.findOne({
+                'uuid' : u
+            })
+            c.push(
+                {
+                    'cid' : channel.cid,
+                    'avatar' : ui.avatar,
+                    'name' : ui.name
+                }
+            )
+        }
+        else{
+            c.push({
+                'cid' : channel.cid,
+                'name' : channel.name
+            })
+        }
+    }
+    res.send(c)
 })
 
 //get whispers in a channel
@@ -48,11 +73,28 @@ router.get('/api/channel/:cid', async (req, res) => {
         '$pull' : { 'unread' : req.session.uuid}
     })
 
-    const whispers = await Whipser.find({
+    const whispers = await Whisper.find({
         'cid' : req.params.cid
     })
 
-    res.send(whispers)
+    var w = []
+    for(let whisper of whispers){
+        const ui = await UserInfo.findOne({
+            'uuid' : whisper.sender
+        })
+        w.push({
+            'whisper' : {
+                'sender' :{
+                    'uuid' : whisper.sender,
+                    'avatar' : ui.avatar
+                },
+                'content' : whisper.content
+            },
+            'uuid' : req.session.uuid
+        })
+    }
+
+    res.send(w)
 })
 
 //get unread whispers
@@ -61,6 +103,19 @@ router.get('/api/whisper/unread', async (req, res) => {
         'unread' : {'$in' : [req.session.uuid]}
     })
     res.send(unreadWhispers.length)
+})
+
+router.get('/api/whisper/fake/channel', async (req, res) => {
+    const channels = await Channel.find()
+    res.send(channels)
+})
+
+router.get('/api/whisper/fake/whisper/:cid', async (req, res) => {
+    const whispers = await Whisper.find({
+        'cid' : req.params.cid
+    })
+
+    res.send(whispers)
 })
 
 module.exports = router;

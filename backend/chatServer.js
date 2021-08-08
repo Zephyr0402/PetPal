@@ -1,4 +1,6 @@
 var app = require('./app')
+const { v4: uuidv4 } = require('uuid');
+const {Whisper, Channel} = require('./models/whisperModel');
 var chatServer = require('http').createServer(app);
 var io = require("socket.io")(chatServer, {
     cors: {
@@ -33,7 +35,7 @@ io.on('connection', (socket) => {
         //store it to db
         await Whisper.create({
             'cid' : whisper.cid,
-            'wid' : '1',
+            'wid' : uuidv4(),
             'sender' : curUserId,
             'content' : whisper.content,
             'unread' : unreadMembers,
@@ -44,25 +46,30 @@ io.on('connection', (socket) => {
         const channel = await Channel.findOne({
             'cid' : whisper.cid
         })
-        const receivers = channel.members.filter((value) => 
-            {return value != curUserId}
-        ) 
+        const receivers = channel.members;
 
         //select online receivers to send message
+        console.log("socket id: ", socket.id)
+        console.log("online user:", onlineUsers)
+        //socket.emit('forward-whisper', "to all socket");
+        //io.to(socket.id).emit('forward-whisper',"to specific socket");
         for(let receiver of receivers){
+            console.log(receiver)
             if(onlineUsers[receiver] == undefined){
                 //do nothing
+                console.log("you should not see this")
             }else{
                 onlineUsers[receiver].socketIds.forEach((socketId) =>
-                    {socket.to(socketId).emit('forward-whisper', whisper);}
+                    {io.to(socketId).emit('forward-whisper', whisper);}
                 )
             }
         }
     })
 
     //offline (exit chat room)
-    socket.on('disconnect', uuid => {
-        onlineUsers[uuid] = undefined
+    socket.on('disconnect', () => {
+        var socketLen = onlineUsers[curUserId].length
+        onlineUsers[curUserId].socketIds.splice(socketLen-1,1)
     })
 
 })

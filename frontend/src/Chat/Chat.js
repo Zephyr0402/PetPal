@@ -6,13 +6,15 @@ import { ChannelList } from './Channel'
 import { WhisperPanel } from './WhisperPanel'
 import { withRouter } from 'react-router'
 import './Chat.css'
+import { getChannels } from '../Services/whisperService'
+import { ConsoleSqlOutlined } from '@ant-design/icons'
 
 const Chat = (props) => {
-    const cid = props.location.hash.substring(2)
+    const [channels, setChannels] = useState([])
+    const [cid, setCid] = useState(props.location.pathname.substring(1))
 
     useEffect(() => {
-        console.log("fffffffffffffffffff")
-        openSocket()
+        openSocket("b56f1c7e-bc02-401a-81dd-d8703adb4190")
         socket.on("connect", () => {
             console.log("connected to backend")
         })
@@ -22,21 +24,36 @@ const Chat = (props) => {
         return closeSocket
       }, []);
 
-    const onWhisperSend = () => {
-    }
+    useEffect(async () => {
+        var channels = await getChannels()
+        console.log(channels)
+        setChannels(channels)
+    },[])
 
-    const onWhisperType = (text) => {
+    const onWhisperSend = (text) => {
+        var whisperBody = {
+            'cid' : cid,
+            'content' : text,
+            'timestamp' : new Date()
+        }
+        console.log(whisperBody)
+        socket.emit('whisper', whisperBody)
+    }
+    
+    const onChannelSwitch = (newcid) => {
+        setCid(newcid)
     }
 
     return(
         <Layout style = {{height:'100%', alignItems:'center'}}>
             <Header></Header>
             <div className="chat-body">
-                <ChannelList/>
+                <ChannelList channels = {channels} onChannelSwitch = {onChannelSwitch}/>
                 <WhisperPanel
                     cid = {cid}
-                    name = "example" 
-                    avatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                    name = {channels.length > 0 && cid != "" ? channels.filter((channel) => channel.cid == cid)[0].name : ""}
+                    avatar = {channels.length > 0 && cid != "" ? channels.filter((channel) => channel.cid == cid)[0].avatar : ""}
+                    onWhisperSend = {onWhisperSend}
                 />
             </div>
         </Layout>

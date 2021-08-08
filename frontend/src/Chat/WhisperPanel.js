@@ -1,252 +1,89 @@
 import React, {useState, useEffect} from 'react'
 import UserAvatar from '../Layout/Avatar'
-import {Input, Button} from 'antd'
+import {Input, Button, Empty} from 'antd'
 import { SmileOutlined } from '@ant-design/icons';
 import Picker from 'emoji-picker-react';
 import './WhisperPanel.css'
+import { getWhispers } from '../Services/whisperService';
 
-var whisperList = [
+var iwList = [
     {
         'whisper' : {
             'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                'uuid' : "",
+                'avatar' : ""
             },
-            'content' : "hello from u1"
-        },
-        'uuid' : 'u1'
-    },
-    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u2",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u2"
-        },
-        'uuid' : 'u1'
-    },
-    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },
-    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },
-    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u3",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u3",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u3",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u3",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u3",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
-        },
-        'uuid' : 'u1'
-    },    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "u1",
-                'avatar' : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-            },
-            'content' : "hello from u3"
+            'content' : ""
         },
         'uuid' : 'u1'
     }
-
 ]
 
 export const WhisperPanel = (props) => {
-    console.log(props.cid)
+
+    const [text, setText] = useState("")
+    const [whisperList, setWhisperList] = useState(iwList)
+
+    useEffect(() => {
+        setText("")
+    },[props])
+
+    useEffect(async () => {
+        if(props.cid !== ""){
+            var whisperList = await getWhispers(props.cid)
+            setWhisperList(whisperList)
+        }
+    },[props])
+
+    const onWhisperType = (e) => {
+        setText(e.target.value)
+    }
+
+    const onWhisperSend = () => {
+        props.onWhisperSend(text)
+        setText("")
+    }
+
     return(
-        <div className = "whisper-panel">
-            <div className = "whisper-header">
-                <UserAvatar
-                    size = {45}
-                    src = {props.avatar}
-                />
-                <b style = {{marginLeft:'0.5%', fontSize:"100%"}}>{props.name}</b>
+        props.cid == "" ?
+            <div className = "whisper-panel">
+            <Empty></Empty>
             </div>
-            <div className = "whisper-list">
-                {
-                    whisperList.map((whisper) => 
-                        <Whisper
-                            whisper = {whisper.whisper}
-                            uuid = {whisper.uuid}
-                        />
-                    )
-                }
+            :
+            <div className = "whisper-panel">
+                <div className = "whisper-header">
+                    <UserAvatar
+                        size = {45}
+                        src = {props.avatar}
+                    />
+                    <b style = {{marginLeft:'0.5%', fontSize:"100%"}}>{props.name}</b>
+                </div>
+                <div className = "whisper-list">
+                    {
+                        whisperList.map((whisper) => 
+                            <Whisper
+                                whisper = {whisper.whisper}
+                                uuid = {whisper.uuid}
+                            />
+                        )
+                    }
+                </div>
+                <div className = "whisper-input">
+                    <SmileOutlined style = {{fontSize:'25px', color:'gray'}}/>
+                    <Input
+                        bordered = {false}
+                        placeholder = "Say something..."
+                        onChange = {onWhisperType}
+                        value = {text}
+                    />
+                    <Button type = "link" onClick = {onWhisperSend}>Send</Button>
+                </div>
             </div>
-            <div className = "whisper-input">
-                <SmileOutlined style = {{fontSize:'25px', color:'gray'}}/>
-                <Input
-                    bordered = {false}
-                    placeholder = "Say something..."
-                />
-                <Button type = "link">Send</Button>
-            </div>
-        </div>
     )
 }
 
 export const Whisper = (props) => {
-    const [isMineWhisper, ] = useState(props.whisper.sender.uuid == props.uuid)
+    var isMineWhisper = props.whisper.sender.uuid == props.uuid
 
     const myWhisperStyle = {
         'display' : 'flex',
