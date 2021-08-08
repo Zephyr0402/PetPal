@@ -4,10 +4,12 @@ import './Header.css';
 import {Link, Redirect} from 'react-router-dom';
 import { FormOutlined, DownOutlined, CheckCircleFilled, CheckCircleTwoTone, InfoCircleTwoTone} from '@ant-design/icons';
 import { getHeader, getUserInfo, logout } from '../Services/userService';
+import {showLoginRequiredModal} from "../Services/modal";
 
 const Header = (props) => {
     const [header, setHeader] = useState({});
     const [optionsVisible, setOptionsVisible] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
 
     useEffect(()=>{
         getHeader()
@@ -16,7 +18,9 @@ const Header = (props) => {
                     await getUserInfo().
                         then(
                             res => setHeader(res)
-                        )
+                        );
+
+                    setIsLogin(res.uuid !== "" && res.uuid !== undefined);
                 }
             })
     },[]);
@@ -61,7 +65,10 @@ const Header = (props) => {
                 header.name === undefined ?
                     <span className = "header-btns">
                         <Tooltip title = "Post now!">
-                            <Button danger shape="circle" icon={<FormOutlined />} href = "/post"/>
+                             <Button danger shape="circle" icon={<FormOutlined />}
+                                     onClick={() => isLogin ?
+                                         window.location.href="/post":
+                                         showLoginRequiredModal("Please login to post new animal")}/>
                         </Tooltip>
                         <Link className = "header-btn" to = "/login">Log in</Link>
                         <Button className = "header-btn" type = 'primary' href = "/register">Sign up</Button>

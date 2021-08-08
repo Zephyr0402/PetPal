@@ -47,7 +47,7 @@ const AnimalCard = (props) => {
 
     }, []);
 
-    const isLogin = userId !== null && userId !== undefined;
+    const isLogin = userId !== "" && userId !== undefined;
 
     const handleAddToWishlist = () => {
 
