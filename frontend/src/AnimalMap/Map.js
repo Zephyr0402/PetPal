@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import './Map.css'
-
+import CustomizedInfoWindow from './CustomizedInfoWindow';
 
 const mapStyles = {
     position: 'absolute',
@@ -29,19 +29,24 @@ const AnimalMap = (props) => {
                 return i;
             }
         }
-    }
+    };
 
     const onMarkerClick = (marker) => {
         props.setDisplay(marker2aid(marker));
         //setShowInfoWindow(true);
         setActiveMarker(marker);
-    }
+    };
 
     const onInfoWindowClose = (props) => {
         // if(showInfoWindow){
         //     setShowInfoWindow(false);
         // }
-    }
+    };
+
+    const onThumbnailClick = () => {
+        console.log("thumbnail clicked");
+        props.setDisplayListResponsive(true);
+    };
 
     return(
         <Map className = "map-container"
@@ -59,7 +64,7 @@ const AnimalMap = (props) => {
                     ref = {(marker) => aid2marker[index] = marker}
                 />
             )}
-            <InfoWindow
+           {/* <InfoWindow
                 marker={
                     props.aid > -1 ?
                     aid2marker[props.aid].marker : null
@@ -74,7 +79,25 @@ const AnimalMap = (props) => {
                         <p>{props.aid > -1 ? data[props.aid].address : ""}</p>
                     </div>
                 </div>
-            </InfoWindow>
+            </InfoWindow>*/}
+
+            <CustomizedInfoWindow
+                marker={
+                    props.aid > -1 ?
+                        aid2marker[props.aid].marker : null
+                }
+                visible={props.aid > -1}
+                onClose={onInfoWindowClose}
+            >
+                <div className="map-thumbnail" onClick={onThumbnailClick}>
+                    {props.aid > -1 && !props.isDisplayListResponsive ? <div><img alt={data[props.aid].name + " image"} src={data[props.aid].image}/></div> : <></>}
+                    <div>
+                        <h3>{props.aid > -1 ? data[props.aid].name + ": $" + data[props.aid].price : ""}</h3>
+                        <p>{props.aid > -1 ? data[props.aid].address : ""}</p>
+                    </div>
+                </div>
+
+            </CustomizedInfoWindow>
         </Map>
     )
 }

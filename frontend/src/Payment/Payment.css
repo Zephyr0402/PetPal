@@ -110,8 +110,6 @@
     }
 }
 
-
-
 @media only screen and (max-width: 750px) {
     .payment-wrapper .ant-card-cover {
         height: 400px;
@@ -119,14 +117,21 @@
 }
 
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 550px) {
     .payment-wrapper .ant-card-cover {
-        height: 400px;
+        height: 300px;
     }
 
     .payment-wrapper .ant-card-body {
         padding: 16px;
     }
 }
+
+@media only screen and (max-width: 400px) {
+    .payment-wrapper .ant-card-cover {
+        height: 200px;
+    }
+}
+
 
 

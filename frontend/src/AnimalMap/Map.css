@@ -4,6 +4,7 @@
 
 .map-thumbnail {
     max-width: 200px;
+    cursor: pointer;
 }
 
 .map-thumbnail img {
@@ -24,7 +25,6 @@
 @media only screen and (max-width: 750px) {
     .map-container {
         width: 100% !important;
-        height: 93% !important;
     }
 
     .map-container .gm-bundled-control-on-bottom {
@@ -38,4 +38,13 @@
         padding: 0px 16px !important;
     }
 
+}
+
+@media only screen and (max-width: 350px) {
+    .map-thumbnail img {
+        width: 160px;
+        height: 120px;
+        object-fit: cover;
+        margin-bottom: 0.5rem;
+    }
 }

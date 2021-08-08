@@ -14,7 +14,7 @@ const Main = (props) => {
     const [animalInfos, setAnimalInfos] = useState([]);
     const [display, setDisplay] = useState(-1);
     const [displayCheckout, setDisplayCheckout] = useState(false);
-    const [displayList, setDisplayList] = useState(true);
+    const [displayListResponsive, setDisplayListResponsive] = useState(true);
     const [windowSize, setWindowSize] = useState({
         width: undefined,
         height: undefined,
@@ -52,7 +52,7 @@ const Main = (props) => {
     };
 
     const handleToggle = () => {
-        setDisplayList(!displayList);
+        setDisplayListResponsive(!displayListResponsive);
     };
 
     return(
@@ -60,7 +60,7 @@ const Main = (props) => {
             <Header/>
             <Layout>
                 <Layout.Sider className =
-                                  {windowSize.width > 750 || displayList ?
+                                  {windowSize.width > 750 || displayListResponsive ?
                                       "aside-wrapper show-list" :
                                       "aside-wrapper hide-list"}
                               width = "38%">
@@ -71,16 +71,16 @@ const Main = (props) => {
                             <AnimalCard aid={display} animalCardInfo={ animalInfos[display] } setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout}/> }
                 </Layout.Sider>
                 <Layout className=
-                            {windowSize.width > 750 || !displayList ?
+                            {windowSize.width > 750 || !displayListResponsive ?
                                 "map-wrapper show-map" :
                                 "map-wrapper hide-map"} >
                     <Layout.Content>
-                        <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay = {setMyDisplay}/>
+                        <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay = {setMyDisplay} isDisplayListResponsive={displayListResponsive} setDisplayListResponsive={setDisplayListResponsive}/>
                     </Layout.Content>
                 </Layout>
             </Layout>
             <div className="toggle-map-list-button" onClick={handleToggle}>
-                {displayList ? <EnvironmentFilled/> : <UnorderedListOutlined/>}
+                {displayListResponsive ? <EnvironmentFilled/> : <UnorderedListOutlined/>}
             </div>
         </Layout>
 

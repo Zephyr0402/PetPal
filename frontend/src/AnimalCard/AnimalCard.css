@@ -164,6 +164,10 @@ span[aria-label="shopping-cart"]{
 }
 
 @media only screen and (max-width: 400px) {
+    .card-wrapper .ant-card-cover {
+        height: 200px;
+    }
+
     .icon-button-wrapper {
         width: 65%;
     }
