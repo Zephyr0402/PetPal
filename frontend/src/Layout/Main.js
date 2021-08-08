@@ -20,6 +20,7 @@ const Main = (props) => {
     const filterAnimalInBounds = async (bounds) => {
         console.log('filterAnimalInBounds');
         console.log(bounds);
+        setAnimalInfos([]);
         fetchAnimalList().then(res => {
             var inboundAnimalInfo = [];
             for (let i = 0; i < res.length; i++) {
