@@ -22,11 +22,8 @@ const AnimalMap = (props) => {
     var data = props.animalCardInfo;
 
     useEffect(() => {
-        console.log('testingggg')
-        console.log(data);
         data = props.animalCardInfo;
         const mData = [];
-        console.log("aid is:", props.aid);
         if (props.aid > -1) {
             if (aid2marker[props.aid].marker !== activeMarker) {
                 props.google.maps.event.trigger(aid2marker[props.aid].marker, 'click');
@@ -45,7 +42,6 @@ const AnimalMap = (props) => {
             setMarkerData(mData);
             setShowInfoWindow(true);
         } else {
-            console.log('hide info window');
             setShowInfoWindow(false);
         }
 
@@ -61,15 +57,13 @@ const AnimalMap = (props) => {
     }
 
     const onMarkerClick = (marker) => {
-        console.log('onMarkerClick');
-        console.log(marker2aid(marker));
         setActiveMarker(marker);
         props.setDisplay(marker2aid(marker));
         setShowInfoWindow(true);
     }
 
     const onInfoWindowClose = (props) => {
-        if(showInfoWindow){
+        if (showInfoWindow) {
             setShowInfoWindow(false);
         }
     }
@@ -132,7 +126,7 @@ const AnimalMap = (props) => {
                 })
             }
             {
-                console.log('test infowindow: ' + showInfoWindow)
+                console.log('test infowindow: ' + showInfoWindow + props.aid)
             }
             {showInfoWindow &&
                 <InfoWindow
@@ -142,14 +136,13 @@ const AnimalMap = (props) => {
                     // visible={(e) => { console.log('visible'); return props.aid > -1; }}
                     visible={props.aid > -1}
                     onClose={onInfoWindowClose}
-                onOpen={(e) => {
+                    onOpen={(e) => {
                         console.log(e);
                         onInfoWindowOpen(props, e);
-                        
                     }
                     }
                 >
-                <div id="iwc"/>
+                    <div id="iwc" />
                 </InfoWindow>
             }
         </Map>
