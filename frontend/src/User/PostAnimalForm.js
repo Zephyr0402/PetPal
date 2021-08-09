@@ -141,7 +141,7 @@ function PostAnimalForm() {
 
     const handleSelectBoxChange = (data) => {
         setCategory(data);
-    }
+    };
 
     const resetInput = () => {
         //TODO: replace with actual resetInput functionality
@@ -298,7 +298,7 @@ function PostAnimalForm() {
 
                     <Form.Item {...tailLayout}>
                         <Button type="primary" htmlType="submit" onClick={async (e) => handlePostAnimal(e)}>Post</Button>
-                        <Button htmlType="reset" onClick={(e) => handleResetForm(e)}>Reset</Button>
+                        <Button htmlType="reset">Reset</Button>
                     </Form.Item>
                 </Form>
             </div>

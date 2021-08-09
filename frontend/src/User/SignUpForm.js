@@ -32,7 +32,15 @@ const SignUpForm = () => {
     const showVerModal = () => {
         if(!verModal) verify(emailInput.current.props.value);
         setVerModal(!verModal);
-    }
+    };
+
+    const isInputBlank = () => {
+        const isNameBlank = nameInput.current.props.value === undefined || nameInput.current.props.value.trim() === "";
+        const isEmailBlank = emailInput.current.props.value === undefined || emailInput.current.props.value.trim() === "";
+        const isPasswordBlank = passwordInput.current.props.value === undefined || passwordInput.current.props.value.trim() === "";
+        console.log(isNameBlank || isEmailBlank || isPasswordBlank);
+        return isNameBlank || isEmailBlank || isPasswordBlank;
+    };
 
     return (
         <div>
@@ -41,11 +49,12 @@ const SignUpForm = () => {
                 <div id="register_form_wrapper">
                     <h1 className="form_title">Sign Up</h1>
                     <Form id="register_form" {...layout}
-                          onFinish = {onFinish}
+                          /*onFinish = {onFinish}*/
                     >
                         <Form.Item
                             label="Preferred Name"
                             name="name_input"
+                            rules={[{ required: true, message: 'Please input your preferred name.' }]}
                         >
                             <Input ref = {nameInput}/>
                         </Form.Item>
@@ -53,6 +62,7 @@ const SignUpForm = () => {
                         <Form.Item
                             label="Email"
                             name="email_input"
+                            rules={[{ required: true, message: 'Please input your email.' }]}
                         >
                             <Input ref = {emailInput} />
                         </Form.Item>
@@ -60,12 +70,16 @@ const SignUpForm = () => {
                         <Form.Item
                             label="Password"
                             name="password_input"
+                            rules={[{ required: true, message: 'Please input your password.' }]}
                         >
                             <Input.Password ref = {passwordInput}/>
                         </Form.Item>
 
                         <Form.Item {...tailLayout}>
-                            <Button type="primary" htmlType = "submit" onClick = {showVerModal}>Submit</Button>
+                            <Button type="primary" htmlType = "submit"
+                                    onClick = {() => isInputBlank() ? console.log('some blank input fields') : showVerModal()}>
+                                Submit
+                            </Button>
                             <Button htmlType="reset">Reset</Button>
                         </Form.Item>
 
