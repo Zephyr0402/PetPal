@@ -23,6 +23,7 @@ function UserInfo(props){
     useEffect(async () => {
       await getUserInfo(props.uuid)
         .then((res) => {
+          console.log(res.uuid);
           setUUid(res.uuid);
           setInputName(res.name);
           setInputPNumber(res.phone);

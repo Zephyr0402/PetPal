@@ -1,4 +1,4 @@
-import { Avatar, Table, Tag, Dropdown, Space, Button } from 'antd';
+import { Row, Table, Tag, Col, Space, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { getTransactionHistory, cancelTransaction } from '../Services/transactionService';
 import {displayErrorMessage, displaySuccessMessage} from '../Services/modal';
@@ -21,11 +21,13 @@ function TransactionHistory(){
     return(
         <>
         <br />
-        <Table rowKey={record => record.orderNumber} expandable={{expandedRowRender: record =><p>Transaction ID: {record._id}</p>}} dataSource={tdata}>
+        <Table rowKey={record => record.orderNumber} 
+            expandable={{expandedRowRender: record => (<div><img src={record.animalImg}/></div>)}} 
+            dataSource={tdata}>
             <Column title="Order#" dataIndex="orderNumber" key="orderNumber" />
             <Column title="Date" dataIndex="timestamp" key="timestamp" render={timestamp => new Date(timestamp).toLocaleString('en-CA')}/>
-            <Column title="From" dataIndex="sellerId" key="sellerId" />
-            <Column title="Ship to" dataIndex="buyerId" key="buyerId" />
+            <Column title="From" dataIndex="sellerName" key="sellerName" />
+            <Column title="Ship to" dataIndex="buyerName" key="buyerName" />
             <Column title="Total (CAD)" dataIndex="price" key="price" />
             <Column title="Status" dataIndex="status" key="status" />
             <Column
