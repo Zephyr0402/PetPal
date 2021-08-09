@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import {Layout} from 'antd';
+import {EnvironmentFilled, UnorderedListOutlined} from '@ant-design/icons';
 import Header from './Header';
 import UtilityView from '../AnimalList/UtilityView';
 import AnimalCard from '../AnimalCard/AnimalCard'
 import AnimalMap from '../AnimalMap/Map';
 import Payment from "../Payment/Payment";
 import { fetchAnimalList } from '../Services/fetchData';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import './Main.css'
 
 const Main = (props) => {
     const [animalInfos, setAnimalInfos] = useState([]);
     const [display, setDisplay] = useState(-1);
     const [displayCheckout, setDisplayCheckout] = useState(false);
     const [curMarkerAid, setCurMarkerAid] = useState(-1);
+    const [displayListResponsive, setDisplayListResponsive] = useState(true);
+    const [windowSize, setWindowSize] = useState({
+        width: undefined,
+        height: undefined,
+    });
 
     const setMyDisplay = (e) => {
         setCurMarkerAid(e);
@@ -49,41 +56,67 @@ const Main = (props) => {
         });
     }
 
-    // useEffect(() => {
-    //     if (display === -1) {
-    //         fetchAnimalList().then(res => {
-    //             setAnimalInfos(res);
-    //             if (props.location.query != undefined) {
-    //                 for (var i = 0; i < res.length; i++) {
-    //                     if (res[i].id == props.location.query.display) {
-    //                         setDisplay(i)
-    //                         break
-    //                     }
-    //                 }
-    //             }
-    //         });
-    //     }
-    // }, [display]);
+    useEffect(() => {
+        // fetchAnimalList().then(res => {
+        //     setAnimalInfos(res);
+        //     if(props.location.query != undefined){
+        //         for(var i = 0; i< res.length; i++){
+        //             if(res[i].id == props.location.query.display){
+        //                 setDisplay(i)
+        //                 break
+        //             }
+        //         }
+        //     }
+        // });
 
-    return(
-        <Layout>
-            <Header/>
+        window.addEventListener("resize", handleResize);
+        handleResize();
+        return () => window.removeEventListener("resize", handleResize);
+
+    }, [display]);
+
+
+    const handleResize = () => {
+        setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight,
+        });
+    };
+
+    const handleToggle = () => {
+        setDisplayListResponsive(!displayListResponsive);
+    };
+
+        return (
             <Layout>
-                <Layout.Sider width = "38%" style = {{backgroundColor:'white'}}>
-                    {  display <= -1 ?
-                        <UtilityView animalInfos={animalInfos} setDisplay={setMyDisplay}/> :
-                        displayCheckout ?
-                            <Payment aid={display} setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout} animalInfos={animalInfos}/> :
-                            <AnimalCard aid={display} animalCardInfo={animalInfos[display]} setDisplay={setMyDisplay} setDisplayCheckout={setDisplayCheckout}/> }
-                </Layout.Sider>
+                <Header />
                 <Layout>
-                    <Layout.Content>
-                        <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay={setMyDisplay} filterAnimalInBounds={filterAnimalInBounds}/>
-                    </Layout.Content>
+                    <Layout.Sider className=
+                        {windowSize.width > 750 || displayListResponsive ?
+                            "aside-wrapper show-list" :
+                            "aside-wrapper hide-list"}
+                        width="38%">
+                        {display <= -1 ?
+                            <UtilityView animalInfos={animalInfos} setDisplay={setMyDisplay} /> :
+                            displayCheckout ?
+                                <Payment aid={display} setDisplay={setMyDisplay} setDisplayCheckout={setDisplayCheckout} animalInfos={animalInfos} /> :
+                                <AnimalCard aid={display} animalCardInfo={animalInfos[display]} setDisplay={setMyDisplay} setDisplayCheckout={setDisplayCheckout} />}
+                    </Layout.Sider>
+                    <Layout className=
+                        {windowSize.width > 750 || !displayListResponsive ?
+                            "map-wrapper show-map" :
+                            "map-wrapper hide-map"} >
+                        <Layout.Content>
+                            <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay={setMyDisplay} filterAnimalInBounds={filterAnimalInBounds} isDisplayListResponsive={displayListResponsive} setDisplayListResponsive={setDisplayListResponsive} />
+                        </Layout.Content>
+                    </Layout>
                 </Layout>
+                <div className="toggle-map-list-button" onClick={handleToggle}>
+                    {displayListResponsive ? <EnvironmentFilled /> : <UnorderedListOutlined />}
+                </div>
             </Layout>
-        </Layout>
-    );
+
+        );
 }
 
 export default withRouter(Main);

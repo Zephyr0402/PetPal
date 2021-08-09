@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import { List, Button } from 'antd';
 import ReactDOM from "react-dom";
+import './Map.css'
 
 const mapStyles = {
     position: 'absolute',
@@ -98,7 +99,7 @@ const AnimalMap = (props) => {
     }
 
     return (
-        <Map
+        <Map className="map-container"
             containerStyle={mapStyles}
             google={props.google}
             zoom={14}

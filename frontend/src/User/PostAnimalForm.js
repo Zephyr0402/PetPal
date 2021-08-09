@@ -10,6 +10,7 @@ import { getUserInfo } from '../Services/userService';
 import { postAnimalInfo } from '../Services/postAnimalInfo';
 import { getBase64 } from '../Services/utils';
 import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
+import { showLoginRequiredModal, successModal, warningModal } from "../Services/modal";
 
 axios.defaults.withCredentials = true;
 
@@ -45,7 +46,7 @@ function PostAnimalForm() {
         console.log("handlePostAnimal");
 
         if (category === null || location.value.description === undefined || animalAgeYear === null || animalAgeMonth === null || dateFound === null || description === null || category === null || animalName === null || price === null) {
-            window.alert('Have empty field!');
+            warningModal('Please fill in all fields. They cannot be left blank.');
             return;
         }
 
@@ -61,8 +62,7 @@ function PostAnimalForm() {
         console.log(userInfo);
 
         if (userInfo.message !== undefined) {
-            window.alert('Not login, redirecting...');
-            window.location.href = '/login';
+            showLoginRequiredModal("Please login to post new animal");
         }
 
         // get GPS coordinates from address
@@ -76,12 +76,12 @@ function PostAnimalForm() {
             );
 
         if (geoInfo.lat === undefined || geoInfo.lng === undefined) {
-            window.alert('Cannot get GPS coordinates!');
+            warningModal("Cannot get GPS coordinates! Please try again.");
             return;
         }
 
         if (imageFileList === undefined || imageFileList.length <= 0) {
-            window.alert('You should at least upload one image!');
+            warningModal("You should at least upload one image!");
             return;
         } else {
             for (let i = 0; i < imageFileList.length; i++) {
@@ -120,7 +120,7 @@ function PostAnimalForm() {
 
         await postAnimalInfo(req);
         resetInput();
-        alert('Posted!');
+        successModal('Animal is successfully posted!');
 
         window.location.href = '/';
     };
@@ -141,7 +141,7 @@ function PostAnimalForm() {
 
     const handleSelectBoxChange = (data) => {
         setCategory(data);
-    }
+    };
 
     const resetInput = () => {
         //TODO: replace with actual resetInput functionality
@@ -307,7 +307,7 @@ function PostAnimalForm() {
 
                         <Form.Item {...tailLayout}>
                             <Button type="primary" htmlType="submit" onClick={async (e) => handlePostAnimal(e)}>Post</Button>
-                            <Button htmlType="reset" onClick={(e) => handleResetForm(e)}>Reset</Button>
+                            <Button htmlType="reset">Reset</Button>
                         </Form.Item>
                     </Form>
                 </div>

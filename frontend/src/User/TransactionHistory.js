@@ -4,6 +4,7 @@ import { UserOutlined, DownOutlined } from '@ant-design/icons';
 import { getTransactionHistory, cancelTransaction } from '../Services/transactionService';
 import {displayErrorMessage, displaySuccessMessage} from '../Services/modal';
 import './UserInfoPage.css';
+import {getUserInfo} from "../Services/userService";
 
 const { Column, ColumnGroup } = Table;
 
@@ -43,13 +44,18 @@ const { Column, ColumnGroup } = Table;
 function TransactionHistory(){
 
     const [tdata, settdata] = useState([]);
+    const [userId, setUserId] = useState("");
 
     useEffect(async () => {
         getTransactionHistory()
             .then((res) => {
                 settdata(res);
                 console.log(tdata);
-            })
+            });
+        getUserInfo()
+            .then(res => {
+                setUserId(res.uuid);
+            });
     },[]);
 
     return(
@@ -78,9 +84,9 @@ function TransactionHistory(){
                 title="Action"
                 dataIndex=""
                 key="cancel"
-                render={rec => rec.status === "pending"?
+                render={rec => rec.status === "pending" && rec.buyerId === userId ?
                     <Button type="text" danger
-                            onClick={() => cancelTransaction(rec._id, rec.stripeId, rec.animalId)
+                            onClick={() => cancelTransaction(rec.buyerId, rec.sellerId, rec._id, rec.stripeId, rec.animalId)
                                 .then(success => {
                                     if(success) {
                                         displaySuccessMessage("Transaction is canceled successfully", 3);

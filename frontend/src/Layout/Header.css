@@ -1,6 +1,7 @@
 .header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: whitesmoke;
     width: 100%;
     padding: 0.3rem 0.6rem;
@@ -12,7 +13,6 @@
 .header-btns{
     display: flex;
     align-items: center;
-    margin-right: 10px;
 }
 
 .header-btn{
@@ -22,4 +22,22 @@
 
 .header-btns .ant-btn-primary.header-btn {
     color: white;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+@media only screen and (max-width: 400px) {
+    .header img[alt="Petpal-logo"] {
+        width: 130px;
+    }
+
+    .header-btns .ant-btn-primary.header-btn {
+        padding: 0.5rem;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .header img[alt="Petpal-logo"] {
+        width: 115px;
+    }
 }

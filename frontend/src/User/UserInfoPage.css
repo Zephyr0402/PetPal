@@ -8,8 +8,67 @@
     padding: 24px;
 }
 
+.ant-menu-inline {
+    padding-top: 35px;
+}
+
 .avatar {
     padding-right: 3%;
     display: flex;
     flex-direction: row-reverse;
+}
+
+.posts-thumbnail-wrapper {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.posts-thumbnail {
+    position: relative;
+    width: 200px;
+    max-width: 200px;
+    flex: none;
+}
+
+.posts-thumbnail .ant-card-cover{
+    height: 150px;
+}
+
+
+.posts-thumbnail .ant-card-cover img {
+    object-fit: cover;
+    height: 150px;
+}
+
+.posts-thumbnail span[aria-label="close-circle"] {
+    position: absolute;
+    top: -5px;
+    right: 0px;
+    cursor: pointer;
+    z-index: 99;
+}
+
+.posts-thumbnail span[aria-label="close-circle"] svg{
+    width: 25px;
+    height: 25px;
+}
+
+.posts-thumbnail span[aria-label="close-circle"] svg:hover {
+    fill: #1890ff;
+}
+
+.animal-sold-message {
+    width: 184px;
+    height: 97%;
+    position: absolute;
+    top: 0;
+    background-color: rgba(0,0,0,0.3);
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

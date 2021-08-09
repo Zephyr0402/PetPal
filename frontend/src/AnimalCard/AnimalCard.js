@@ -1,13 +1,12 @@
 import React, { useState,useEffect } from 'react';
 import {HeartTwoTone, ShoppingCartOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-import {Card, Avatar, Descriptions, Button} from 'antd';
+import {Card, Descriptions, Button} from 'antd';
 import CommentCollection from './Comments';
 import './AnimalCard.css';
 import {getUserInfo} from "../Services/userService";
 import {addToWishList, isInWishList, removeFromWishList} from "../Services/wishlistService";
-import backendURL from "../Services/backendURL";
 import {showLoginRequiredModal} from "../Services/modal";
-import {getUserByAnimalId} from "../Services/animalService"
+import UserAvatar from '../Layout/Avatar';
 
 const { Meta } = Card;
 
@@ -39,7 +38,7 @@ const AnimalCard = (props) => {
         .then(res => {
             setUserId(res.uuid);
 
-            getUserByAnimalId(thisCard.id).then(seller => setIsTheSameUser(res.uuid === seller));
+            setIsTheSameUser(thisCard.userinfo.uuid === res.uuid);
 
             isInWishList(thisCard._id, res.uuid)
                 .then(inWishlist => {
@@ -51,7 +50,7 @@ const AnimalCard = (props) => {
 
     }, []);
 
-    const isLogin = userId !== null && userId !== undefined;
+    const isLogin = userId !== "" && userId !== undefined;
 
     const handleAddToWishlist = () => {
 
@@ -76,7 +75,7 @@ const AnimalCard = (props) => {
                 <div className="card-header">
                     <Button type = 'text' onClick = {() => props.setDisplay(-1)}><ArrowLeftOutlined/></Button>
                     <Meta
-                        avatar={<Avatar src={thisCard.userinfo.avatar} />}
+                        avatar={<UserAvatar size = {40} src={thisCard.userinfo.avatar} uuid = {thisCard.userinfo.uuid} />}
                         title={thisCard.user}
                     />
                 </div>
@@ -84,7 +83,7 @@ const AnimalCard = (props) => {
                     style={{ width: '100%', marginBottom:"20px" }}
                     cover={
                         <img
-                            alt="example"
+                            alt={thisCard.name + " image"}
                             src={thisCard.image}
                         />
                     }
