@@ -54,10 +54,11 @@ export const removeFromWishList = (animal, user) => {
         }),
         body: JSON.stringify(item)
     }).then(res => {
+        res.text().then(txt => console.log(txt));
         if(res.status === 200) {
             return true;
         }else if(res.status >= 400){
-            console.log("Fail to remove animal from wishlist");
+            return false;
         }
     });
 

@@ -74,10 +74,8 @@ router.delete("/delete", cors(), async (req, res) => {
     WishList.findOneAndDelete({
         animalId: wishList.animalId,
         userId: wishList.userId
-    }).then(() =>
-        res.status(200).json({
-            message: "Successfully delete animal from the wishlist",
-        }))
+    })
+        .then(() => res.status(200).json("Successfully delete animal from the wishlist"))
         .catch(error => res.status(400).json('Fail to delete animal from the wishlist: ' + error));
 });
 
