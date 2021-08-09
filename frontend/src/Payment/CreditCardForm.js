@@ -97,6 +97,23 @@ const CreditCardForm = (props) => {
                         res.json().then(result => {
                             props.setNewTransaction(result.data);
                             props.setPaymentSuccess(true);
+
+                            const notification = {
+                                destinationUserID: sellerId,
+                                contentID: result.data._id,
+                            };
+
+                            fetch(backendURL + "/api/notify/transaction/proceed&" + userId, {
+                                method: "POST",
+                                headers: new Headers({
+                                    "Content-Type": "application/json",
+                                }),
+                                body: JSON.stringify(notification)
+                            }).then(res => {
+                                res.text().then(text => console.log(text));
+                            }).catch(err => console.log(err));
+
+
                         });
                     }else if(res.status >= 400){
                         res.text().then(text => setErrorMsg(text));

@@ -24,7 +24,13 @@ export const warningModal = (text) => {
 
 export const successModal = (text) => {
     Modal.success({
-        content: text
+        title: text
+    });
+};
+
+export const errorModal = (text) => {
+    Modal.error({
+        title: text
     });
 };
 
