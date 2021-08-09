@@ -1,50 +1,11 @@
-.map-container .gm-svpc {
-    top: 15px !important;
-}
-
-.map-thumbnail {
-    max-width: 200px;
-    cursor: pointer;
-}
-
-.map-thumbnail img {
-    width: 200px;
-    height: 140px;
-    object-fit: cover;
-    margin-bottom: 0.5rem;
-}
-
-
 @media only screen and (max-width: 1300px) {
     .map-container {
         width: 50% !important;
     }
 }
 
-
 @media only screen and (max-width: 750px) {
     .map-container {
         width: 100% !important;
-    }
-
-    .map-container .gm-bundled-control-on-bottom {
-        bottom: 230px !important;
-        right: 40px !important;
-    }
-
-    .map-container .gm-style-mtc button {
-        font-size: 14px !important;
-        height: 30px !important;
-        padding: 0px 16px !important;
-    }
-
-}
-
-@media only screen and (max-width: 350px) {
-    .map-thumbnail img {
-        width: 160px;
-        height: 120px;
-        object-fit: cover;
-        margin-bottom: 0.5rem;
     }
 }
