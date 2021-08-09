@@ -144,4 +144,11 @@ router.post('/userinfo', async (req, res) => {
     }
 });
 
+
+router.delete("/delete/:animalId", async (req, res) => {
+    AnimalInfo.findByIdAndDelete(req.params.animalId)
+   .then(() => res.status(200).json("Successfully delete animal"))
+   .catch(error => res.status(400).json('Fail to delete animal: ' + error));
+});
+
 module.exports = router;
