@@ -125,9 +125,9 @@ function UserInfo(props){
           { props.isMe? createButton() : null}
           </Card>
           <br />
-          <Card title="Rating" bordered={false}>
+          {/* <Card title="Rating" bordered={false}>
               <Rate allowHalf disabled defaultValue={4.5} />
-          </Card>
+          </Card> */}
           <Card title="Comments" bordered = {false}>
             { comment ? 
               <CommentCollection id = {uuid} commentType = "user"/> : <Skeleton active/>
