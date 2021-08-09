@@ -2,6 +2,7 @@ import React , {createElement,useEffect,useState} from 'react';
 import { Comment, Tooltip, Avatar, Divider } from 'antd';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import {LikeComment, DislikeComment} from '../Services/commentService'
+import { notifyLike } from '../Services/notificationService';
 import {CommentArea} from './CommentArea'
 import UserAvatar from '../Layout/Avatar';
 
@@ -15,12 +16,14 @@ const SingleComment = (props) => {
     const [showCommentArea,setShowCommentArea] = useState(false)
     console.log(cmtDetail)
 
-    const like = () => {
+    const like = async () => {
       setLiked(true);
       setLikes(likes +1);
       setDisliked(false);
       console.log(cmtDetail.ucid);
+      console.log(cmtDetail.cmtorid);
       LikeComment(cmtDetail.ucid,'set');
+      await notifyLike(cmtDetail.cmtorid, cmtDetail.ucid);
     }
 
     const cancelLike = () => {
