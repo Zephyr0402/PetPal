@@ -14,16 +14,17 @@ const SingleComment = (props) => {
     const [disliked, setDisliked] = useState(false);
 
     const [showCommentArea,setShowCommentArea] = useState(false)
-    console.log(cmtDetail)
+    // console.log(cmtDetail)
 
-    const like = async () => {
+    const like = () => {
+      console.log('hhhhh');
       setLiked(true);
       setLikes(likes +1);
       setDisliked(false);
+      notifyLike(cmtDetail.cmtorid, cmtDetail.ucid);
       console.log(cmtDetail.ucid);
       console.log(cmtDetail.cmtorid);
       LikeComment(cmtDetail.ucid,'set');
-      await notifyLike(cmtDetail.cmtorid, cmtDetail.ucid);
     }
 
     const cancelLike = () => {
