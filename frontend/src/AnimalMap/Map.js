@@ -125,10 +125,11 @@ const AnimalMap = (props) => {
                     position={ele.position}
                     onClick={onMarkerClick}
                     ref={(marker) => aid2marker[index] = marker}
+                    icon="Petpal_icon_32x32.png"
                 />
             }
             )}
-            {aid > -1 && 
+            {aid > -1 && aid2marker[aid].marker !== null &&
                 <InfoWindow
                     marker={
                         aid2marker[aid].marker
