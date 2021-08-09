@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {Card, Col, Row} from 'antd';
 import { CloseCircleTwoTone } from '@ant-design/icons';
 import {Link} from 'react-router-dom';
-import { getPostedAnimals } from '../Services/postAnimalInfo';
+import {getPostedAnimals, removeAnimal} from '../Services/postAnimalInfo';
 import {getWishList, removeFromWishList} from '../Services/wishlistService'
 import './UserInfoPage.css'
 import {getUserInfo} from "../Services/userService";
@@ -36,11 +36,17 @@ function PostedAnimals(props){
             });
     },[props.filter]);
 
-    const handleRemoveFromWishlist = (animalId, userId) => {
-        removeFromWishList(animalId, userId).then(() => {
-            window.location.reload();
-        });
-    }
+    const handleRemove = (animalId, userId) => {
+        if(props.filter === "1") {
+            removeAnimal(animalId).then(() => {
+                window.location.reload();
+            });
+        }else if(props.filter === "2"){
+            removeFromWishList(animalId, userId).then(() => {
+                window.location.reload();
+            });
+        }
+    };
 
     const cardDisplay = animalinfo.map((card) =>
     <Col className="posts-thumbnail" xs={24} md={12} lg={8} xl={6} xxl={4}>
@@ -53,10 +59,9 @@ function PostedAnimals(props){
             <Meta title={card.name + ": $" + card.price} description={card.description} />
             </Card>
         </Link>
-        {props.filter === "2" ?
-            <CloseCircleTwoTone onClick={() => handleRemoveFromWishlist(card._id, userId)}/> :
-            <></>
-        }
+
+        <CloseCircleTwoTone onClick={() => handleRemove(card._id, userId)}/>
+
         {card.status === "sold" ?
             <div className="animal-sold-message"><span>SOLD</span></div> :
             <></>
