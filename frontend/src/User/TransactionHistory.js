@@ -23,7 +23,8 @@ function TransactionHistory(){
         <br />
         <Table rowKey={record => record.orderNumber} 
             expandable={{expandedRowRender: record => (<div><img src={record.animalImg}/></div>)}} 
-            dataSource={tdata}>
+            dataSource={tdata}
+            size='small'>
             <Column title="Order#" dataIndex="orderNumber" key="orderNumber" />
             <Column title="Date" dataIndex="timestamp" key="timestamp" render={timestamp => new Date(timestamp).toLocaleString('en-CA')}/>
             <Column title="From" dataIndex="sellerName" key="sellerName" />

@@ -104,7 +104,11 @@ function UserInfo(props){
           <Card title="Profile" bordered={false}>
           
           <br />
-          <Descriptions title="" bordered>
+          <Descriptions className='descriptions'
+                        bordered
+                        column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
+                        size='small'
+          >
               <Descriptions.Item label="User Name" span={3}>
                   {edit ? <Input value = {inputName} type = "text" onChange = {inputChangeName.bind(this)} />: <Input value = {inputName} type = "text" disabled = 'true' />}
               </Descriptions.Item>

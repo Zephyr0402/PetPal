@@ -49,7 +49,7 @@ const UserInfoPage = (props) => {
             <Layout>
                 <Header/>
                 <Layout>
-                    <Sider width={300}>
+                    <Sider className='sideBar' width={300}>
                         <Menu
                         mode="inline"
                         defaultSelectedKeys={selectedKey}
@@ -71,8 +71,8 @@ const UserInfoPage = (props) => {
                             }
                         </Menu>
                     </Sider>
-                    <Layout className="right-container" style={{ padding: '0 24px 24px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
+                    <Layout className="right-container">
+                        <Breadcrumb className='breadcrumb' style={{ margin: '16px 0' }}>
                         </Breadcrumb>
                         <Content className="site-layout-background">
                             <div style = {{height:'100%', overflow :'auto'}}>
