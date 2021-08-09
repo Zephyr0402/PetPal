@@ -15,14 +15,15 @@ const Main = (props) => {
     const [curMarkerAid, setCurMarkerAid] = useState(-1);
 
     const setMyDisplay = (e) => {
-        setCurMarkerAid(-1);
-        setDisplay(e);
-    }
-
-    const setMapDisplay = (e) => {
         setCurMarkerAid(e);
         setDisplay(e);
     }
+
+    // const getOneAnimalInfo = () => {
+    //     setCurMarkerAid(0);
+    //     fetch ...............
+    //     setAnimalInfo(res)
+    // }
 
     const filterAnimalInBounds = async (bounds) => {
         if (curMarkerAid > -1) {
@@ -70,14 +71,14 @@ const Main = (props) => {
             <Layout>
                 <Layout.Sider width = "38%" style = {{backgroundColor:'white'}}>
                     {  display <= -1 ?
-                        <UtilityView animalInfos={animalInfos} setDisplay={setMapDisplay}/> :
+                        <UtilityView animalInfos={animalInfos} setDisplay={setMyDisplay}/> :
                         displayCheckout ?
                             <Payment aid={display} setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout} animalInfos={animalInfos}/> :
-                            <AnimalCard aid={display} animalCardInfo={ animalInfos[display] } setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout}/> }
+                            <AnimalCard aid={display} animalCardInfo={animalInfos[display]} setDisplay={setMyDisplay} setDisplayCheckout={setDisplayCheckout}/> }
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>
-                        <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay={setMapDisplay} filterAnimalInBounds={filterAnimalInBounds}/>
+                        <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay={setMyDisplay} filterAnimalInBounds={filterAnimalInBounds}/>
                     </Layout.Content>
                 </Layout>
             </Layout>

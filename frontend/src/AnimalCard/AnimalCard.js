@@ -27,7 +27,10 @@ const AnimalCard = (props) => {
             user: 'None',
             userAvatar: 'None',
             kind: 'None',
-            description: 'None'
+            description: 'None',
+            userinfo: {
+                avatar: '/image-not-found.png'
+            }
         };
     }
 

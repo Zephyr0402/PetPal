@@ -18,17 +18,23 @@ var aid2marker = [];
 const AnimalMap = (props) => {
     const [showInfoWindow, setShowInfoWindow] = useState(false);
     const [activeMarker, setActiveMarker] = useState({});
-    const [aid, setAid] = useState(-1);
     const [markerData, setMarkerData] = useState([]);
-    const data = props.animalCardInfo;
+    var data = props.animalCardInfo;
 
     useEffect(() => {
         console.log('testingggg')
         console.log(data);
+        data = props.animalCardInfo;
         const mData = [];
         console.log("aid is:", props.aid);
         if (props.aid > -1) {
+            if (aid2marker[props.aid].marker !== activeMarker) {
+                props.google.maps.event.trigger(aid2marker[props.aid].marker, 'click');
+            }
             for (var i = 0; i < data.length; i++) {
+                if (data[i].address === undefined || data[props.aid].address === undefined) {
+                    continue;
+                }
                 if (data[i].address === data[props.aid].address) {
                     mData.push({
                         "name": data[i].name,
@@ -36,12 +42,10 @@ const AnimalMap = (props) => {
                     });
                 }
             }
-            console.log('mData', mData);
-            setAid(props.aid);
             setMarkerData(mData);
             setShowInfoWindow(true);
         } else {
-            setAid(props.aid);
+            console.log('hide info window');
             setShowInfoWindow(false);
         }
 
@@ -61,7 +65,7 @@ const AnimalMap = (props) => {
         console.log(marker2aid(marker));
         setActiveMarker(marker);
         props.setDisplay(marker2aid(marker));
-        // setShowInfoWindow(true);
+        setShowInfoWindow(true);
     }
 
     const onInfoWindowClose = (props) => {
@@ -128,21 +132,20 @@ const AnimalMap = (props) => {
                 })
             }
             {
-                console.log('test infowindow: ' + aid)
+                console.log('test infowindow: ' + showInfoWindow)
             }
-            {aid > -1 && aid2marker[aid].marker !== null && showInfoWindow &&
+            {showInfoWindow &&
                 <InfoWindow
                     marker={
-                        aid2marker[aid].marker
+                        props.aid > -1 ? aid2marker[props.aid].marker : null
                     }
-                visible={e => {
-                    return showInfoWindow
-                }
-                }
+                    // visible={(e) => { console.log('visible'); return props.aid > -1; }}
+                    visible={props.aid > -1}
                     onClose={onInfoWindowClose}
-                    onOpen={e => {
+                onOpen={(e) => {
                         console.log(e);
                         onInfoWindowOpen(props, e);
+                        
                     }
                     }
                 >
