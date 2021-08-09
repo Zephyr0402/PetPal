@@ -16,7 +16,7 @@ const initialCenter = {
 var aid2marker = [];
 
 const AnimalMap = (props) => {
-    // const [showInfoWindow, setShowInfoWindow] = useState(false);
+    const [showInfoWindow, setShowInfoWindow] = useState(false);
     const [activeMarker, setActiveMarker] = useState({});
     const [aid, setAid] = useState(-1);
     const [markerData, setMarkerData] = useState([]);
@@ -39,10 +39,12 @@ const AnimalMap = (props) => {
             console.log('mData', mData);
             setAid(props.aid);
             setMarkerData(mData);
+            setShowInfoWindow(true);
         } else {
             setAid(props.aid);
+            setShowInfoWindow(false);
         }
-        
+
 
     }, [props.aid, props.animalCardInfo]);
 
@@ -63,9 +65,9 @@ const AnimalMap = (props) => {
     }
 
     const onInfoWindowClose = (props) => {
-        // if(showInfoWindow){
-        //     setShowInfoWindow(false);
-        // }
+        if(showInfoWindow){
+            setShowInfoWindow(false);
+        }
     }
 
     const onIdle = async (mapProps, map) => {
@@ -109,6 +111,7 @@ const AnimalMap = (props) => {
             {
                 data.map((ele, index) => {
                     return <Marker
+                        key={ele.id}
                         name={ele.name}
                         position={ele.position}
                         onClick={onMarkerClick}
@@ -125,23 +128,25 @@ const AnimalMap = (props) => {
                 })
             }
             {
-                console.log('test infowindow:' + aid)
+                console.log('test infowindow: ' + aid)
             }
-            {
-                console.log(aid > -1 && aid2marker[aid].marker ? aid2marker[aid].marker : 'no marker')
-            }
-            {aid > -1 && aid2marker[aid].marker &&
+            {aid > -1 && aid2marker[aid].marker !== null && showInfoWindow &&
                 <InfoWindow
                     marker={
                         aid2marker[aid].marker
                     }
-                    visible={true}
+                visible={e => {
+                    return showInfoWindow
+                }
+                }
                     onClose={onInfoWindowClose}
                     onOpen={e => {
+                        console.log(e);
                         onInfoWindowOpen(props, e);
-                    }}
+                    }
+                    }
                 >
-                    <div id="iwc"></div>
+                <div id="iwc"/>
                 </InfoWindow>
             }
         </Map>

@@ -15,6 +15,7 @@ const Main = (props) => {
     const [curMarkerAid, setCurMarkerAid] = useState(-1);
 
     const setMyDisplay = (e) => {
+        setCurMarkerAid(-1);
         setDisplay(e);
     }
 
