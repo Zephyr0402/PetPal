@@ -44,17 +44,21 @@ function PostedAnimals(props){
 
     const cardDisplay = animalinfo.map((card) =>
     <Col className="posts-thumbnail" xs={24} md={12} lg={8} xl={6} xxl={4}>
-        <Link to = {{pathname:'/map', query : { display: card.id }}}>
+        <Link to = { card.status === "sold" ? '#' : {pathname:'/map', query : { display: card.id }} }>
             <Card
             hoverable
             style={{ height: "97%", objectFit: 'cover', width: 200}}
             cover={<img alt={card.name} src={card.image} width="200" height="180"/>}
             >
-            <Meta title={card.name} description={card.description} />
+            <Meta title={card.name + ": $" + card.price} description={card.description} />
             </Card>
         </Link>
         {props.filter === "2" ?
             <CloseCircleTwoTone onClick={() => handleRemoveFromWishlist(card._id, userId)}/> :
+            <></>
+        }
+        {card.status === "sold" ?
+            <div className="animal-sold-message"><span>SOLD</span></div> :
             <></>
         }
     </Col>
