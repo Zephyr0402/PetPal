@@ -69,7 +69,7 @@ const Main = (props) => {
             <Layout>
                 <Layout.Sider width = "38%" style = {{backgroundColor:'white'}}>
                     {  display <= -1 ?
-                        <UtilityView animalInfos={ animalInfos } setDisplay = {setMyDisplay}/> :
+                        <UtilityView animalInfos={animalInfos} setDisplay={setMapDisplay}/> :
                         displayCheckout ?
                             <Payment aid={display} setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout} animalInfos={animalInfos}/> :
                             <AnimalCard aid={display} animalCardInfo={ animalInfos[display] } setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout}/> }
