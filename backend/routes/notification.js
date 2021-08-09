@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 const NotificationInfo = require('../models/notificationinfoModel');
 
-router.post('/api/notify/like', async(req, res) => {
+router.post('/like', async(req, res) => {
+    console.log('start notify like');
     if(req.session.uuid === undefined){
         return res.send({
             message : "Your session has expired. Please log in again!"
@@ -19,6 +20,9 @@ router.post('/api/notify/like', async(req, res) => {
 
     try {
         await newNotification.save();
+        return res.send({
+            message : "Successfully add notification"
+        }) 
     } catch (err) {
         console.log(err);
     }
