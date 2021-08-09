@@ -17,8 +17,7 @@ const AnimalCard = (props) => {
     const [isTheSameUser, setIsTheSameUser] = useState(true);
 
     let thisCard = props.animalCardInfo;
-
-    console.log('thisCard' + thisCard.userinfo);
+    
     if (thisCard === undefined) {
         thisCard = {
             name: 'None',

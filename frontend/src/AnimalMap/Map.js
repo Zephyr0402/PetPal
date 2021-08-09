@@ -22,7 +22,6 @@ const AnimalMap = (props) => {
     //const aid = props.aid;
     const [aid, setAid] = useState(-1);
     const [markerData, setMarkerData] = useState([]);
-    
 
     useEffect(() => {
         console.log('testingggg')
@@ -38,15 +37,15 @@ const AnimalMap = (props) => {
                     });
                 }
             }
+            console.log('mData', mData);
+            setAid(props.aid);
             setMarkerData(mData);
+        } else {
             setAid(props.aid);
         }
+        
 
     }, [props.aid, props.animalCardInfo]);
-
-    // useEffect(() => {
-    //     aid = -1;
-    // }, [props.aid]);
 
     const marker2aid = (marker) => {
         for (let i in aid2marker) {
@@ -58,10 +57,10 @@ const AnimalMap = (props) => {
 
     const onMarkerClick = (marker) => {
         console.log('onMarkerClick');
+        console.log(marker2aid(marker));
         props.setDisplay(marker2aid(marker));
         setActiveMarker(marker);
         // setShowInfoWindow(true);
-        
     }
 
     const onInfoWindowClose = (props) => {
@@ -70,23 +69,27 @@ const AnimalMap = (props) => {
         // }
     }
 
-    const onCenterMoved = (mapProps, map) => {
+    const onCenterMoved = async (mapProps, map) => {
         console.log('onCenterMoved');
-        const bounds = map.getBounds();
-        props.filterAnimalInBounds(bounds);
-        // if (bounds.contains({ lat: 49.268199, lng: -123.247630 })) {
-        //     console.log('within range!');
-        // } else {
-        //     console.log('not in range!');
-        // }
+        // const bounds = map.getBounds();
+        // console.log(bounds);
+        // props.filterAnimalInBounds(bounds);
     }
 
-    const onZoomChanged = async (mapProps, map) => {
+    const onIdle = async (mapProps, map) => {
+        console.log('onIdle');
         const bounds = map.getBounds();
         await props.filterAnimalInBounds(bounds);
     }
 
+    const onZoomChanged = async (mapProps, map) => {
+        console.log('onZoomChanged');
+        // const bounds = map.getBounds();
+        // await props.filterAnimalInBounds(bounds);
+    }
+
     const onInfoWindowOpen = (props, e) => {
+        console.log('onInfoWindowOpen');
         const button = (
             <div>
                 <List style={{ width: "100%" }}
@@ -100,7 +103,7 @@ const AnimalMap = (props) => {
                 />
 
             </div>
-            
+
         );
         ReactDOM.render(
             React.Children.only(button),
@@ -117,42 +120,44 @@ const AnimalMap = (props) => {
             center={activeMarker.position}
             onDragend={onCenterMoved}
             onZoomChanged={onZoomChanged}
+            onIdle={onIdle}
         >
             {
-            data.map((ele, index) => {
-                return <Marker
-                    name={ele.name}
-                    position={ele.position}
-                    onClick={onMarkerClick}
-                    ref={(marker) => aid2marker[index] = marker}
-                    icon="Petpal_icon_32x32.png"
-                />
+                data.map((ele, index) => {
+                    return <Marker
+                        name={ele.name}
+                        position={ele.position}
+                        onClick={onMarkerClick}
+                        ref={(marker) => {
+                            if (marker === null) {
+                                return;
+                            }
+                            aid2marker[index] = marker
+                        }
+                        }
+                        icon="Petpal_icon_32x32.png"
+                    />
+                })
             }
-            )}
-            {aid > -1 && aid2marker[aid].marker !== null &&
+            {
+                console.log('test infowindow' + aid)
+            }
+            {
+                console.log(aid > -1 && aid2marker[aid].marker ? aid2marker[aid].marker : 'no marker')
+            }
+            {aid > -1 && aid2marker[aid].marker &&
                 <InfoWindow
                     marker={
                         aid2marker[aid].marker
                     }
                     visible={true}
-                onClose={onInfoWindowClose}
-                onOpen={e => {
-                    onInfoWindowOpen(props, e);
-                }}
-            >
-                <div id="iwc">
-
-                    {/* <List style={{ width: "100%" }}
-                        itemLayout="horizontal"
-                        dataSource={markerData}
-                        renderItem={(item, index) => (
-                            <List.Item className='marker-list-item' id={item.aid} style={{ width: "100%" }}>
-                                <Button onClick={console.log("hey")} type="link" >{item.name}</Button>
-                            </List.Item>
-                        )}
-                    /> */}
-                </div>
-            </InfoWindow>
+                    onClose={onInfoWindowClose}
+                    onOpen={e => {
+                        onInfoWindowOpen(props, e);
+                    }}
+                >
+                    <div id="iwc"></div>
+                </InfoWindow>
             }
         </Map>
     )

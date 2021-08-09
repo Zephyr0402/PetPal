@@ -12,15 +12,23 @@ const Main = (props) => {
     const [animalInfos, setAnimalInfos] = useState([]);
     const [display, setDisplay] = useState(-1);
     const [displayCheckout, setDisplayCheckout] = useState(false);
+    const [curMarkerAid, setCurMarkerAid] = useState(-1);
 
     const setMyDisplay = (e) => {
         setDisplay(e);
     }
 
+    const setMapDisplay = (e) => {
+        setCurMarkerAid(e);
+        setDisplay(e);
+    }
+
     const filterAnimalInBounds = async (bounds) => {
-        console.log('filterAnimalInBounds');
-        console.log(bounds);
-        setDisplay(-1);
+        if (curMarkerAid > -1) {
+            setCurMarkerAid(-1);
+            return;
+        }
+        setDisplay(-2);
         setAnimalInfos([]);
         fetchAnimalList().then(res => {
             var inboundAnimalInfo = [];
@@ -33,31 +41,34 @@ const Main = (props) => {
                     inboundAnimalInfo.push(res[i]);
                 }
             }
-            console.log('inboundAnimalInfo');
+            console.log('filterAnimalInBounds');
             console.log(inboundAnimalInfo);
             setAnimalInfos(inboundAnimalInfo);
         });
     }
 
-    useEffect(() => {
-        fetchAnimalList().then(res => {
-            setAnimalInfos(res);
-            if(props.location.query != undefined){
-                for(var i = 0; i< res.length; i++){
-                    if(res[i].id == props.location.query.display){
-                        setDisplay(i)
-                        break
-                    }       
-                }
-            }
-        });
-    }, [display]);
+    // useEffect(() => {
+    //     if (display === -1) {
+    //         fetchAnimalList().then(res => {
+    //             setAnimalInfos(res);
+    //             if (props.location.query != undefined) {
+    //                 for (var i = 0; i < res.length; i++) {
+    //                     if (res[i].id == props.location.query.display) {
+    //                         setDisplay(i)
+    //                         break
+    //                     }
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }, [display]);
+
     return(
         <Layout>
             <Header/>
             <Layout>
                 <Layout.Sider width = "38%" style = {{backgroundColor:'white'}}>
-                    {  display === -1 ?
+                    {  display <= -1 ?
                         <UtilityView animalInfos={ animalInfos } setDisplay = {setMyDisplay}/> :
                         displayCheckout ?
                             <Payment aid={display} setDisplay = {setMyDisplay} setDisplayCheckout={setDisplayCheckout} animalInfos={animalInfos}/> :
@@ -65,7 +76,7 @@ const Main = (props) => {
                 </Layout.Sider>
                 <Layout>
                     <Layout.Content>
-                        <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay={setMyDisplay} filterAnimalInBounds={filterAnimalInBounds}/>
+                        <AnimalMap aid={display} animalCardInfo={animalInfos} setDisplay={setMapDisplay} filterAnimalInBounds={filterAnimalInBounds}/>
                     </Layout.Content>
                 </Layout>
             </Layout>
