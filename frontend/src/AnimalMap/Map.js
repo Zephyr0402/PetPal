@@ -18,10 +18,9 @@ var aid2marker = [];
 const AnimalMap = (props) => {
     // const [showInfoWindow, setShowInfoWindow] = useState(false);
     const [activeMarker, setActiveMarker] = useState({});
-    const data = props.animalCardInfo;
-    //const aid = props.aid;
     const [aid, setAid] = useState(-1);
     const [markerData, setMarkerData] = useState([]);
+    const data = props.animalCardInfo;
 
     useEffect(() => {
         console.log('testingggg')
@@ -58,8 +57,8 @@ const AnimalMap = (props) => {
     const onMarkerClick = (marker) => {
         console.log('onMarkerClick');
         console.log(marker2aid(marker));
-        props.setDisplay(marker2aid(marker));
         setActiveMarker(marker);
+        props.setDisplay(marker2aid(marker));
         // setShowInfoWindow(true);
     }
 
@@ -69,23 +68,10 @@ const AnimalMap = (props) => {
         // }
     }
 
-    const onCenterMoved = async (mapProps, map) => {
-        console.log('onCenterMoved');
-        // const bounds = map.getBounds();
-        // console.log(bounds);
-        // props.filterAnimalInBounds(bounds);
-    }
-
     const onIdle = async (mapProps, map) => {
         console.log('onIdle');
         const bounds = map.getBounds();
         await props.filterAnimalInBounds(bounds);
-    }
-
-    const onZoomChanged = async (mapProps, map) => {
-        console.log('onZoomChanged');
-        // const bounds = map.getBounds();
-        // await props.filterAnimalInBounds(bounds);
     }
 
     const onInfoWindowOpen = (props, e) => {
@@ -118,8 +104,6 @@ const AnimalMap = (props) => {
             zoom={14}
             initialCenter={initialCenter}
             center={activeMarker.position}
-            onDragend={onCenterMoved}
-            onZoomChanged={onZoomChanged}
             onIdle={onIdle}
         >
             {
@@ -130,6 +114,7 @@ const AnimalMap = (props) => {
                         onClick={onMarkerClick}
                         ref={(marker) => {
                             if (marker === null) {
+                                aid2marker[index] = null;
                                 return;
                             }
                             aid2marker[index] = marker
@@ -140,7 +125,7 @@ const AnimalMap = (props) => {
                 })
             }
             {
-                console.log('test infowindow' + aid)
+                console.log('test infowindow:' + aid)
             }
             {
                 console.log(aid > -1 && aid2marker[aid].marker ? aid2marker[aid].marker : 'no marker')
