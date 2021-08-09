@@ -8,14 +8,27 @@
     padding: 24px;
 }
 
+.ant-menu-inline {
+    padding-top: 35px;
+}
+
 .avatar {
     padding-right: 3%;
     display: flex;
     flex-direction: row-reverse;
 }
 
+.posts-thumbnail-wrapper {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .posts-thumbnail {
     position: relative;
+    width: 200px;
+    max-width: 200px;
+    flex: none;
 }
 
 .posts-thumbnail .ant-card-cover{
@@ -30,15 +43,15 @@
 
 .posts-thumbnail span[aria-label="close-circle"] {
     position: absolute;
-    top: 5px;
-    left: 13px;
+    top: -5px;
+    right: 0px;
     cursor: pointer;
     z-index: 99;
 }
 
 .posts-thumbnail span[aria-label="close-circle"] svg{
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
 }
 
 .posts-thumbnail span[aria-label="close-circle"] svg:hover {

@@ -47,7 +47,7 @@ function PostedAnimals(props){
         <Link to = { card.status === "sold" ? '#' : {pathname:'/map', query : { display: card.id }} }>
             <Card
             hoverable
-            style={{ height: "97%", objectFit: 'cover', width: 200}}
+            style={{ height: "97%", objectFit: 'cover', width: '100%'}}
             cover={<img alt={card.name} src={card.image} width="200" height="180"/>}
             >
             <Meta title={card.name + ": $" + card.price} description={card.description} />
@@ -65,7 +65,7 @@ function PostedAnimals(props){
 )
 
     return (
-        <div style = {{height:'100%', overflow :'auto'}}>
+        <div className="posts-thumbnail-wrapper">
         <br />
         <Row gutter={16}>
             {cardDisplay}
