@@ -10,6 +10,7 @@ import { getUserInfo } from '../Services/userService';
 import { postAnimalInfo } from '../Services/postAnimalInfo';
 import { getBase64 } from '../Services/utils';
 import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
+import {showLoginRequiredModal, successModal, warningModal} from "../Services/modal";
 
 axios.defaults.withCredentials = true;
 
@@ -45,7 +46,7 @@ function PostAnimalForm() {
         console.log("handlePostAnimal");
 
         if (category === null || location.value.description === undefined || animalAgeYear === null || animalAgeMonth === null || dateFound === null || description === null || category === null || animalName === null || price === null) {
-            window.alert('Have empty field!');
+            warningModal('Please fill in all fields. They cannot be left blank.');
             return;
         }
 
@@ -61,10 +62,9 @@ function PostAnimalForm() {
         console.log(userInfo);
 
         if (userInfo.message !== undefined) {
-            window.alert('Not login, redirecting...');
-            window.location.href = '/login';
+            showLoginRequiredModal("Please login to post new animal");
         }
-        
+
         // get GPS coordinates from address
         const geoInfo = await geocodeByAddress(address)
             .then(results => getLatLng(results[0]))
@@ -76,12 +76,12 @@ function PostAnimalForm() {
         );
 
         if (geoInfo.lat === undefined || geoInfo.lng === undefined) {
-            window.alert('Cannot get GPS coordinates!');
+            warningModal("Cannot get GPS coordinates! Please try again.");
             return;
         }
 
         if (fileList.fileList === undefined || fileList.fileList.length <= 0) {
-            window.alert('You should at least upload one image!');
+            warningModal("You should at least upload one image!");
             return;
         } else {
             for (let i = 0; i < fileList.fileList.length; i++) {
@@ -92,7 +92,7 @@ function PostAnimalForm() {
                 }
             }
         }
-        
+
         const animalInfo = {
             "id": "",
             "name": animalName,
@@ -117,11 +117,11 @@ function PostAnimalForm() {
             "animalinfo": animalInfo,
             "userUUID": userInfo.uuid
         }
-        
+
         await postAnimalInfo(req);
         resetInput();
-        alert('Posted!');
-        
+        successModal('Animal is successfully posted!');
+
         window.location.href = '/';
     };
 

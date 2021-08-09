@@ -16,6 +16,18 @@ export const showLoginRequiredModal = (text) => {
     });
 };
 
+export const warningModal = (text) => {
+    Modal.warning({
+        title: text
+    });
+};
+
+export const successModal = (text) => {
+    Modal.success({
+        content: text
+    });
+};
+
 
 export const displaySuccessMessage = (text, duration) => {
     message.success(text, duration);
