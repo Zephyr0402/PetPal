@@ -8,24 +8,22 @@ import '../Layout/Header.css'
 import PostedAnimals from './PostedAnimals';
 import TransactionHistory from './TransactionHistory';
 import { withRouter } from 'react-router-dom'
-import SubMenu from 'antd/lib/menu/SubMenu';
 import { checkUUID } from '../Services/userService';
 
 const {Content, Sider } = Layout;
 
 const UserInfoPage = (props) => {
     //props.match.params.uuid
-    // console.log(props);
-    var initialKey = props.location.query == undefined ? "1": props.location.query.key;
+    var initialKey = props.location.query === undefined ? "1": props.location.query.key;
     const [selectedKey, setSelectedKey] = useState(initialKey);
     const [isMe, setIsMe] = useState(true)
-    // console.log(selectedKey);
 
     // check whether the params.uuid matches current user
-    useEffect(async () => {
-        await checkUUID(props.match.params.uuid)
+    useEffect(() => {
+        console.log('profile rendered');
+        setSelectedKey(initialKey);
+        checkUUID(props.match.params.uuid)
         .then((res) => {
-            // console.log(res)
             setIsMe(res);
         })
     }, [props]);

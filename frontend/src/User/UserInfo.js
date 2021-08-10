@@ -1,9 +1,8 @@
-import {Avatar, Descriptions, Rate, Card, Button, Input, Image, Skeleton } from 'antd';
+import {Avatar, Descriptions, Card, Button, Input, Image, Skeleton } from 'antd';
 import React, {useState, useEffect } from 'react';
 import { getUserInfo, updateUserInfo } from '../Services/userService'
 import './UserInfoPage.css'
 import Modal from 'antd/lib/modal/Modal';
-import Form from 'antd/lib/form/Form';
 import Uploader from './Uploader';
 import CommentCollection from '../AnimalCard/Comments';
 
@@ -20,8 +19,8 @@ function UserInfo(props){
     const [upload, showUpload] = useState(false)
     const [comment, showComment] = useState(false)
 
-    useEffect(async () => {
-      await getUserInfo(props.uuid)
+    useEffect(() => {
+      getUserInfo(props.uuid)
         .then((res) => {
           console.log(res.uuid);
           setUUid(res.uuid);

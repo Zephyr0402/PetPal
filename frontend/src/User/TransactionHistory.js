@@ -1,18 +1,18 @@
-import { Row, Table, Tag, Col, Space, Button } from 'antd';
+import {Table, Tag, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
 import { getTransactionHistory, cancelTransaction } from '../Services/transactionService';
 import {displayErrorMessage, displaySuccessMessage} from '../Services/modal';
 import './UserInfoPage.css';
 import {getUserInfo} from "../Services/userService";
 
-const { Column, ColumnGroup } = Table;
+const { Column } = Table;
 
 function TransactionHistory(){
 
     const [tdata, settdata] = useState([]);
     const [userId, setUserId] = useState("");
 
-    useEffect(async () => {
+    useEffect(() => {
         getTransactionHistory()
             .then((res) => {
                 settdata(res);
@@ -28,7 +28,7 @@ function TransactionHistory(){
         <>
         <br />
         <Table rowKey={record => record.orderNumber} 
-            expandable={{expandedRowRender: record => (<div><img src={record.animalImg}/></div>)}} 
+            expandable={{expandedRowRender: record => (<div><img alt='animalImage' src={record.animalImg}/></div>)}} 
             dataSource={tdata}
             size='small'>
             <Column title="Order#" dataIndex="orderNumber" key="orderNumber" />

@@ -1,5 +1,5 @@
-import React , {createElement,useEffect,useState} from 'react';
-import { Comment, Tooltip, Avatar, Divider } from 'antd';
+import React , {createElement,useState} from 'react';
+import { Comment, Tooltip } from 'antd';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import {LikeComment, DislikeComment} from '../Services/commentService'
 import { notifyLike } from '../Services/notificationService';

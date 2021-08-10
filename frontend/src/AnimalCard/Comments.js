@@ -1,9 +1,8 @@
-import React, { createElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SingleComment from './Comment'
 import './Comments.css';
 import {getComments, postComment} from '../Services/commentService'
-import Header from '../Layout/Header'
-import {List, Comment, Avatar, Divider} from 'antd'
+import {List, Divider} from 'antd'
 import { CommentArea } from './CommentArea';
 
 const CommentCollection = (props) => {

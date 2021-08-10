@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import {Button, Tooltip, Avatar, Typography, Dropdown, Menu, Divider, message, Alert} from 'antd';
+import {Button, Tooltip, Avatar, Dropdown, Menu, Divider, message} from 'antd';
 import './Header.css';
-import {Link, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { FormOutlined, DownOutlined,InfoCircleTwoTone, CommentOutlined} from '@ant-design/icons';
 import { getHeader, getUserInfo, logout } from '../Services/userService';
 import {showLoginRequiredModal} from "../Services/modal";
@@ -15,8 +15,8 @@ const Header = (props) => {
         getHeader()
             .then(async res => {
                 if(typeof res.uuid === 'string'){
-                    await getUserInfo(res.uuid).
-                        then(
+                    await getUserInfo(res.uuid)
+                        .then(
                             res => setHeader(res)
                         );
 
