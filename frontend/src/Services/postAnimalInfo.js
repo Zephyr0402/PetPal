@@ -15,7 +15,26 @@ export const postAnimalInfo = async (req) => {
     console.log(info);
 }
 
-export const getPostedAnimals = async () => {
-    return await axios.get(backendURL+'/animalInfo/uuid')
+export const getPostedAnimals = async (uuid) => {
+    return await axios.get(backendURL+'/animalInfo/posted/'+ uuid)
         .then(res => res.data);
 }
+
+
+export const removeAnimal = (animalId) => {
+
+    return fetch(backendURL + "/animalInfo/delete/"+animalId, {
+        method: "DELETE",
+        headers: new Headers({
+            "Content-Type": "application/json",
+        }),
+    }).then(res => {
+        res.text().then(txt => console.log(txt));
+        if(res.status === 200) {
+            return true;
+        }else if(res.status >= 400){
+            return false;
+        }
+    });
+
+};

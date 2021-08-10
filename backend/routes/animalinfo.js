@@ -45,14 +45,15 @@ router.get("/", async function (req, res) {
 });
 
 // get posted animals according to user's uuid
-router.get("/uuid", async function (req, res) {
+router.get("/posted/:uuid?", async function (req, res) {
+    uuid = req.params.uuid;
     if(req.session.uuid === undefined){
         console.log("Session is expired")
         res.send([])
     } else {
         console.log("Get Uploaded Animals");
 
-        await UserInfo.find({"uuid": req.session.uuid}, "_id", (err, docs) => {
+        await UserInfo.find({"uuid": uuid}, "_id", (err, docs) => {
             if(err){
                 res.status(404).send({
                     message: "Something wrong when getting user info"
@@ -61,7 +62,7 @@ router.get("/uuid", async function (req, res) {
                 var ids = docs.map(function(doc) { return doc._id; });
                 // console.log(docs)
                 // console.log(ids);
-                AnimalInfo.find({"userinfo": {$in: ids}}, "id name image description", (err, docs) => {
+                AnimalInfo.find({"userinfo": {$in: ids}}, "id name image description price status", (err, docs) => {
                     if(err){
                         res.status(404).send({
                             message: "Something wrong when getting animal info"
@@ -136,12 +137,19 @@ router.post('/changestatus', async (req, res) => {
 router.post('/userinfo', async (req, res) => {
     try {
         let info = await AnimalInfo.find({ "id": req.body.id }).populate('userinfo');
-        console.log(info[0].userinfo);
+        // console.log(info[0].userinfo);
         res.send(info[0].userinfo);
     } catch (err) {
         console.log(err);
         res.send(500);
     }
+});
+
+
+router.delete("/delete/:animalId", async (req, res) => {
+    AnimalInfo.findByIdAndDelete(req.params.animalId)
+   .then(() => res.status(200).json("Successfully delete animal"))
+   .catch(error => res.status(400).json('Fail to delete animal: ' + error));
 });
 
 module.exports = router;

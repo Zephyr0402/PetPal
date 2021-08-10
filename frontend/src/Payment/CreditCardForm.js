@@ -97,6 +97,23 @@ const CreditCardForm = (props) => {
                         res.json().then(result => {
                             props.setNewTransaction(result.data);
                             props.setPaymentSuccess(true);
+
+                            const notification = {
+                                destinationUserID: sellerId,
+                                contentID: result.data._id,
+                            };
+
+                            fetch(backendURL + "/api/notify/transaction/proceed&" + userId, {
+                                method: "POST",
+                                headers: new Headers({
+                                    "Content-Type": "application/json",
+                                }),
+                                body: JSON.stringify(notification)
+                            }).then(res => {
+                                res.text().then(text => console.log(text));
+                            }).catch(err => console.log(err));
+
+
                         });
                     }else if(res.status >= 400){
                         res.text().then(text => setErrorMsg(text));
@@ -118,7 +135,7 @@ const CreditCardForm = (props) => {
 
     return (
         <div className="credit-card-form">
-            <Title level={2} className="payment-summary"><span>Payment for {props.animal.name}</span><span>${props.animal.price}</span></Title>
+            <Title level={2} className="payment-summary"><span>{props.animal.name}</span><span>${props.animal.price}</span></Title>
             <form onSubmit={handleSubmit}>
                 <h3>Please enter your valid credit card</h3>
                 <fieldset className="form-group">
@@ -128,7 +145,7 @@ const CreditCardForm = (props) => {
                 </fieldset>
                 {isProcessing ?
                     <Text >Processing Payment</Text > :
-                    <Button type="primary" htmlType="submit">Make Payment</Button>
+                    <Button type="primary" htmlType="submit">Pay ${props.animal.price}</Button>
                 }
 
             </form>

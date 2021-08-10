@@ -1,0 +1,59 @@
+.aside-wrapper {
+    background-color: white;
+    flex: none !important;
+    max-width: 38% !important;
+    min-width: 0 !important;
+    width: 38% !important;
+    -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    z-index: 888;
+}
+
+.toggle-map-list-button {
+    width: 40px;
+    height: 40px;
+    z-index: 9999;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #1373b7;
+    padding-left: 5px;
+    padding-top: 5px;
+    border-radius: 100px 0 0 0;
+    box-shadow: -2px -2px 6px 0 rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: -2px -2px 6px 0 rgba(0, 0, 0, 0.2);
+    display: none;
+}
+
+.toggle-map-list-button svg {
+    fill: #ffffff;
+}
+
+.show-map, .show-list {
+    display: block;
+}
+
+.hide-map, .hide-list {
+    display: none;
+}
+
+@media only screen and (max-width: 1300px) {
+    .aside-wrapper {
+        max-width: 50% !important;
+        width: 50% !important;
+    }
+}
+
+
+@media only screen and (max-width: 750px) {
+   .aside-wrapper {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .toggle-map-list-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

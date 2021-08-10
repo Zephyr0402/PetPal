@@ -77,8 +77,8 @@ export const getHeader = async ( uuid = "" ) => {
         .then(res => res.data);
 }
 
-export const getUserInfo = async () => {
-    return await axios.get('http://localhost:9999/api/cur_user/info')
+export const getUserInfo = async (uuid) => {
+    return await axios.get(backendURL + '/api/info/'+ uuid)
         .then(res => res.data);
 }
 
@@ -96,4 +96,9 @@ export const updateUserInfo = async (userInfo) => {
             "Content-Type": "application/json",
         }
     })
+}
+
+export const checkUUID = async (uuid) => {
+    return await axios.get(backendURL + '/api/check/'+ uuid)
+    .then(res => res.data);
 }

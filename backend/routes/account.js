@@ -294,7 +294,24 @@ router.get('/api/logout', async(req, res) => {
     })
 })
 
-router.get('/api/cur_user/info', async (req,res) => {
+router.get('/api/check/:uuid?', async(req, res) => {
+    uuid = req.params.uuid;
+    console.log(uuid)
+    if(req.session.uuid === undefined){
+        return res.send({
+            message : "Your session has expired. Please log in again!"
+        })  
+    }
+
+    if (uuid === req.session.uuid){
+        res.send(true)
+    } else {
+        res.send(false)
+    }
+})
+
+router.get('/api/info/:uuid?', async (req,res) => {
+    uuid = req.params.uuid;
     // console.log(req.session);
     //not logged in
     if(req.session.uuid === undefined){
@@ -305,7 +322,7 @@ router.get('/api/cur_user/info', async (req,res) => {
 
     //return user information
     const user = await UserInfo.findOne({
-        'uuid' : req.session.uuid
+        'uuid' : uuid
     }, (err, doc) => {
         if(err){
             res.status(404).send({

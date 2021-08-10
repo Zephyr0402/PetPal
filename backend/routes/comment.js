@@ -2,8 +2,9 @@ var express = require('express');
 var router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const Comment = require('../models/commentModel');
-const { findOneAndUpdate } = require('../models/transactionModel');
-const {UserInfo} = require('../models/userModel');
+const { UserInfo } = require('../models/userModel');
+const AnimalInfo = require('../models/animalinfoModel');
+const NotificationInfo = require('../models/notificationinfoModel');
 
 router.get('/api/getuuid', async (req, res) => {
     return res.send(uuidv4())
@@ -32,6 +33,25 @@ router.post('/api/comment', async (req, res) => {
         },{
             '$push' : {'replies' : comment.ucid}
         })
+    }
+
+    console.log('Update one comment notification');
+    try {
+        // Find seller id
+        const infos = await AnimalInfo.findOne({ "id": req.body.uaid }).populate('userinfo');
+        console.log(infos.userinfo);
+        const sourceUserID = infos.userinfo.uuid;
+        const destinationUserID = req.session.uuid;
+        const contentID = comment.ucid;
+        await NotificationInfo.create({
+            type: "comment",
+            sourceUserID: sourceUserID,
+            destinationUserID: destinationUserID,
+            contentID: contentID,
+            timestamp: Date.now()
+        })
+    } catch (err) {
+        console.log(err);
     }
 
     return res.send({
@@ -80,7 +100,7 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
 
 //comments for user
 router.get('/api/comment/animal/:uaid', async (req, res) => {
-    console.log(req.params.uaid)
+    // console.log(req.params.uaid)
     const animalCommentsFromDB = await Comment.find({
         'uaid' : req.params.uaid
     })

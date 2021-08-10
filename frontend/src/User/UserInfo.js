@@ -7,7 +7,7 @@ import Form from 'antd/lib/form/Form';
 import Uploader from './Uploader';
 import CommentCollection from '../AnimalCard/Comments';
 
-function UserInfo(){
+function UserInfo(props){
     const [uuid, setUUid] = useState("");
     const [edit, setEdit] = useState(false);
     const [update, setUpdate] = useState(false);
@@ -21,8 +21,9 @@ function UserInfo(){
     const [comment, showComment] = useState(false)
 
     useEffect(async () => {
-      await getUserInfo()
+      await getUserInfo(props.uuid)
         .then((res) => {
+          console.log(res.uuid);
           setUUid(res.uuid);
           setInputName(res.name);
           setInputPNumber(res.phone);
@@ -103,7 +104,11 @@ function UserInfo(){
           <Card title="Profile" bordered={false}>
           
           <br />
-          <Descriptions title="" bordered>
+          <Descriptions className='descriptions'
+                        bordered
+                        column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
+                        size='small'
+          >
               <Descriptions.Item label="User Name" span={3}>
                   {edit ? <Input value = {inputName} type = "text" onChange = {inputChangeName.bind(this)} />: <Input value = {inputName} type = "text" disabled = 'true' />}
               </Descriptions.Item>
@@ -117,12 +122,12 @@ function UserInfo(){
                   {edit ? <Input value = {inputIntro} type = "text" onChange = {inputChangeIntro.bind(this)} />: <Input value = {inputIntro} type = "text" disabled = 'true' />}
               </Descriptions.Item>
           </Descriptions>
-          {createButton()}
+          { props.isMe? createButton() : null}
           </Card>
           <br />
-          <Card title="Rating" bordered={false}>
+          {/* <Card title="Rating" bordered={false}>
               <Rate allowHalf disabled defaultValue={4.5} />
-          </Card>
+          </Card> */}
           <Card title="Comments" bordered = {false}>
             { comment ? 
               <CommentCollection id = {uuid} commentType = "user"/> : <Skeleton active/>

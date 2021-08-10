@@ -1,7 +1,7 @@
 import { Layout, Menu, Breadcrumb} from 'antd';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import './UserInfoPage.css'
-import { UserOutlined, TransactionOutlined, BookOutlined} from '@ant-design/icons';
+import { UserOutlined, TransactionOutlined, BookOutlined, HeartOutlined} from '@ant-design/icons';
 import UserInfo from './UserInfo';
 import Header from '../Layout/Header';
 import '../Layout/Header.css'
@@ -9,23 +9,35 @@ import PostedAnimals from './PostedAnimals';
 import TransactionHistory from './TransactionHistory';
 import { withRouter } from 'react-router-dom'
 import SubMenu from 'antd/lib/menu/SubMenu';
+import { checkUUID } from '../Services/userService';
 
 const {Content, Sider } = Layout;
 
 const UserInfoPage = (props) => {
     //props.match.params.uuid
-    var initialKey = props.location.query == undefined ? "1": props.location.query.key
-    const [selectedKey, setSelectedKey] = useState(initialKey)
-    console.log(selectedKey)
+    // console.log(props);
+    var initialKey = props.location.query == undefined ? "1": props.location.query.key;
+    const [selectedKey, setSelectedKey] = useState(initialKey);
+    const [isMe, setIsMe] = useState(true)
+    // console.log(selectedKey);
+
+    // check whether the params.uuid matches current user
+    useEffect(async () => {
+        await checkUUID(props.match.params.uuid)
+        .then((res) => {
+            // console.log(res)
+            setIsMe(res);
+        })
+    }, []);
 
     const switchComponent = (key) => {
         switch (key){
             case "1":
-                return(<UserInfo />);
+                return(<UserInfo uuid={props.match.params.uuid} isMe={isMe} />);
             case "2":
-                return(<PostedAnimals filter="1"/>);
+                return(<PostedAnimals filter="1" uuid={props.match.params.uuid} />);
             case "2.5":
-                return(<PostedAnimals filter="2"/>);
+                return(<PostedAnimals filter="2" />);
             case "3":
                 return(<TransactionHistory />);
             default:
@@ -37,7 +49,7 @@ const UserInfoPage = (props) => {
             <Layout>
                 <Header/>
                 <Layout>
-                    <Sider width={300}>
+                    <Sider className='sideBar' width={300}>
                         <Menu
                         mode="inline"
                         defaultSelectedKeys={selectedKey}
@@ -47,18 +59,14 @@ const UserInfoPage = (props) => {
                         >
                             <Menu.Item key="1" icon={<UserOutlined />}>
                                 Basic Information
-                            </Menu.Item>
-                            <SubMenu icon={<BookOutlined />} title="Posts">
-                                <Menu.Item key="2">My Posted Animals</Menu.Item>
-                                <Menu.Item key="2.5">My Favourite List</Menu.Item>
-                            </SubMenu>
-                            <Menu.Item key="3" icon={<TransactionOutlined />}>
-                                Transaction History
-                            </Menu.Item>
+                            </Menu.Item>             
+                            <Menu.Item key="2" icon={<BookOutlined />}>My Posted Animals</Menu.Item>
+                            {isMe? <Menu.Item key="2.5" icon={<HeartOutlined />}>My Wish List</Menu.Item> : null}
+                            {isMe? <Menu.Item key="3" icon={<TransactionOutlined />}>Transaction History</Menu.Item> : null}
                         </Menu>
                     </Sider>
-                    <Layout className="right-container" style={{ padding: '0 24px 24px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
+                    <Layout className="right-container">
+                        <Breadcrumb className='breadcrumb' style={{ margin: '16px 0' }}>
                         </Breadcrumb>
                         <Content className="site-layout-background">
                             <div style = {{height:'100%', overflow :'auto'}}>
