@@ -7,8 +7,8 @@ import UserAvatar from '../Layout/Avatar';
 
 const SingleComment = (props) => {
     const cmtDetail = props.commentDetail;
-
-    const [liked, setLiked] = useState(false);
+    console.log(cmtDetail)
+    const [liked, setLiked] = useState(cmtDetail.liked);
     const [likes, setLikes] = useState(cmtDetail.likes.length)
     const [disliked, setDisliked] = useState(false);
 
@@ -19,7 +19,6 @@ const SingleComment = (props) => {
       setLiked(true);
       setLikes(likes +1);
       setDisliked(false);
-      console.log(cmtDetail.ucid);
       LikeComment(cmtDetail.ucid,'set');
     }
 

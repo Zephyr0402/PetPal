@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const { v4: uuidv4 } = require('uuid');
 const Comment = require('../models/commentModel');
+const { findOneAndUpdate } = require('../models/transactionModel');
 const {UserInfo} = require('../models/userModel');
 
 router.get('/api/getuuid', async (req, res) => {
@@ -51,6 +52,14 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
             'uuid' : c.cmtorid
         })
 
+        var liked = false
+        for(let like of c.likes){
+            if(like == req.session.uuid){
+                liked = true
+                break
+            }
+        }
+
         userComments.push({
             'cmtorid' : c.cmtorid,
             'ucid' : c.ucid,
@@ -58,6 +67,7 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
             'avatar': userInfo.avatar,
             'content' : c.content,
             'time' : c.time,
+            'liked' : liked,
             'likes' : c.likes,
             'dislikes' : c.dislikes,
             'replies' : c.replies
@@ -91,6 +101,14 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
                 'uuid' : r.cmtorid
             }, 'name avatar')
 
+            let liked = false
+            for(let like of r.likes){
+                if(like == req.session.uuid){
+                    liked = true
+                    break
+                }
+            }
+
             replies.push({
                 'cmtorid' : resizeBy.cmtorid,
                 'ucid' : r.ucid,
@@ -99,8 +117,17 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
                 'content' : r.content,
                 'time' : r.time,
                 'likes' : r.likes,
+                'liked' : liked,
                 'dislikes' : r.dislikes,
             })
+        }
+
+        let liked = false
+        for(let like of c.likes){
+            if(like == req.session.uuid){
+                liked = true
+                break
+            }
         }
 
         animalComments.push({
@@ -111,6 +138,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
             'content' : c.content,
             'time' : c.time,
             'likes' : c.likes,
+            'liked' : liked,
             'dislikes' : c.dislikes,
             'replies' : replies
         })

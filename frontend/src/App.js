@@ -16,7 +16,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path = "/">
-          <Redirect to = "/chat/"/>
+          <Redirect to = "/map"/>
         </Route>
         <Route path = "/map">
           <Main/>
