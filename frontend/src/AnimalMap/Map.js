@@ -26,9 +26,12 @@ const AnimalMap = (props) => {
         data = props.animalCardInfo;
         const mData = [];
         if (props.aid > -1) {
-            if (aid2marker[props.aid].marker !== activeMarker) {
-                props.google.maps.event.trigger(aid2marker[props.aid].marker, 'click');
+            if (aid2marker.length > props.aid) {
+                if (aid2marker[props.aid].marker !== activeMarker) {
+                    props.google.maps.event.trigger(aid2marker[props.aid].marker, 'click');
+                }
             }
+            
             for (var i = 0; i < data.length; i++) {
                 if (data[i].address === undefined || data[props.aid].address === undefined) {
                     continue;
