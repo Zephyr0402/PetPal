@@ -6,7 +6,6 @@
 .site-layout-background {
     text-align: left;
     background-color: #fff;
-    padding: 24px;
 }
 
 .ant-menu-inline {
@@ -88,4 +87,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media only screen and (max-width: 500px) {
+    .right-container .ant-card-head ,
+    .right-container .ant-card-body {
+        padding: 0;
+    }
+
+    .right-container #comment-text {
+        max-width: 100% !important;
+    }
 }

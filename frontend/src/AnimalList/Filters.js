@@ -112,19 +112,17 @@ export const PriceFilter = (props) => {
     return(
         <div className = "filter-border">
             <InputNumber
-                id = "minPriceInput" 
-                min = {range.min} max = {curRange.max} defaultValue = {range.min} value = {curRange.min} 
-                bordered = {false} size = 'small' 
+                id = "minPriceInput"
+                min = {range.min} max = {curRange.max} defaultValue = {range.min} value = {curRange.min}
+                bordered = {false} size = 'small'
                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} parser={value => value.replace(/\$\s?|(,*)/g, '')}
                 onChange = {onRangeMinInputChange}/>
             <LineOutlined />
-            <LineOutlined />
-            <InputNumber 
-                style = {{ marginLeft: "8px", width : "70px"}}
-                id = "maxPriceInput" 
-                min = {curRange.min} max = {range.max} defaultValue = {range.max} value = {curRange.max} 
+            <InputNumber
+                id = "maxPriceInput"
+                min = {curRange.min} max = {range.max} defaultValue = {range.max} value = {curRange.max}
                 bordered={false} size= 'small'
-                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} parser={value => value.replace(/\$\s?|(,*)/g, '')} 
+                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} parser={value => value.replace(/\$\s?|(,*)/g, '')}
                 onChange = {onRangeMaxInputChange}/>
             <Slider range min = {range.min} max = {range.max} defaultValue={[range.min, range.max]} value = {[curRange.min, curRange.max]} onChange = {onSliderChange}/>
         </div>

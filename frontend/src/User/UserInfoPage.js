@@ -57,7 +57,7 @@ const UserInfoPage = (props) => {
                         >
                             <Menu.Item key="1" icon={<UserOutlined />}>
                                 Basic Information
-                            </Menu.Item>             
+                            </Menu.Item>
                             <Menu.Item key="2" icon={<BookOutlined />}>My Posted Animals</Menu.Item>
                             {isMe? <Menu.Item key="2.5" icon={<HeartOutlined />}>My Wish List</Menu.Item> : null}
                             {isMe? <Menu.Item key="3" icon={<TransactionOutlined />}>Transaction History</Menu.Item> : null}
@@ -67,7 +67,7 @@ const UserInfoPage = (props) => {
                         <Breadcrumb className='breadcrumb' style={{ margin: '16px 0' }}>
                         </Breadcrumb>
                         <Content className="site-layout-background">
-                            <div style = {{height:'100%', overflow :'auto'}}>
+                            <div style = {{height:'100%', overflow :'auto', padding: '24px'}}>
                                 {switchComponent(selectedKey)}
                             </div>
                         </Content>
