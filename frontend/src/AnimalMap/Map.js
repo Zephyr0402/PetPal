@@ -40,8 +40,6 @@ const AnimalMap = (props) => {
                     });
                 }
             }
-            console.log('useEffect');
-            console.log(aid2marker);
             setMarkerData(mData);
             setShowInfoWindow(true);
         } else {
@@ -72,13 +70,11 @@ const AnimalMap = (props) => {
     }
 
     const onIdle = async (mapProps, map) => {
-        console.log('onIdle');
         const bounds = map.getBounds();
         await props.filterAnimalInBounds(bounds);
     }
 
     const onInfoWindowOpen = (props, e) => {
-        console.log('onInfoWindowOpen');
         const button = (
             <div>
                 <List style={{ width: "100%" }}
@@ -86,7 +82,7 @@ const AnimalMap = (props) => {
                     dataSource={markerData}
                     renderItem={(item, index) => (
                         <List.Item className='marker-list-item' id={item.aid} style={{ width: "100%" }}>
-                            <Button onClick={(e) => { console.log('button' + item.aid); props.setDisplay(item.aid) }} type="link" >{item.name}</Button>
+                            <Button onClick={(e) => { props.setDisplay(item.aid) }} type="link" >{item.name}</Button>
                         </List.Item>
                     )}
                 />
@@ -122,33 +118,20 @@ const AnimalMap = (props) => {
                                 return;
                             }
                             aid2marker[index] = marker
-                            console.log('aid2marker');
-                            console.log(aid2marker);
                         }
                         }
                         icon="Petpal_icon_32x32.png"
                     />
                 })
             }
-            {
-                console.log('test infowindow: ' + showInfoWindow + props.aid)
-            }
-            {
-                console.log('test infowindow marker num: ' + aid2marker.length)
-            }
-            {
-                console.log('test infowindow marker: ')
-            }
             {(props.aid > -1 || showInfoWindow) &&
                 <InfoWindow
                     marker={
                         props.aid > -1 ? aid2marker[props.aid].marker : null
                     }
-                    // visible={(e) => { console.log('visible'); return props.aid > -1; }}
                     visible={props.aid > -1 && showInfoWindow}
                     onClose={onInfoWindowClose}
                     onOpen={(e) => {
-                        console.log('onOpen');
                         onInfoWindowOpen(props, e);
                     }
                     }
