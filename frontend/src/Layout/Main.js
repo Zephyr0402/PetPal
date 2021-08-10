@@ -21,6 +21,19 @@ const Main = (props) => {
         height: undefined,
     });
 
+    useEffect(() => {
+        if(props.location.query != undefined){
+            var index = -1;
+            for(let i = 0; i< animalInfos.length;i++){
+                if(animalInfos[i].id == props.location.query.display){
+                    index=i
+                    break
+                }
+            }
+            setDisplay(index)
+        }
+    }, [animalInfos])
+
     const setMyDisplay = (e) => {
         setCurMarkerAid(e);
         setDisplay(e);
@@ -50,8 +63,6 @@ const Main = (props) => {
                     inboundAnimalInfo.push(res[i]);
                 }
             }
-            console.log('filterAnimalInBounds');
-            console.log(inboundAnimalInfo);
             setAnimalInfos(inboundAnimalInfo);
         });
     }

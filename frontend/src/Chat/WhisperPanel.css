@@ -1,0 +1,54 @@
+.whisper-panel{
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 50%;
+}
+
+.whisper-header{
+    flex: 1 1 8%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 2%;
+    box-shadow: 0 0.4vh 0.4vh rgb(225, 225, 225);
+}
+
+.whisper-list{
+    overflow: auto;
+    flex: 1 1 87.5%;
+    box-shadow: 0 -0.3vh 0.3vh rgb(225, 225, 225) inset;
+    margin-bottom: 0.3%;
+    margin-top: 0.3%;
+}
+
+.whisper-list-item{
+    align-items: center;
+    margin: 0.8%;
+}
+
+.whisper-content{
+    border-radius: 25px;
+    background-color: rgb(225, 225, 225);
+    padding: 1.5%;
+    font-size: 'medium';
+    margin-left: 0.3%;
+    margin-right: 0.3%;
+}
+
+.whisper-input{
+    flex: 1 1 4.5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border:2px solid rgb(158, 149, 149);
+    border-radius: 25px;
+    padding: 0.3%;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1.5%;
+    margin-bottom: 1.5%;
+    box-shadow: 0 0.5vh 0.5vh rgb(225, 225, 225);
+}

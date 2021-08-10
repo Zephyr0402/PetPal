@@ -4,6 +4,7 @@ import { Form, Input, Button, Modal, message } from 'antd';
 import { getHeader, login , sendResetLink} from '../Services/userService';
 import { InfoCircleTwoTone} from '@ant-design/icons'
 import Header from '../Layout/Header'
+import { openSocket } from '../Chat/Socket';
 
 const LoginForm = (props) => {
 
@@ -23,12 +24,15 @@ const LoginForm = (props) => {
     }
 
     const onFinish = async (values) => {
+        
         await login(values.email, values.password)
         .then(
             async (res) => {
                 await getHeader(res.uuid).then(
                     () =>{
                         if(res.success){
+                            //openSocket(res.uuid)
+                            //console.log(socket)
                             message.error({
                                 content: res.message,
                                 duration: 2,

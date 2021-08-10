@@ -311,8 +311,10 @@ router.get('/api/check/:uuid?', async(req, res) => {
 })
 
 router.get('/api/info/:uuid?', async (req,res) => {
-    uuid = req.params.uuid;
-    // console.log(req.session);
+    if(req.params.uuid == undefined)
+        uuid = req.session.uuid
+    else
+        uuid = req.params.uuid;
     //not logged in
     if(req.session.uuid === undefined){
         return res.send({
@@ -321,7 +323,7 @@ router.get('/api/info/:uuid?', async (req,res) => {
     }
 
     //return user information
-    const user = await UserInfo.findOne({
+    await UserInfo.findOne({
         'uuid' : uuid
     }, (err, doc) => {
         if(err){

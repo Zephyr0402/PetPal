@@ -16,6 +16,7 @@ const AnimalCard = (props) => {
     const [isTheSameUser, setIsTheSameUser] = useState(true);
 
     let thisCard = props.animalCardInfo;
+    console.log(thisCard)
     
     if (thisCard === undefined) {
         thisCard = {
@@ -76,7 +77,7 @@ const AnimalCard = (props) => {
                     <Button type = 'text' onClick = {() => props.setDisplay(-1)}><ArrowLeftOutlined/></Button>
                     <Meta
                         avatar={<UserAvatar size = {40} src={thisCard.userinfo.avatar} uuid = {thisCard.userinfo.uuid} />}
-                        title={thisCard.user}
+                        title={thisCard.userinfo.name}
                     />
                 </div>
                 <Card

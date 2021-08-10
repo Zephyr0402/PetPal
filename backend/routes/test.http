@@ -73,3 +73,19 @@ post {{url}}/api/comment
 
 ###like
 post {{url}}/api/comment/dislike/ca89d0c2-6836-43f2-a205-503e663ed9fd
+
+###create channel
+post {{url}}/api/channel
+{{json}}
+
+{
+    "name" : "222",
+    "members" : ["u1","u2"]
+}
+
+###get channels
+get {{url}}/api/channel
+
+### get channel whispers
+
+### get unread whispers

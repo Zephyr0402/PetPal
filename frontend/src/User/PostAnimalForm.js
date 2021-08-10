@@ -59,8 +59,6 @@ function PostAnimalForm() {
             }
         );
 
-        console.log(userInfo);
-
         if (userInfo.message !== undefined) {
             showLoginRequiredModal("Please login to post new animal");
         }

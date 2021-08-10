@@ -77,7 +77,7 @@ export const getHeader = async ( uuid = "" ) => {
         .then(res => res.data);
 }
 
-export const getUserInfo = async (uuid) => {
+export const getUserInfo = async ( uuid = "" ) => {
     return await axios.get(backendURL + '/api/info/'+ uuid)
         .then(res => res.data);
 }

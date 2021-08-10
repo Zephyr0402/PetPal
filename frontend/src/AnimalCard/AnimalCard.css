@@ -25,6 +25,11 @@
 .ant-card-meta {
     display: flex;
     align-items: center;
+    margin-right: 2%;
+}
+
+.ant-card-meta-avatar{
+    padding-right: 0.8vh;
 }
 
 .card-wrapper .ant-card-cover {

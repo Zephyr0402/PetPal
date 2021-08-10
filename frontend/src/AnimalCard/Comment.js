@@ -8,21 +8,17 @@ import UserAvatar from '../Layout/Avatar';
 
 const SingleComment = (props) => {
     const cmtDetail = props.commentDetail;
-
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(cmtDetail.liked);
     const [likes, setLikes] = useState(cmtDetail.likes.length)
-    const [disliked, setDisliked] = useState(false);
-
+    const [disliked, setDisliked] = useState(cmtDetail.disliked);
+  console.log(cmtDetail)
     const [showCommentArea,setShowCommentArea] = useState(false)
     // console.log(cmtDetail)
 
     const like = async() => {
-      console.log('hhhhh');
       setLiked(true);
       setLikes(likes +1);
       setDisliked(false);
-      console.log(cmtDetail.ucid);
-      console.log(cmtDetail.cmtorid);
       await notifyLike(cmtDetail.cmtorid, cmtDetail.ucid);
       await LikeComment(cmtDetail.ucid,'set');
     }
@@ -102,10 +98,6 @@ const SingleComment = (props) => {
             actions={actions}
             author={<a>{cmtDetail.name}</a>}
             avatar={
-                // <Avatar
-                // src={cmtDetail.avatar}
-                // alt="Username loading..."
-                // />
                 <UserAvatar size = {35} src = {cmtDetail.avatar} uuid = {cmtDetail.cmtorid}/>
             }
             content={

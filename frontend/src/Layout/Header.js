@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {Button, Tooltip, Avatar, Typography, Dropdown, Menu, Divider, message, Alert} from 'antd';
 import './Header.css';
 import {Link, Redirect} from 'react-router-dom';
-import { FormOutlined, DownOutlined, CheckCircleFilled, CheckCircleTwoTone, InfoCircleTwoTone} from '@ant-design/icons';
+import { FormOutlined, DownOutlined,InfoCircleTwoTone, CommentOutlined} from '@ant-design/icons';
 import { getHeader, getUserInfo, logout } from '../Services/userService';
 import {showLoginRequiredModal} from "../Services/modal";
 
@@ -70,21 +70,24 @@ const Header = (props) => {
                                          window.location.href="/post":
                                          showLoginRequiredModal("Please login to post new animal")}/>
                         </Tooltip>
-                        <Link className = "header-btn" to = "/login">Log in</Link>
+                        <Button type = "link" className = "header-btn" href = "/login">Log in</Button>
                         <Button className = "header-btn" type = 'primary' href = "/register">Sign up</Button>
                     </span>
                 :
                     <span className = "header-btns">
+                        
                         <Tooltip title = "Post now!">
                             <Button danger shape="circle" icon={<FormOutlined />} href = "/post"/>
                         </Tooltip>
+                        <Button bo style = {{marginLeft:"1%", marginRight:"1%"}} shape="circle" icon={<CommentOutlined />} href = "/chat/"/>
                         <Dropdown
+                        arrow = {true}
                             overlay = {optionsOnNameClick}
                             onVisibleChange = {onMenuVisibleChange}
                             visible = {optionsVisible}
                         >
-                            <div style = {{display:'inline'}}>
-                                <Avatar style = {{marginLeft:"8px", marginRight:"8px"}} src = {header.avatar}/><DownOutlined/>
+                            <div>
+                                <Avatar style = {{display:'inline-block'}} src = {header.avatar}/><DownOutlined/>
                             </div>
                         </Dropdown>
                     </span>
