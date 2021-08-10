@@ -122,7 +122,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
 
         const repliesFromDB = await Comment.find({
             'fcid' : c.ucid
-        }, 'cmtorid content time likes dislikes')
+        })
 
         var replies = [];
         for(let r of repliesFromDB){
@@ -146,7 +146,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
                     break
                 }
             }
-
+            console.log(r.ucid)
             replies.push({
                 'cmtorid' : r.cmtorid,
                 'ucid' : r.ucid,
@@ -202,7 +202,7 @@ router.post('/api/comment/like/:type/:ucid', async (req, res) => {
     const comment = await Comment.findOne({
         'ucid' : req.params.ucid
     })
-
+    console.log(req.params.ucid)
     if(req.params.type == "set"){
         await Comment.updateOne({
             'ucid' : req.params.ucid
