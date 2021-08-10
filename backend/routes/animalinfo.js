@@ -137,7 +137,7 @@ router.post('/changestatus', async (req, res) => {
 router.post('/userinfo', async (req, res) => {
     try {
         let info = await AnimalInfo.find({ "id": req.body.id }).populate('userinfo');
-        console.log(info[0].userinfo);
+        // console.log(info[0].userinfo);
         res.send(info[0].userinfo);
     } catch (err) {
         console.log(err);

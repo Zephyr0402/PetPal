@@ -70,7 +70,7 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
 
 //comments for user
 router.get('/api/comment/animal/:uaid', async (req, res) => {
-    console.log(req.params.uaid)
+    // console.log(req.params.uaid)
     const animalCommentsFromDB = await Comment.find({
         'uaid' : req.params.uaid
     })

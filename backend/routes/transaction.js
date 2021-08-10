@@ -38,15 +38,15 @@ router.get("/uuid", async (req, res) => {
                 for(let doc of docs){    
                     doc = JSON.parse(JSON.stringify(doc))
                     const udoc = await UserInfo.find({'uuid': doc.buyerId}, 'name');
-                    console.log(udoc[0].name);
+                    // console.log(udoc[0].name);
                     doc.buyerName = udoc[0].name;
 
                     const udoc2 = await UserInfo.find({'uuid': doc.sellerId}, 'name');
-                    console.log(udoc2[0].name);
+                    // console.log(udoc2[0].name);
                     doc.sellerName = udoc2[0].name;
 
                     const animalInfo = await AnimalInfo.find({'_id': doc.animalId}, 'name image');
-                    console.log(animalInfo[0].name)
+                    // console.log(animalInfo[0].name)
                     doc.animalName = animalInfo[0].name;
                     doc.animalImg = animalInfo[0].image;
                     newDocs.push(doc);
