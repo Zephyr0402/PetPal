@@ -1,6 +1,7 @@
 var app = require('./app')
 const { v4: uuidv4 } = require('uuid');
 const {Whisper, Channel} = require('./models/whisperModel');
+const {UserInfo} = require('./models/userModel');
 var chatServer = require('http').createServer(app);
 var io = require("socket.io")(chatServer, {
     cors: {
@@ -21,19 +22,23 @@ io.on('connection', (socket) => {
             'status' : USER_STATUS[0]
         }
     }else{
+        onlineUsers[curUserId].socketIds = []
         onlineUsers[curUserId].socketIds.push(socket.id)
     }
 
+    console.log(onlineUsers)
     //receive whisper message
     socket.on('whisper', async whisper => {
-        var members = await Channel.find({
+        curUserId = socket.handshake.headers.uuid
+        var m = await Channel.findOne({
             'cid' : whisper.cid
         },'members')
-        unreadMembers = members.filter((value) => {
+
+        var unreadMembers = m.members.filter((value) => {
             return value != curUserId
         })
         //store it to db
-        await Whisper.create({
+        var w = await Whisper.create({
             'cid' : whisper.cid,
             'wid' : uuidv4(),
             'sender' : curUserId,
@@ -42,6 +47,12 @@ io.on('connection', (socket) => {
             'timestamp' : whisper.timestamp
         })
 
+        const uavatar = await UserInfo.findOne({
+            'uuid' : curUserId
+        },'avatar')
+        var c = {}
+        c["avatar"] = uavatar.avatar
+        
         //find receivers
         const channel = await Channel.findOne({
             'cid' : whisper.cid
@@ -49,25 +60,26 @@ io.on('connection', (socket) => {
         const receivers = channel.members;
 
         //select online receivers to send message
-        console.log("socket id: ", socket.id)
-        console.log("online user:", onlineUsers)
-        //socket.emit('forward-whisper', "to all socket");
-        //io.to(socket.id).emit('forward-whisper',"to specific socket");
         for(let receiver of receivers){
-            console.log(receiver)
             if(onlineUsers[receiver] == undefined){
                 //do nothing
-                console.log("you should not see this")
             }else{
+                console.log(receiver)
+                c["uuid"] = receiver;
                 onlineUsers[receiver].socketIds.forEach((socketId) =>
-                    {io.to(socketId).emit('forward-whisper', whisper);}
+                    {   
+                        console.log(socketId)
+                        io.to(socketId).emit('forward-whisper', {...(w._doc),...c});
+                    }
                 )
             }
         }
     })
 
     //offline (exit chat room)
-    socket.on('disconnect', () => {
+    socket.on('disconnect', (reason) => {
+        console.log(reason)
+        curUserId = socket.handshake.headers.uuid
         var socketLen = onlineUsers[curUserId].length
         onlineUsers[curUserId].socketIds.splice(socketLen-1,1)
     })

@@ -14,7 +14,7 @@ export const getWhispers = async (cid) => {
 }
 
 export const postChannel = async (name, mbs) => {
-    return fetch(backendURL + "/api/comment/", {
+    return fetch(backendURL + "/api/channel/", {
         method: 'POST',
         body : JSON.stringify({
             'name' : name,
@@ -25,4 +25,9 @@ export const postChannel = async (name, mbs) => {
         },
         credentials: 'include'
     }).then(res => res.json());
+}
+
+export const getUnreadWhisper = async () => {
+    return axios.get(backendURL + "/api/whisper/unread")
+    .then(res => res.data);
 }

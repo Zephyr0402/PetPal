@@ -102,7 +102,21 @@ router.get('/api/whisper/unread', async (req, res) => {
     const unreadWhispers = await Whisper.find({
         'unread' : {'$in' : [req.session.uuid]}
     })
-    res.send(unreadWhispers.length)
+
+    const channels = await Channel.find({
+        'members' : {'$in' : [req.session.uuid]}
+    })
+
+    var u = {}
+    for(let channel of channels){
+        u[channel.cid] = 0
+    }
+    
+    for(let uw of unreadWhispers){
+        u[uw.cid] += 1
+    }
+    
+    res.send(u)
 })
 
 router.get('/api/whisper/fake/channel', async (req, res) => {

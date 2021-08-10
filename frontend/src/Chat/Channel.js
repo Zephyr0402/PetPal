@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import UserAvatar from '../Layout/Avatar'
 import {Link} from 'react-router-dom'
 import './Channel.css'
+import { Badge } from 'antd'
 
 export const ChannelList = (props) => {
     const changeChannel = (cid) => {
@@ -27,6 +28,7 @@ export const ChannelList = (props) => {
                                 src = {channel.avatar}
                             />
                             <b style = {{marginLeft:'2%', fontSize:"100%"}}>{channel.name}</b>
+                            {/* <Badge count = {props.unread[channel.cid]}/> */}
                         </div>
                     </a>
                 )

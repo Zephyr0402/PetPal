@@ -22,17 +22,9 @@ var iwList = [
 export const WhisperPanel = (props) => {
 
     const [text, setText] = useState("")
-    const [whisperList, setWhisperList] = useState(iwList)
 
     useEffect(() => {
         setText("")
-    },[props])
-
-    useEffect(async () => {
-        if(props.cid !== ""){
-            var whisperList = await getWhispers(props.cid)
-            setWhisperList(whisperList)
-        }
     },[props])
 
     const onWhisperType = (e) => {
@@ -60,7 +52,7 @@ export const WhisperPanel = (props) => {
                 </div>
                 <div className = "whisper-list">
                     {
-                        whisperList.map((whisper) => 
+                        props.whisperList.map((whisper) => 
                             <Whisper
                                 whisper = {whisper.whisper}
                                 uuid = {whisper.uuid}

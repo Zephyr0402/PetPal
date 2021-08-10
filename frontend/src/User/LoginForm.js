@@ -31,6 +31,8 @@ const LoginForm = (props) => {
                 await getHeader(res.uuid).then(
                     () =>{ 
                         if(res.success){
+                            //openSocket(res.uuid)
+                            //console.log(socket)
                             message.error({
                                 content: res.message, 
                                 duration: 2, 

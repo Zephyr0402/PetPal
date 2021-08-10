@@ -1,8 +1,6 @@
 import { io } from "socket.io-client";
 const SERVER = "http://localhost:10043";
 
-export var socket;
-
 export const openSocket = (uuid) => {
     const options = {
         transportOptions: {
@@ -13,9 +11,9 @@ export const openSocket = (uuid) => {
             }
         }
     }
-    socket = io(SERVER, options)
+    return io(SERVER, options)
 }
 
-export const closeSocket = () => {
+export const closeSocket = (socket) => {
     socket.disconnect()
 }
