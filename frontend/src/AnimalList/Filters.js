@@ -4,7 +4,6 @@ import { LineOutlined } from '@ant-design/icons';
 import './Filter.css'
 
 export const KindFilter = (props) => {
-    const [kind, setKind] = useState("none");
     const data = props.data;
 
     useEffect(()=>{
