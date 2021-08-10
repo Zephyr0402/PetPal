@@ -31,7 +31,7 @@ const AnimalMap = (props) => {
                     props.google.maps.event.trigger(aid2marker[props.aid].marker, 'click');
                 }
             }
-            
+
             for (var i = 0; i < data.length; i++) {
                 if (data[i].address === undefined || data[props.aid].address === undefined) {
                     continue;
@@ -84,7 +84,7 @@ const AnimalMap = (props) => {
                     itemLayout="horizontal"
                     dataSource={markerData}
                     renderItem={(item, index) => (
-                        <List.Item className='marker-list-item' id={item.aid} style={{ width: "100%" }}>
+                        <List.Item className='marker-list-item' id={item.aid} style={{ width: "100%", padding: 0 }}>
                             <Button onClick={(e) => { props.setDisplay(item.aid) }} type="link" >{item.name}</Button>
                         </List.Item>
                     )}

@@ -15,7 +15,7 @@ const Main = (props) => {
     const [display, setDisplay] = useState(-1);
     const [displayCheckout, setDisplayCheckout] = useState(false);
     const [curMarkerAid, setCurMarkerAid] = useState(-1);
-    const [displayListResponsive, setDisplayListResponsive] = useState(true);
+    const [displayListResponsive, setDisplayListResponsive] = useState(false);
     const [windowSize, setWindowSize] = useState({
         width: undefined,
         height: undefined,

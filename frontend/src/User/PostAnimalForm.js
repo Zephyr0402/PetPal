@@ -10,7 +10,7 @@ import { getUserInfo } from '../Services/userService';
 import { postAnimalInfo } from '../Services/postAnimalInfo';
 import { getBase64 } from '../Services/utils';
 import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
-import { showLoginRequiredModal, successModal, warningModal } from "../Services/modal";
+import { showLoginRequiredModal, displaySuccessMessage, warningModal } from "../Services/modal";
 
 axios.defaults.withCredentials = true;
 
@@ -118,7 +118,7 @@ function PostAnimalForm() {
 
         await postAnimalInfo(req);
         resetInput();
-        successModal('Animal is successfully posted!');
+        displaySuccessMessage('Animal is successfully posted!', 1);
 
         window.location.href = '/';
     };

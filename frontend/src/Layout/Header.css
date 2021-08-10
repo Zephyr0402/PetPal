@@ -17,9 +17,14 @@
     align-items: center;
 }
 
-.header-btn{
+.header-btns a[href="/login"] {
     margin: 10px;
     color: black;
+    padding: 0;
+}
+
+.header-btns a[href="/login"]:hover {
+    color: #1890ff;
 }
 
 .header-btns .ant-btn-primary.header-btn {
