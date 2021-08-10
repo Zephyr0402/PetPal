@@ -69,17 +69,19 @@ const Header = (props) => {
                     </span>
                 :
                     <span className = "header-btns">
+                        
                         <Tooltip title = "Post now!">
                             <Button danger shape="circle" icon={<FormOutlined />} href = "/post"/>
                         </Tooltip>
-                        <a href = "/chat/#"><CommentOutlined /></a>
+                        <Button bo style = {{marginLeft:"1%", marginRight:"1%"}} shape="circle" icon={<CommentOutlined />} href = "/chat/"/>
                         <Dropdown
+                        arrow = {true}
                             overlay = {optionsOnNameClick}
                             onVisibleChange = {onMenuVisibleChange}
                             visible = {optionsVisible}
                         >
-                            <div style = {{display:'inline'}}>
-                                <Avatar style = {{marginLeft:"8px", marginRight:"8px"}} src = {header.avatar}/><DownOutlined/>
+                            <div>
+                                <Avatar style = {{display:'inline-block'}} src = {header.avatar}/><DownOutlined/>
                             </div>
                         </Dropdown>
                     </span>
