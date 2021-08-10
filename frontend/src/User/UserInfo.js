@@ -33,7 +33,7 @@ function UserInfo(props){
           setAvatar(res.avatar);
           showComment(true);
         })
-      }, [update, upload, avatar]);
+      }, [update, upload, avatar, props]);
 
     const inputChangeName = (e) => {
       setInputName(e.target.value);

@@ -34,7 +34,7 @@ function PostedAnimals(props){
             .then(res => {
                 setUserId(res.uuid);
             });
-    },[props.filter]);
+    },[props]);
 
     const handleRemove = (animalId, userId) => {
         if(props.filter === "1") {

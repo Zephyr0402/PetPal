@@ -28,7 +28,7 @@ const UserInfoPage = (props) => {
             // console.log(res)
             setIsMe(res);
         })
-    }, []);
+    }, [props]);
 
     const switchComponent = (key) => {
         switch (key){
