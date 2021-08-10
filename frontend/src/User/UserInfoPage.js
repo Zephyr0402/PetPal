@@ -1,7 +1,7 @@
 import { Layout, Menu, Breadcrumb} from 'antd';
 import React, { useState, useEffect } from 'react';
 import './UserInfoPage.css'
-import { UserOutlined, TransactionOutlined, BookOutlined} from '@ant-design/icons';
+import { UserOutlined, TransactionOutlined, BookOutlined, HeartOutlined} from '@ant-design/icons';
 import UserInfo from './UserInfo';
 import Header from '../Layout/Header';
 import '../Layout/Header.css'
@@ -59,16 +59,10 @@ const UserInfoPage = (props) => {
                         >
                             <Menu.Item key="1" icon={<UserOutlined />}>
                                 Basic Information
-                            </Menu.Item>
-                            <SubMenu icon={<BookOutlined />} title="Posts">
-                                <Menu.Item key="2">My Posted Animals</Menu.Item>
-                                {isMe? <Menu.Item key="2.5">My Favourite List</Menu.Item> : null}
-                            </SubMenu>
-                            {isMe? 
-                                <Menu.Item key="3" icon={<TransactionOutlined />}>
-                                Transaction History
-                                </Menu.Item> : null
-                            }
+                            </Menu.Item>             
+                            <Menu.Item key="2" icon={<BookOutlined />}>My Posted Animals</Menu.Item>
+                            {isMe? <Menu.Item key="2.5" icon={<HeartOutlined />}>My Wish List</Menu.Item> : null}
+                            {isMe? <Menu.Item key="3" icon={<TransactionOutlined />}>Transaction History</Menu.Item> : null}
                         </Menu>
                     </Sider>
                     <Layout className="right-container">

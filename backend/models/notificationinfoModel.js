@@ -5,6 +5,6 @@ const NotificationInfo = database.model('NotificationInfo', new database.Schema(
     sourceUserID: String,
     destinationUserID: String,
     contentID: String,
-    timestamp: String
+    timestamp: Date
 }));
 module.exports = NotificationInfo;

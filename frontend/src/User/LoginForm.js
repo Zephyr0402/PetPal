@@ -27,11 +27,11 @@ const LoginForm = (props) => {
         .then(
             async (res) => {
                 await getHeader(res.uuid).then(
-                    () =>{ 
+                    () =>{
                         if(res.success){
                             message.error({
-                                content: res.message, 
-                                duration: 2, 
+                                content: res.message,
+                                duration: 2,
                                 icon: <InfoCircleTwoTone twoToneColor = "#52c41a"/>,
                                 onClose: () => {
                                     window.location.href = '/';
@@ -40,7 +40,7 @@ const LoginForm = (props) => {
                         }
                         else{
                             message.error({
-                                content: res.message, 
+                                content: res.message,
                                 duration: 3
                             })
                         }
@@ -74,6 +74,7 @@ const LoginForm = (props) => {
                             <Form.Item
                                 label="Email"
                                 name="email"
+                                rules={[{ required: true, message: 'Please input your email.' }]}
                                 place
                             >
                                 <Input />
@@ -82,10 +83,11 @@ const LoginForm = (props) => {
                         <Form.Item
                             label="Password"
                             name="password"
+                            rules={[{ required: true, message: 'Please input your password.' }]}
                         >
                             <Input.Password />
                         </Form.Item>
-                    
+
                         <Form.Item {...tailLayout}>
                             <Button type="primary" htmlType="submit">Submit</Button>
                             <a className="login-form-forgot" onClick = {onShowModal}>
@@ -102,7 +104,7 @@ const LoginForm = (props) => {
                         >
                             <p>Please input your email here:</p>
                             <Input ref = {emailInput}/>
-                            <p>After you submit, an confirmation email will be sent to your email address. Please follow instructions in it</p> 
+                            <p>After you submit, an confirmation email will be sent to your email address. Please follow instructions in it</p>
                         </Modal>
 
                     </Form>

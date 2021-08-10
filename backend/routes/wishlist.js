@@ -34,7 +34,7 @@ router.get("/uuid", async (req, res) => {
                 var ids = docs.map((doc) => { return doc.animalId; });
                 // console.log(doc);
                 // res.send(doc);
-                AnimalInfo.find({"_id": {$in: ids}}, "id name image description", (err, docs) => {
+                AnimalInfo.find({"_id": {$in: ids}}, "id name image description price status", (err, docs) => {
                     if(err){
                         res.status(404).send({
                             message: "Something wrong when getting animal info"
@@ -74,10 +74,8 @@ router.delete("/delete", cors(), async (req, res) => {
     WishList.findOneAndDelete({
         animalId: wishList.animalId,
         userId: wishList.userId
-    }).then(() =>
-        res.status(200).json({
-            message: "Successfully delete animal from the wishlist",
-        }))
+    })
+        .then(() => res.status(200).json("Successfully delete animal from the wishlist"))
         .catch(error => res.status(400).json('Fail to delete animal from the wishlist: ' + error));
 });
 
