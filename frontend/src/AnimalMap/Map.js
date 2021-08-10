@@ -40,6 +40,8 @@ const AnimalMap = (props) => {
                     });
                 }
             }
+            console.log('useEffect');
+            console.log(aid2marker);
             setMarkerData(mData);
             setShowInfoWindow(true);
         } else {
@@ -120,6 +122,8 @@ const AnimalMap = (props) => {
                                 return;
                             }
                             aid2marker[index] = marker
+                            console.log('aid2marker');
+                            console.log(aid2marker);
                         }
                         }
                         icon="Petpal_icon_32x32.png"
@@ -129,16 +133,22 @@ const AnimalMap = (props) => {
             {
                 console.log('test infowindow: ' + showInfoWindow + props.aid)
             }
-            {showInfoWindow &&
+            {
+                console.log('test infowindow marker num: ' + aid2marker.length)
+            }
+            {
+                console.log('test infowindow marker: ')
+            }
+            {(props.aid > -1 || showInfoWindow) &&
                 <InfoWindow
                     marker={
                         props.aid > -1 ? aid2marker[props.aid].marker : null
                     }
                     // visible={(e) => { console.log('visible'); return props.aid > -1; }}
-                    visible={props.aid > -1}
+                    visible={props.aid > -1 && showInfoWindow}
                     onClose={onInfoWindowClose}
                     onOpen={(e) => {
-                        console.log(e);
+                        console.log('onOpen');
                         onInfoWindowOpen(props, e);
                     }
                     }
