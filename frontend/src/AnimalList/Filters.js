@@ -26,7 +26,7 @@ export const KindFilter = (props) => {
             }
             if (data[index].kind.toUpperCase() === e.target.innerText.toUpperCase())
                 thumbnail.style.display = 'block';
-            else 
+            else
                 thumbnail.style.display = 'none';
             index++;
         }
@@ -100,7 +100,7 @@ export const PriceFilter = (props) => {
             }
             if(data[index].price >= min && data[index].price <= max)
                 thumbnail.style.display = 'block';
-            else 
+            else
                 thumbnail.style.display = 'none';
             index++;
         }
