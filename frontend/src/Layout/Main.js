@@ -21,6 +21,10 @@ const Main = (props) => {
         height: undefined,
     });
 
+    useEffect(() => {
+        console.log(animalInfos)
+    }, [animalInfos])
+
     const setMyDisplay = (e) => {
         setCurMarkerAid(e);
         setDisplay(e);

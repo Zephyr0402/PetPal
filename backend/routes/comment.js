@@ -17,7 +17,7 @@ router.post('/api/comment', async (req, res) => {
     const comment = await Comment.create({
         'ucid' : uuidv4(),
         'cmtorid' : req.session.uuid,
-        'uaid' : req.body.uaid === undefined ? -1 : req.body.uaid,
+        'uaid' : req.body.uaid === undefined ? "" : req.body.uaid,
         'uuid' : req.body.uuid === undefined ? "" : req.body.uuid,
         'fcid' : req.body.fcid === undefined ? "" : req.body.fcid,
         'content' : req.body.content,
@@ -39,7 +39,6 @@ router.post('/api/comment', async (req, res) => {
     try {
         // Find seller id
         const infos = await AnimalInfo.findOne({ "id": req.body.uaid }).populate('userinfo');
-        console.log(infos.userinfo);
         const sourceUserID = infos.userinfo.uuid;
         const destinationUserID = req.session.uuid;
         const contentID = comment.ucid;
@@ -72,10 +71,19 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
             'uuid' : c.cmtorid
         })
 
-        var liked = false
+        var liked = false;
+        var disliked = false;
         for(let like of c.likes){
             if(like == req.session.uuid){
                 liked = true
+                break
+            }
+        }
+
+        var disliked = false;
+        for(let dislike of c.dislikes){
+            if(dislike == req.session.uuid){
+                disliked = true
                 break
             }
         }
@@ -90,6 +98,7 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
             'liked' : liked,
             'likes' : c.likes,
             'dislikes' : c.dislikes,
+            'disliked' : disliked,
             'replies' : c.replies
         })
     }
@@ -129,6 +138,15 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
                 }
             }
 
+            
+            var disliked = false;
+            for(let dislike of r.dislikes){
+                if(dislike == req.session.uuid){
+                    disliked = true
+                    break
+                }
+            }
+
             replies.push({
                 'cmtorid' : resizeBy.cmtorid,
                 'ucid' : r.ucid,
@@ -139,6 +157,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
                 'likes' : r.likes,
                 'liked' : liked,
                 'dislikes' : r.dislikes,
+                'disliked' : disliked
             })
         }
 
@@ -149,6 +168,15 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
                 break
             }
         }
+        
+        var disliked = false;
+        for(let dislike of c.dislikes){
+            if(dislike == req.session.uuid){
+                disliked = true
+                break
+            }
+        }
+
 
         animalComments.push({
             'cmtorid' : c.cmtorid,
@@ -160,7 +188,8 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
             'likes' : c.likes,
             'liked' : liked,
             'dislikes' : c.dislikes,
-            'replies' : replies
+            'replies' : replies,
+            'disliked' : disliked
         })
     }
 
