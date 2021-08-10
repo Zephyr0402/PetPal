@@ -148,7 +148,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
             }
 
             replies.push({
-                'cmtorid' : resizeBy.cmtorid,
+                'cmtorid' : r.cmtorid,
                 'ucid' : r.ucid,
                 'name' : repliesUserInfo.name,
                 'avatar': repliesUserInfo.avatar,
