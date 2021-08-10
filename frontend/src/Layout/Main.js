@@ -22,7 +22,16 @@ const Main = (props) => {
     });
 
     useEffect(() => {
-        console.log(animalInfos)
+        if(props.location.query != undefined){
+            var index = -1;
+            for(let i = 0; i< animalInfos.length;i++){
+                if(animalInfos[i].id == props.location.query.display){
+                    index=i
+                    break
+                }
+            }
+            setDisplay(index)
+        }
     }, [animalInfos])
 
     const setMyDisplay = (e) => {
@@ -54,8 +63,6 @@ const Main = (props) => {
                     inboundAnimalInfo.push(res[i]);
                 }
             }
-            console.log('filterAnimalInBounds');
-            console.log(inboundAnimalInfo);
             setAnimalInfos(inboundAnimalInfo);
         });
     }
