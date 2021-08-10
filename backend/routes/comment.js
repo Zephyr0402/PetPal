@@ -99,7 +99,8 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
             'likes' : c.likes,
             'dislikes' : c.dislikes,
             'disliked' : disliked,
-            'replies' : c.replies
+            'replies' : [],
+            'canReply' : false
         })
     }
 
@@ -107,7 +108,7 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
 
 })
 
-//comments for user
+//comments for animals
 router.get('/api/comment/animal/:uaid', async (req, res) => {
     // console.log(req.params.uaid)
     const animalCommentsFromDB = await Comment.find({
@@ -157,7 +158,8 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
                 'likes' : r.likes,
                 'liked' : liked,
                 'dislikes' : r.dislikes,
-                'disliked' : disliked
+                'disliked' : disliked,
+                'canReply' : false
             })
         }
 
@@ -189,7 +191,8 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
             'liked' : liked,
             'dislikes' : c.dislikes,
             'replies' : replies,
-            'disliked' : disliked
+            'disliked' : disliked,
+            'canReply' : true
         })
     }
 
