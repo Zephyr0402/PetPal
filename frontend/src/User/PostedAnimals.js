@@ -64,7 +64,7 @@ function PostedAnimals(props){
             </Card>
         </Link>
 
-        <CloseCircleTwoTone onClick={() => handleRemove(card._id, userId)}/>
+        { props.isMe? <CloseCircleTwoTone onClick={() => handleRemove(card._id, userId)}/> : null}
 
         {card.status === "sold" ?
             <div className="animal-sold-message"><span>SOLD</span></div> :

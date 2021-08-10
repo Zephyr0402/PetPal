@@ -33,9 +33,9 @@ const UserInfoPage = (props) => {
             case "1":
                 return(<UserInfo uuid={props.match.params.uuid} isMe={isMe} />);
             case "2":
-                return(<PostedAnimals filter="1" uuid={props.match.params.uuid} />);
+                return(<PostedAnimals filter="1" uuid={props.match.params.uuid} isMe={isMe} />);
             case "2.5":
-                return(<PostedAnimals filter="2" />);
+                return(<PostedAnimals filter="2" isMe={isMe} />);
             case "3":
                 return(<TransactionHistory />);
             default:
