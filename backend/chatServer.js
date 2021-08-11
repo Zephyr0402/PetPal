@@ -5,7 +5,7 @@ const {UserInfo} = require('./models/userModel');
 var chatServer = require('http').createServer(app);
 var io = require("socket.io")(chatServer, {
     cors: {
-      origin: "https://petpal-cpsc455.herokuapp.com:9999",
+      origin: "https://petpal-cpsc455.herokuapp.com:10043",
       methods: ["GET", "POST"]
     }
 });
