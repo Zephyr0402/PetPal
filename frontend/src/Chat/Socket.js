@@ -10,6 +10,9 @@ export const openSocket = (uuid) => {
                 }
             }
         }
+        rejectUnauthorized: false,
+        secure: true, 
+        reconnection: true
     }
     return io(SERVER, options)
 }
