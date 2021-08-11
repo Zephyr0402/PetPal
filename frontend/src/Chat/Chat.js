@@ -22,6 +22,9 @@ const Chat = (props) => {
         socket.on("connect", () => {
             message.success("connected to chat server!")
         })
+        socket.on("connect_error", (err) => {
+            console.log(`connect_error due to ${err.message}`);
+        });
         socket.on("forward-whisper", data => {
             //if(data.cid == cid){
                 var c = whisperList;
