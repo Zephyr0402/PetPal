@@ -4,9 +4,8 @@ import { Form, Input, Button, Modal, message } from 'antd';
 import { getHeader, login , sendResetLink} from '../Services/userService';
 import { InfoCircleTwoTone} from '@ant-design/icons'
 import Header from '../Layout/Header'
-import { openSocket } from '../Chat/Socket';
 
-const LoginForm = (props) => {
+const LoginForm = () => {
 
     const emailInput = useRef("");
     const [showResetModal, setShowResetModal] = useState(false);
@@ -31,8 +30,6 @@ const LoginForm = (props) => {
                 await getHeader(res.uuid).then(
                     () =>{
                         if(res.success){
-                            //openSocket(res.uuid)
-                            //console.log(socket)
                             message.error({
                                 content: res.message,
                                 duration: 2,
@@ -60,7 +57,6 @@ const LoginForm = (props) => {
     }
 
     const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
     };
 
     return (

@@ -7,17 +7,12 @@ const ResetPwdForm = (props) => {
         labelCol: { span: 6 },
         wrapperCol: { span: 18 },
     };
-    const tailLayout = {
-        wrapperCol: { offset: 1, span: 18 },
-    };
-
     const onResetPassword = async (values) => {
         await resetPassword(props.match.params.token, values.password).then(
             res => alert(res.message)
         )
         window.location.href = "/login"
     }
-    console.log(props.match.params.token)
     return (
         <div className = "form_container">
             <div id="register_form_wrapper">

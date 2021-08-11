@@ -1,6 +1,5 @@
 import backendURL from './backendURL';
 import axios from 'axios';
-import { CodeFilled } from '@ant-design/icons';
 
 axios.defaults.withCredentials = true;
 

@@ -1,4 +1,4 @@
-import {Input, Form, Button, Avatar, Comment} from 'antd'
+import {Input, Form, Button, Comment} from 'antd'
 import React,{useEffect, useRef, useState} from 'react'
 import UserAvatar from '../Layout/Avatar';
 import { getUserInfo } from '../Services/userService';
@@ -20,7 +20,6 @@ export const CommentArea = (props) => {
     },[]);
 
     const onCommentSubmit = (values) => {
-        console.log(userId)
         if(userId === "" || userId === undefined) {
             showLoginRequiredModal("Please login to add your comment");
         }else{

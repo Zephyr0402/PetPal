@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import UserAvatar from '../Layout/Avatar'
-import {Link} from 'react-router-dom'
 import './Channel.css'
-import { Badge } from 'antd'
 
 export const ChannelList = (props) => {
     const changeChannel = (cid) => {

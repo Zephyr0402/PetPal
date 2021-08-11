@@ -2,22 +2,7 @@ import React, {useState, useEffect} from 'react'
 import UserAvatar from '../Layout/Avatar'
 import {Input, Button, Empty} from 'antd'
 import { SmileOutlined } from '@ant-design/icons';
-import Picker from 'emoji-picker-react';
 import './WhisperPanel.css'
-import { getWhispers } from '../Services/whisperService';
-
-var iwList = [
-    {
-        'whisper' : {
-            'sender' : {
-                'uuid' : "",
-                'avatar' : ""
-            },
-            'content' : ""
-        },
-        'uuid' : 'u1'
-    }
-]
 
 export const WhisperPanel = (props) => {
 
@@ -37,7 +22,7 @@ export const WhisperPanel = (props) => {
     }
 
     return(
-        props.cid == "" ?
+        props.cid === "" ?
             <div className = "whisper-panel">
             <Empty></Empty>
             </div>
@@ -75,7 +60,7 @@ export const WhisperPanel = (props) => {
 }
 
 export const Whisper = (props) => {
-    var isMineWhisper = props.whisper.sender.uuid == props.uuid
+    var isMineWhisper = props.whisper.sender.uuid === props.uuid
 
     const myWhisperStyle = {
         'display' : 'flex',
