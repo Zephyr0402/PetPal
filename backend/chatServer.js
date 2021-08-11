@@ -86,6 +86,6 @@ io.on('connection', (socket) => {
 
 })
 
-chatServer.listen(3000, () => {
+chatServer.listen(10043, () => {
     console.log('chat server listening on localhost:10043');
 });
