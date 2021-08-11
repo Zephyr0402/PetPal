@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Card, Col, Row} from 'antd';
 import { CloseCircleTwoTone } from '@ant-design/icons';
-import {Link} from 'react-router-dom';
 import {getPostedAnimals, removeAnimal} from '../Services/postAnimalInfo';
 import {getWishList, removeFromWishList} from '../Services/wishlistService'
 import './UserInfoPage.css'

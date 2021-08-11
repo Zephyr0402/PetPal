@@ -1,4 +1,4 @@
-import {Avatar, Descriptions, Card, Button, Input, Image, Skeleton, message } from 'antd';
+import {Avatar, Descriptions, Card, Button, Input, Image, Skeleton } from 'antd';
 import React, {useState, useEffect, useRef } from 'react';
 import { EditOutlined} from '@ant-design/icons';
 import { getUserInfo, updateUserInfo, changeEmail, verify, logout } from '../Services/userService'
