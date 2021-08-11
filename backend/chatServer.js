@@ -2,10 +2,10 @@ var app = require('./app')
 const { v4: uuidv4 } = require('uuid');
 const {Whisper, Channel} = require('./models/whisperModel');
 const {UserInfo} = require('./models/userModel');
-var chatServer = require('http').createServer(app);
+var chatServer = require('https').createServer(app);
 var io = require("socket.io")(chatServer, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "https://petpal-cpsc455.herokuapp.com:3000",
       methods: ["GET", "POST"]
     }
 });
