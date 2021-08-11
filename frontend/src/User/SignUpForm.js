@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import './forms.css';
-import {Button, Form, Input,  Modal} from 'antd';
+import {Button, Form, Input,  Modal, message} from 'antd';
+import { InfoCircleTwoTone} from '@ant-design/icons';
 import { register, verify} from '../Services/userService';
 import Header from "../Layout/Header";
 
@@ -24,8 +25,14 @@ const SignUpForm = () => {
     const onFinish = async (values) => {
         register(nameInput.current.props.value, emailInput.current.props.value, passwordInput.current.props.value, codeInput.current.state.value)
         .then(res => {
-            alert(res.message);
-            window.location.href = "/login";
+            message.error({
+                content: res.message,
+                duration: 1,
+                icon: <InfoCircleTwoTone twoToneColor = "#52c41a"/>,
+                onClose: () => {
+                    window.location.href = "/login";
+                 }
+            })
         });
     };
 

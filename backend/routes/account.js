@@ -281,7 +281,7 @@ router.post('/api/login',  async (req, res) => {
     res.send({
         success: true,
         uuid: user.uuid,
-        message: "Log in successfully! You will be redirected to main page in 2 seconds"
+        message: "Log in successfully! You will be redirected to main page in 1 seconds"
     });
   });
 
