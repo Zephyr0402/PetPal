@@ -58,6 +58,7 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/', accountRouter);
 app.use('/', commentRouter);
+app.use('/', whisperRouter)
 app.use('/animalinfo', postRouter);
 app.use('/api/transaction', transactionRouter);
 app.use('/api/wishlist', wishListRouter);
@@ -68,7 +69,6 @@ app.get('*', (req, res) => {
 
 app.use('/api/notify', notificationRouter);
 app.use('/api/message', messageRouter);
-app.use('/', whisperRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
