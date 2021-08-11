@@ -97,12 +97,12 @@
 }
 
 @media only screen and (max-width: 500px) {
-    .right-container .ant-card-head ,
-    .right-container .ant-card-body {
+    .user-info-content .ant-card-head ,
+    .user-info-content .ant-card-body {
         padding: 0;
     }
 
-    .right-container #comment-text {
+    .user-info-content #comment-text {
         max-width: 100% !important;
     }
 }
