@@ -3,7 +3,6 @@ var router = express.Router();
 const NotificationInfo = require('../models/notificationinfoModel');
 
 router.post('/like', async(req, res) => {
-    console.log('start notify like');
     if(req.session.uuid === undefined){
         return res.send({
             message : "Your session has expired. Please log in again!"
@@ -30,7 +29,6 @@ router.post('/like', async(req, res) => {
 const cors = require("cors");
 
 router.get('/comment/:dstUserID/:timestamp', async (req, res) => {
-    console.log('Get updated comment notification');
     const dstUserID = req.params.dstUserID;
     const infos = await NotificationInfo.find({ "destinationUserID": dstUserID, "type": "comment" });
     var resInfos = [];

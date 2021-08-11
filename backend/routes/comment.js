@@ -12,8 +12,6 @@ router.get('/api/getuuid', async (req, res) => {
 
 //post comment
 router.post('/api/comment', async (req, res) => {
-    console.log(req.body);
-
     const comment = await Comment.create({
         'ucid' : uuidv4(),
         'cmtorid' : req.session.uuid,
@@ -35,7 +33,7 @@ router.post('/api/comment', async (req, res) => {
         })
     }
 
-    console.log('Update one comment notification');
+    // update one comment notification
     try {
         // Find seller id
         const infos = await AnimalInfo.findOne({ "id": req.body.uaid }).populate('userinfo');
@@ -110,7 +108,6 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
 
 //comments for animals
 router.get('/api/comment/animal/:uaid', async (req, res) => {
-    // console.log(req.params.uaid)
     const animalCommentsFromDB = await Comment.find({
         'uaid' : req.params.uaid
     })
@@ -147,7 +144,6 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
                     break
                 }
             }
-            console.log(r.ucid)
             replies.push({
                 'cmtorid' : r.cmtorid,
                 'ucid' : r.ucid,
@@ -205,7 +201,6 @@ router.post('/api/comment/like/:type/:ucid', async (req, res) => {
     const comment = await Comment.findOne({
         'ucid' : req.params.ucid
     })
-    console.log(req.params.ucid)
     if(req.params.type == "set"){
         await Comment.updateOne({
             'ucid' : req.params.ucid

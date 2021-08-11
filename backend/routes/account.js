@@ -296,7 +296,6 @@ router.get('/api/logout', async(req, res) => {
 
 router.get('/api/check/:uuid?', async(req, res) => {
     uuid = req.params.uuid;
-    console.log(uuid)
     if(req.session.uuid === undefined){
         return res.send({
             message : "Your session has expired. Please log in again!"
@@ -401,7 +400,6 @@ router.post('/api/cur_user/avatar/update', async (req,res) => {
         let bitmap = fs.readFileSync(files.file.path);
         let base64str = Buffer.from(bitmap, 'binary').toString('base64'); 
         let base64 = 'data:' + files.file.type + ';base64,' + base64str
-        console.log(req.session.uuid)
         await UserInfo.updateOne({
             "uuid" : req.session.uuid
         },{
@@ -412,7 +410,6 @@ router.post('/api/cur_user/avatar/update', async (req,res) => {
 })
 
 router.post('/api/email/update', async (req, res) => {
-    console.log(req.body.email)
     const uuid = req.session.uuid
     const auth = await UserAuth.findOne({
         'email' : req.body.email,
