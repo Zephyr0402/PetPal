@@ -17,7 +17,7 @@ const AnimalCard = (props) => {
 
     let thisCard = props.animalCardInfo;
     
-    if (thisCard === undefined) {
+    if (thisCard === undefined || thisCard === null) {
         thisCard = {
             name: 'None',
             image: '/image-not-found.png',

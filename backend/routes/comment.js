@@ -115,8 +115,12 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
     var animalComments = []
     for(let c of animalCommentsFromDB){
         const userInfo = await UserInfo.findOne({
-            'uuid' : c.cmtorid
-        }, 'name avatar')
+            'uuid': c.cmtorid
+        }, 'name avatar');
+
+        if (userInfo === null) {
+            return res.send("");
+        }
 
         const repliesFromDB = await Comment.find({
             'fcid' : c.ucid

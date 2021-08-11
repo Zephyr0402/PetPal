@@ -36,15 +36,26 @@ const AnimalMap = (props) => {
             }
 
             for (var i = 0; i < data.length; i++) {
-                if (data[i].address === undefined || data[props.aid].address === undefined) {
+                if (data[props.aid] === undefined) {
                     continue;
                 }
-                if (data[i].address === data[props.aid].address) {
-                    mData.push({
-                        "name": data[i].name,
-                        "aid": i,
-                    });
+                if (!'address' in data[i] || !'address' in data[props.aid]) {
+                    continue;
                 }
+                try {
+                    if (data[i].address === undefined || data[props.aid].address === undefined) {
+                        continue;
+                    }
+                    if (data[i].address === data[props.aid].address) {
+                        mData.push({
+                            "name": data[i].name,
+                            "aid": i,
+                        });
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+                
             }
             setMarkerData(mData);
             setShowInfoWindow(true);
