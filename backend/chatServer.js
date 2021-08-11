@@ -5,7 +5,7 @@ const {UserInfo} = require('./models/userModel');
 var chatServer = require('http').createServer(app);
 var io = require("socket.io")(chatServer, {
     cors: {
-      origin: "https://petpal-cpsc455.herokuapp.com:10043",
+      origin: "https://petpal-cpsc455.herokuapp.com",
       methods: ["GET", "POST"]
     }
 });
@@ -87,5 +87,5 @@ io.on('connection', (socket) => {
 })
 
 chatServer.listen(10043, () => {
-    console.log('chat server listening on localhost:10043');
+    console.log('chat server listening on port 10043');
 });
