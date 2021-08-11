@@ -89,22 +89,22 @@ function UserInfo(props){
 
     const createButton = () => {
       return(
-        <Button type="dashed" style={{float: "right"}} onClick={enableEdit}> 
+        <Button type="dashed" style={{float: "right"}} onClick={enableEdit}>
           {edit? "FINISH": "EDIT"}
         </Button>
       );
     };
-        
+
     return(
-        <div>
+        <div className="user-info-content">
           <div className="avatar" >
-              <Avatar  
+              <Avatar
                 size={64}
-                src = {<Image 
-                        src = {avatar} 
-                        height = {64} 
+                src = {<Image
+                        src = {avatar}
+                        height = {64}
                         width = {64}
-                        preview = {false} 
+                        preview = {false}
                         onClick = {() => {showUpload(true)}}
                       />}
               />
@@ -134,7 +134,7 @@ function UserInfo(props){
 
 
           <Card title="Profile" bordered={false}>
-          
+
           <br />
           <Descriptions className='descriptions'
                         bordered
@@ -158,7 +158,7 @@ function UserInfo(props){
           </Card>
           <br />
           <Card title="Comments" bordered = {false}>
-            { comment ? 
+            { comment ?
               <CommentCollection id = {uuid} commentType = "user"/> : <Skeleton active/>
             }
           </Card>
