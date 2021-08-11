@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node chatServer.js"
+    "start": "concurrently \"node ./bin/www\" \"node chatServer.js\""
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
