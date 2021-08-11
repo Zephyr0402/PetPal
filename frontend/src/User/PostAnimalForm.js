@@ -81,9 +81,9 @@ function PostAnimalForm() {
             return;
         } else {
             for (let i = 0; i < imageFileList.length; i++) {
-                if (!beforeUpload(imageFileList[i])) {
-                    let message = "Number " + i + " is not a JPG/PNG file!";
-                    window.alert(message);
+                const msg = beforeUpload(imageFileList[i]);
+                if (msg !== "") {
+                    window.alert("Image " + msg);
                     return;
                 }
             }
@@ -107,15 +107,18 @@ function PostAnimalForm() {
             }
         };
 
-        console.log(animalInfo);
-
         const req = {
             "animalinfo": animalInfo,
             "userUUID": userInfo.uuid
         }
 
-        await postAnimalInfo(req);
-        displaySuccessMessage('Animal is successfully posted!', 1);
+        const statusCode = await postAnimalInfo(req);
+        if (statusCode !== 200) {
+            window.alert('Post animal failed: ' + statusCode);
+            return;
+        } else {
+            window.alert('Animal is successfully posted!');
+        }
         setTimeout(window.location.href = '/', 1000);
     };
 
@@ -141,9 +144,15 @@ function PostAnimalForm() {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
-            return false;
+            onImageRemove();
+            return "You can only upload JPG/PNG file!";
         }
-        return true;
+        const islt320KB = file.size / 1024 < 320;
+        if (!islt320KB) {
+            message.error('You can only upload image smaller than 320KB!');
+            return "You can only upload image smaller than 320KB!";
+        }
+        return "";
     };
 
     const handleChange = (fileList) => {
@@ -153,7 +162,6 @@ function PostAnimalForm() {
     const handleCancel = () => { setPreviewVisible(false) };
 
     const onImageRemove = () => {
-        console.log('onImageRemove');
         setImageFileList([]);
     }
 
@@ -173,7 +181,6 @@ function PostAnimalForm() {
                     <Form {...layout}>
                         <Form.Item
                             label="Animal Name"
-                            name="animal_name_input"
                         >
                             <Input placeholder="Please enter animal name" onChange={event => setAnimalName(event.target.value)} />
                         </Form.Item>
@@ -183,7 +190,6 @@ function PostAnimalForm() {
                         >
                             <Input.Group compact>
                                 <Form.Item
-                                    name={['age', 'years']}
                                     noStyle
                                 >
                                     <InputNumber
@@ -194,7 +200,6 @@ function PostAnimalForm() {
                                     />
                                 </Form.Item>
                                 <Form.Item
-                                    name={['age', 'months']}
                                     noStyle
                                 >
                                     <InputNumber
@@ -221,14 +226,12 @@ function PostAnimalForm() {
 
                         <Form.Item
                             label="Date Found"
-                            name="date_found_input"
                         >
                             <DatePicker onChange={onDateChange} />
                         </Form.Item>
 
                         <Form.Item
                             label="Category"
-                            name="animal_category_input"
                         >
                             <Select defaultValue="Select" onChange={handleSelectBoxChange}>
                                 <Option value="Squirrel">Squirrel</Option>
@@ -252,23 +255,22 @@ function PostAnimalForm() {
 
                         <Form.Item
                             label="Price"
-                            name="animal_price_input"
                         >
                             <Input prefix="$" suffix="CAD" placeholder="Please enter animal price" onChange={event => setPrice(event.target.value)} />
                         </Form.Item>
 
                         <Form.Item
                             label="Image"
-                            name="animal_image"
                         >
                             <Upload
                                 listType="picture-card"
                                 onPreview={handlePreview}
                                 onChange={handleChange}
                                 onRemove={onImageRemove}
+                                beforeUpload={beforeUpload}
                             >
 
-                                {imageFileList.length < 1 ? uploadButton : null}
+                                {imageFileList.length === 0 ? uploadButton : null}
                             </Upload>
                             <Modal
                                 visible={previewVisible}
@@ -282,7 +284,6 @@ function PostAnimalForm() {
 
                         <Form.Item
                             label="Description"
-                            name="animal_description_input"
                         >
                             <TextArea rows={4} onChange={event => setDescription(event.target.value)} />
                         </Form.Item>

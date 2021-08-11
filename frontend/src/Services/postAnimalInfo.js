@@ -12,7 +12,7 @@ export const postAnimalInfo = async (req) => {
             "Content-Type": "application/json",
         })
     });
-    console.log(info);
+    return info.status;
 }
 
 export const getPostedAnimals = async (uuid) => {
