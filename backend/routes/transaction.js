@@ -19,12 +19,10 @@ router.get("/", cors(), async (req, res) => {
 
 // Get transaction histories for the current user
 router.get("/uuid", async (req, res) => {
-    console.log("tramsaction be ", req.session);
     if(req.session.uuid === undefined){
         console.log("Session is expired")
         res.send([])
     } else {
-        console.log("start find transaction history");
         await Transaction.find({
             $or:[ { 'buyerId': req.session.uuid }, { 'sellerId': req.session.uuid } ]
         }, async(err, docs) => {
@@ -33,24 +31,18 @@ router.get("/uuid", async (req, res) => {
                     message: "Something wrong when getting the transaction history"
                 })
             } else {
-                // var docForJson;
-                // console.log(docs);
                 var newDocs = [];
                 for(let doc of docs){    
                     doc = JSON.parse(JSON.stringify(doc))
 
                     try{
                         const udoc = await UserInfo.find({'uuid': doc.buyerId}, 'name');
-                        // console.log(doc._id)
-                        // console.log("0 " + udoc[0]);
                         doc.buyerName = udoc[0].name;
 
                         const udoc2 = await UserInfo.find({'uuid': doc.sellerId}, 'name');
-                        // console.log("1 " + udoc2[0]);
                         doc.sellerName = udoc2[0].name;
 
                         const animalInfo = await AnimalInfo.find({'_id': doc.animalId}, 'name image');
-                        // console.log("2 " + animalInfo[0].name)
                         doc.animalName = animalInfo[0].name;
                         doc.animalImg = animalInfo[0].image;
                         newDocs.push(doc);
@@ -59,7 +51,6 @@ router.get("/uuid", async (req, res) => {
                         return res.status(400).json('Fail to get transaction: ' + err)
                     }
                 }
-                // console.log(newDocs);
                 res.send(newDocs);
             }
         });

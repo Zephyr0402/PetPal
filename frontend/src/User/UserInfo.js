@@ -28,7 +28,6 @@ function UserInfo(props){
     useEffect(() => {
       getUserInfo(props.uuid)
         .then((res) => {
-          console.log(res.uuid);
           setUUid(res.uuid);
           setInputName(res.name);
           setInputPNumber(res.phone);
@@ -84,7 +83,6 @@ function UserInfo(props){
 
     const onEmailChangeRequestSend = async () => {
       const res = await changeEmail(newEmailInput.current.state.value, codeInput.current.state.value)
-      console.log(res)
       await logout()
       window.location.href = "/login"
     }

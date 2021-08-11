@@ -10,7 +10,6 @@ import {getUserInfo} from "../Services/userService";
 const { Meta } = Card;
 
 function PostedAnimals(props){
-    // console.log(props);
 
     const [animalinfo, setanimalinfo] = useState([]);
     const [userId, setUserId] = useState("");
@@ -18,17 +17,14 @@ function PostedAnimals(props){
 
     useEffect(() => {
         setReload(false);
-        console.log(props);
         props.filter === "1" ?
         getPostedAnimals(props.uuid)
             .then((res) => {
-                console.log("1");
                 setanimalinfo(res);
             })
         :
         getWishList()
             .then((res) => {
-                console.log("2")
                 setanimalinfo(res);
             });
 
@@ -41,12 +37,10 @@ function PostedAnimals(props){
     const handleRemove = (animalId, userId) => {
         if(props.filter === "1") {
             removeAnimal(animalId).then(() => {
-                // window.location.reload();
                 setReload(true);
             });
         }else if(props.filter === "2"){
             removeFromWishList(animalId, userId).then(() => {
-                // window.location.reload();
                 setReload(true);
             });
         }
