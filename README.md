@@ -61,17 +61,17 @@ Our application acts as a platform that allows people to adopt, sell and buy ani
 |              | User can view individual animal by clicking the option in the list/map                                |    ✅       |
 | **Standard** | User registration, login and logout                                                                   |     ✅      |
 |              | User can filter the animal information by various conditions (eg. city, age, category, etc)           |     ✅      |
-|              | User can search for the animal                                                                        |           |
+|              | User can search for the animal                                                                        |      ✅    |
 |              | User can make a payment for adopting or purchasing an animal                                          |    ✅       |
-|              | User can cancel the payment within 2 hours after submitting the order                                 |           |
+|              | User can cancel the payment within 2 hours after submitting the order                                 |      ✅    |
 |              | Send verification email to verify the user's email address is valid when one tries to sign up         |     ✅      |
 |              | User can submit documentation to confirm his/her identity                                             |           |
-|              | User can see his/her profiles (including basic information, recent transactions, favorite lists, rating and comments)|           |
+|              | User can see his/her profiles (including basic information, recent transactions, wish lists, comments)|     ✅       |
 |              | User can see other users profiles (including basic information, rating and comments)|           |
 |              | User can make a comment on other users once the transaction is completed |           |
 |              | Buyer can leave comments on each animal info                            |     ✅      |
 | **Stretch**  | Chatroom(between buyer and seller)                                                                    |           |
-|              | A favorite list that store all the animal that you clicked “Like” button                              |   ✅      |
+|              | User can create a personal wish list to store the animals they are interested in                      |   ✅      |
 |              | Buyers can confirm the payment after receiving the animal                                             |           |
 |              | Seller will get a notification when a buyer submits an order                                          |           |
 
