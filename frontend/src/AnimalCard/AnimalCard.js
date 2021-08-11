@@ -49,7 +49,7 @@ const AnimalCard = (props) => {
             });
         });
 
-    }, []);
+    }, [thisCard._id, thisCard.userinfo.uuid]);
 
     const isLogin = userId !== "" && userId !== undefined;
 

@@ -32,7 +32,7 @@ const Main = (props) => {
             }
             setDisplay(index)
         }
-    }, [animalInfos])
+    }, [animalInfos, props.location.query])
 
     const setMyDisplay = (e) => {
         setCurMarkerAid(e);

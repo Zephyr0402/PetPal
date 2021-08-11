@@ -27,8 +27,10 @@ const AnimalMap = (props) => {
         const mData = [];
         if (props.aid > -1) {
             if (aid2marker.length > props.aid) {
-                if (aid2marker[props.aid].marker !== activeMarker) {
-                    props.google.maps.event.trigger(aid2marker[props.aid].marker, 'click');
+                if (aid2marker[props.aid] !== null) {
+                    if (aid2marker[props.aid].marker !== activeMarker) {
+                        props.google.maps.event.trigger(aid2marker[props.aid].marker, 'click');
+                    }
                 }
             }
 
