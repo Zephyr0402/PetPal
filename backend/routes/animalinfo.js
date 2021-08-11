@@ -19,13 +19,11 @@ router.post('/post', async function (req, res) {
             if (!err) {
                 res.send(200);
             } else {
-                console.log(err);
                 res.status(500);
                 res.send("You shall not pass!");
             }
         });
     } catch (err) {
-        console.log(err);
         res.status(500);
         res.send("You shall not pass!");
     }
@@ -48,7 +46,6 @@ router.get("/posted/:uuid?", async function (req, res) {
         console.log("Session is expired")
         res.send([])
     } else {
-        console.log("Get Uploaded Animals");
 
         await UserInfo.find({"uuid": uuid}, "_id", (err, docs) => {
             if(err){
@@ -57,15 +54,12 @@ router.get("/posted/:uuid?", async function (req, res) {
                 })
             } else {
                 var ids = docs.map(function(doc) { return doc._id; });
-                // console.log(docs)
-                // console.log(ids);
                 AnimalInfo.find({"userinfo": {$in: ids}}, "id name image description price status address", (err, docs) => {
                     if(err){
                         res.status(404).send({
                             message: "Something wrong when getting animal info"
                         })
                     }else{
-                        // console.log(docs)
                         res.send(docs)
                     }
                 });
@@ -89,8 +83,6 @@ router.use('/public', express.static('public'));
 router.post('/api/upload', async (req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, function (error, fields, files) {
-        console.log("parsing done");
-        console.log(files.file);
         fs.writeFileSync("public/images/" + files.file.name, fs.readFileSync(files.file.path));
     });
     res.send("hello");
@@ -102,10 +94,8 @@ router.post('/api/upload', async (req, res) => {
 // response body example:
 // { "status" : STATUS_OF_THE_ANIMAL }
 router.post('/status', async (req, res) => {
-    console.log(req.body.id);
     try {
         const info = await AnimalInfo.findOne({ id: req.body.id });
-        console.log(info);
         res.send('{"status":' + info.status + '}');
     } catch (err) {
         console.log(err);
@@ -117,7 +107,6 @@ router.post('/status', async (req, res) => {
 // request body example:
 // { "id" : ID_OF_THE_ANIMAL }
 router.post('/changestatus', async (req, res) => {
-    console.log(req.body);
     try {
         let info = await AnimalInfo.updateOne({ "id": req.body.id }, { "status": req.body.status });
         res.send(200);
@@ -134,7 +123,6 @@ router.post('/changestatus', async (req, res) => {
 router.post('/userinfo', async (req, res) => {
     try {
         let info = await AnimalInfo.find({ "id": req.body.id }).populate('userinfo');
-        // console.log(info[0].userinfo);
         res.send(info[0].userinfo);
     } catch (err) {
         console.log(err);

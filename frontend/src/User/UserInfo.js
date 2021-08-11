@@ -1,4 +1,4 @@
-import {Avatar, Descriptions, Card, Button, Input, Image, Skeleton, message } from 'antd';
+import {Avatar, Descriptions, Card, Button, Input, Image, Skeleton } from 'antd';
 import React, {useState, useEffect, useRef } from 'react';
 import { EditOutlined} from '@ant-design/icons';
 import { getUserInfo, updateUserInfo, changeEmail, verify, logout } from '../Services/userService'
@@ -28,7 +28,6 @@ function UserInfo(props){
     useEffect(() => {
       getUserInfo(props.uuid)
         .then((res) => {
-          console.log(res.uuid);
           setUUid(res.uuid);
           setInputName(res.name);
           setInputPNumber(res.phone);
@@ -84,7 +83,6 @@ function UserInfo(props){
 
     const onEmailChangeRequestSend = async () => {
       const res = await changeEmail(newEmailInput.current.state.value, codeInput.current.state.value)
-      console.log(res)
       await logout()
       window.location.href = "/login"
     }

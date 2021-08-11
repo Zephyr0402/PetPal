@@ -18,7 +18,6 @@ function TransactionHistory(){
         getTransactionHistory()
             .then((res) => {
                 settdata(res);
-                console.log(tdata);
             });
         getUserInfo()
             .then(res => {
@@ -61,7 +60,6 @@ function TransactionHistory(){
                                 .then(success => {
                                     if(success) {
                                         displaySuccessMessage("Transaction is canceled successfully", 3);
-                                        // window.location.reload();
                                         setReload(true);
                                     }else{
                                         displayErrorMessage("There an error cancelling your transaction. Please try" +
