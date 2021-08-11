@@ -62,10 +62,17 @@ export const PriceFilter = (props) => {
     const data = props.data;
 
     useEffect(()=>{
-        setRange({
-            min: sortedData[0].price,
-            max: sortedData[sortedData.length-1].price
-        });
+        if (sortedData.length > 0) {
+            setRange({
+                min: sortedData[0].price,
+                max: sortedData[sortedData.length - 1].price
+            });
+        } else {
+            setRange({
+                min: 0,
+                max: 0
+            });
+        }
         return function cleanup(){
             var thumbnails = document.getElementsByClassName('animal-list-item')
 
@@ -74,11 +81,19 @@ export const PriceFilter = (props) => {
             }
     }, [sortedData]);
 
-    useEffect(()=>{
-        setCurRange({
-            min: sortedData[0].price,
-            max: sortedData[sortedData.length-1].price
-        });
+    useEffect(() => {
+        if (sortedData.length > 0) {
+            setCurRange({
+                min: sortedData[0].price,
+                max: sortedData[sortedData.length - 1].price
+            });
+        } else {
+            setCurRange({
+                min: 0,
+                max: 0
+            });
+        }
+        
     }, [sortedData]);
 
     const onRangeMinInputChange = (value) => {
