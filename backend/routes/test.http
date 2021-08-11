@@ -84,7 +84,7 @@ post {{url}}/api/channel
 }
 
 ###get channels
-get {{url}}/api/channel
+get https://petpal-cpsc455.herokuapp.com:9999/api/channel
 
 ### get channel whispers
 

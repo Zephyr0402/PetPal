@@ -35,10 +35,11 @@ router.post('/api/channel', async (req, res) => {
 
 //get all channels
 router.get('/api/channel', async (req, res) => {
+    console.log("uuid", req.session.uuid)
     const channels = await Channel.find({
         'members' : {'$in' : [req.session.uuid]}
     })
-
+    console.log("channels:",channels)
     var c = []
     for(let channel of channels){
         if(channel.members.length == 2){
@@ -62,6 +63,7 @@ router.get('/api/channel', async (req, res) => {
             })
         }
     }
+    console.log("c:",c)
     res.send(c)
 })
 
