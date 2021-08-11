@@ -22,28 +22,22 @@ const Main = (props) => {
     });
 
     useEffect(() => {
-        if(props.location.query != undefined){
+        if(props.location.query !== undefined){
             var index = -1;
             for(let i = 0; i< animalInfos.length;i++){
-                if(animalInfos[i].id == props.location.query.display){
+                if(animalInfos[i].id === props.location.query.display){
                     index=i
                     break
                 }
             }
             setDisplay(index)
         }
-    }, [animalInfos])
+    }, [animalInfos, props.location.query])
 
     const setMyDisplay = (e) => {
         setCurMarkerAid(e);
         setDisplay(e);
     }
-
-    // const getOneAnimalInfo = () => {
-    //     setCurMarkerAid(0);
-    //     fetch ...............
-    //     setAnimalInfo(res)
-    // }
 
     const filterAnimalInBounds = async (bounds) => {
         if (curMarkerAid > -1) {
@@ -68,18 +62,6 @@ const Main = (props) => {
     }
 
     useEffect(() => {
-        // fetchAnimalList().then(res => {
-        //     setAnimalInfos(res);
-        //     if(props.location.query != undefined){
-        //         for(var i = 0; i< res.length; i++){
-        //             if(res[i].id == props.location.query.display){
-        //                 setDisplay(i)
-        //                 break
-        //             }
-        //         }
-        //     }
-        // });
-
         window.addEventListener("resize", handleResize);
         handleResize();
         return () => window.removeEventListener("resize", handleResize);

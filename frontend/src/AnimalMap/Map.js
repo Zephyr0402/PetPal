@@ -20,15 +20,20 @@ const AnimalMap = (props) => {
     const [showInfoWindow, setShowInfoWindow] = useState(false);
     const [activeMarker, setActiveMarker] = useState({});
     const [markerData, setMarkerData] = useState([]);
-    var data = props.animalCardInfo;
+    const [data, setData] = useState([]);
+    var markerEffect = null;
+    //var data = props.animalCardInfo;
 
     useEffect(() => {
-        data = props.animalCardInfo;
+        setData(props.animalCardInfo)
+        //data = props.animalCardInfo;
         const mData = [];
         if (props.aid > -1) {
             if (aid2marker.length > props.aid) {
-                if (aid2marker[props.aid].marker !== activeMarker) {
-                    props.google.maps.event.trigger(aid2marker[props.aid].marker, 'click');
+                if (aid2marker[props.aid] !== null) {
+                    if (aid2marker[props.aid].marker !== markerEffect) {
+                        props.google.maps.event.trigger(aid2marker[props.aid].marker, 'click');
+                    }
                 }
             }
 
@@ -50,7 +55,7 @@ const AnimalMap = (props) => {
         }
 
 
-    }, [props.aid, props.animalCardInfo]);
+    }, [props.aid, props.animalCardInfo, data, props.google.maps.event, markerEffect]);
 
     const marker2aid = (marker) => {
         for (let i in aid2marker) {
@@ -61,6 +66,7 @@ const AnimalMap = (props) => {
     }
 
     const onMarkerClick = (marker) => {
+        markerEffect = marker;
         setActiveMarker(marker);
         props.setDisplay(marker2aid(marker));
         setShowInfoWindow(true);

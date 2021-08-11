@@ -90,7 +90,7 @@ const SingleComment = (props) => {
           {createElement(disliked ? DislikeFilled : DislikeOutlined)}
         </span>
       </Tooltip>,
-      <span key="comment-basic-reply-to" onClick = {showComment}>Reply to</span>,
+      cmtDetail.canReply ? <span key="comment-basic-reply-to" onClick = {showComment}>Reply to</span> : "",
     ];
 
     return(

@@ -14,10 +14,12 @@ function PostedAnimals(props){
 
     const [animalinfo, setanimalinfo] = useState([]);
     const [userId, setUserId] = useState("");
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
+        setReload(false);
         console.log(props);
-        props.filter === "1" ? 
+        props.filter === "1" ?
         getPostedAnimals(props.uuid)
             .then((res) => {
                 console.log("1");
@@ -34,33 +36,35 @@ function PostedAnimals(props){
             .then(res => {
                 setUserId(res.uuid);
             });
-    },[props]);
+    },[props, reload]);
 
     const handleRemove = (animalId, userId) => {
         if(props.filter === "1") {
             removeAnimal(animalId).then(() => {
-                window.location.reload();
+                // window.location.reload();
+                setReload(true);
             });
         }else if(props.filter === "2"){
             removeFromWishList(animalId, userId).then(() => {
-                window.location.reload();
+                // window.location.reload();
+                setReload(true);
             });
         }
     };
 
     const cardDisplay = animalinfo.map((card) =>
     <Col className="posts-thumbnail" xs={24} md={12} lg={8} xl={6} xxl={4}>
-        <Link to = { card.status === "sold" ? '#' : {pathname:'/map', query : { display: card.id }} }>
+        {/*<Link to = { card.status === "sold" ? '#' : {pathname:'/map', query : { display: card.id }} }>*/}
             <Card
             hoverable
             style={{ height: "97%", objectFit: 'cover', width: '100%'}}
             cover={<img alt={card.name} src={card.image} width="200" height="180"/>}
             >
-            <Meta title={card.name + ": $" + card.price} description={card.description} />
+            <Meta title={card.name + ": $" + card.price} description={card.address} />
             </Card>
-        </Link>
+       {/* </Link>*/}
 
-        <CloseCircleTwoTone onClick={() => handleRemove(card._id, userId)}/>
+        { props.isMe? <CloseCircleTwoTone onClick={() => handleRemove(card._id, userId)}/> : null}
 
         {card.status === "sold" ?
             <div className="animal-sold-message"><span>SOLD</span></div> :

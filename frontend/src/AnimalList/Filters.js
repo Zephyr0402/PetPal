@@ -4,7 +4,6 @@ import { LineOutlined } from '@ant-design/icons';
 import './Filter.css'
 
 export const KindFilter = (props) => {
-    const [kind, setKind] = useState("none");
     const data = props.data;
 
     useEffect(()=>{
@@ -73,14 +72,14 @@ export const PriceFilter = (props) => {
             for(let thumbnail of thumbnails)
                 thumbnail.style.display = 'block';
             }
-    },[]);
+    }, [sortedData]);
 
     useEffect(()=>{
         setCurRange({
             min: sortedData[0].price,
             max: sortedData[sortedData.length-1].price
         });
-    },[]);
+    }, [sortedData]);
 
     const onRangeMinInputChange = (value) => {
         onSliderChange([value,curRange.max])

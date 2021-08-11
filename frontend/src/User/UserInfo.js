@@ -1,6 +1,7 @@
-import {Avatar, Descriptions, Card, Button, Input, Image, Skeleton } from 'antd';
-import React, {useState, useEffect } from 'react';
-import { getUserInfo, updateUserInfo } from '../Services/userService'
+import {Avatar, Descriptions, Card, Button, Input, Image, Skeleton, message } from 'antd';
+import React, {useState, useEffect, useRef } from 'react';
+import { EditOutlined} from '@ant-design/icons';
+import { getUserInfo, updateUserInfo, changeEmail, verify, logout } from '../Services/userService'
 import './UserInfoPage.css'
 import Modal from 'antd/lib/modal/Modal';
 import Uploader from './Uploader';
@@ -9,6 +10,7 @@ import CommentCollection from '../AnimalCard/Comments';
 function UserInfo(props){
     const [uuid, setUUid] = useState("");
     const [edit, setEdit] = useState(false);
+    const [verModal, setVerModal] = useState(false);
     const [update, setUpdate] = useState(false);
     const [inputName, setInputName] = useState('');
     const [inputMail, setInputMail] = useState('')
@@ -18,6 +20,10 @@ function UserInfo(props){
     const [avatar, setAvatar] = useState('')
     const [upload, showUpload] = useState(false)
     const [comment, showComment] = useState(false)
+    const [canSend, setCanSend] = useState(true)
+
+    const codeInput = useRef("")
+    const newEmailInput = useRef("")
 
     useEffect(() => {
       getUserInfo(props.uuid)
@@ -66,6 +72,23 @@ function UserInfo(props){
       }
     };
 
+    const showVerModal = () => {
+      if(!verModal) {setCanSend(true)}
+      setVerModal(!verModal);
+    };
+
+    const sendVerCode = () => {
+      verify(newEmailInput.current.state.value)
+      setCanSend(!canSend)
+    }
+
+    const onEmailChangeRequestSend = async () => {
+      const res = await changeEmail(newEmailInput.current.state.value, codeInput.current.state.value)
+      console.log(res)
+      await logout()
+      window.location.href = "/login"
+    }
+
     const createButton = () => {
       return(
         <Button type="dashed" style={{float: "right"}} onClick={enableEdit}> 
@@ -88,7 +111,19 @@ function UserInfo(props){
                       />}
               />
           </div>
-          <div style = {{textAlign:'end', paddingRight:'3%', paddingTop:'0.5%', fontSize:'20px'}}>Account: <b>{inputMail}</b></div>
+          <div style = {{textAlign:'end', paddingRight:'3%', paddingTop:'0.5%', fontSize:'16px'}}>
+            Account: <b>{inputMail}</b>
+            <div style = {{display:'inline'}} onClick = {showVerModal}><EditOutlined /></div>
+          </div>
+          <Modal title="Email Address Change" visible={verModal}
+              onCancel = {showVerModal}
+              onOk = {onEmailChangeRequestSend}
+              okButtonProps = {{disabled: canSend}}
+          >
+              <p>Input your new email address and we will send a verification email to it</p>
+              <Input ref = {newEmailInput} addonAfter = {<Button disabled = {!canSend} onClick = {sendVerCode}>Send</Button>}/>
+              <Input ref = {codeInput}/>
+          </Modal>
           <Modal
             title = "Update your avatar!"
             visible = {upload}
@@ -124,9 +159,6 @@ function UserInfo(props){
           { props.isMe? createButton() : null}
           </Card>
           <br />
-          {/* <Card title="Rating" bordered={false}>
-              <Rate allowHalf disabled defaultValue={4.5} />
-          </Card> */}
           <Card title="Comments" bordered = {false}>
             { comment ? 
               <CommentCollection id = {uuid} commentType = "user"/> : <Skeleton active/>
