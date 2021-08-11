@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-const SERVER = "http://localhost:10043";
+const SERVER = "https://petpal-cpsc455.herokuapp.com:10043";
 
 export const openSocket = (uuid) => {
     const options = {
