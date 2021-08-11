@@ -7,7 +7,7 @@ import './Map.css'
 const mapStyles = {
     position: 'absolute',
     width: '62%',
-    height: '90.5%'
+    height: '91.5%'
 };
 
 const initialCenter = {
@@ -39,7 +39,7 @@ const AnimalMap = (props) => {
                 if (data[props.aid] === undefined) {
                     continue;
                 }
-                if (!'address' in data[i] || !'address' in data[props.aid]) {
+                if (!('address' in data[i]) || !('address' in data[props.aid])) {
                     continue;
                 }
                 try {
