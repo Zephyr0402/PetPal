@@ -74,6 +74,13 @@
     fill: #1890ff;
 }
 
+.posts-thumbnail-wrapper .ant-card-hoverable {
+    cursor: default;
+    -webkit-box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, 0.2);
+    border-color: #ededed;
+}
+
 .animal-sold-message {
     width: 184px;
     height: 97%;

@@ -19,7 +19,7 @@ function PostedAnimals(props){
     useEffect(() => {
         setReload(false);
         console.log(props);
-        props.filter === "1" ? 
+        props.filter === "1" ?
         getPostedAnimals(props.uuid)
             .then((res) => {
                 console.log("1");
@@ -54,7 +54,7 @@ function PostedAnimals(props){
 
     const cardDisplay = animalinfo.map((card) =>
     <Col className="posts-thumbnail" xs={24} md={12} lg={8} xl={6} xxl={4}>
-        <Link to = { card.status === "sold" ? '#' : {pathname:'/map', query : { display: card.id }} }>
+        {/*<Link to = { card.status === "sold" ? '#' : {pathname:'/map', query : { display: card.id }} }>*/}
             <Card
             hoverable
             style={{ height: "97%", objectFit: 'cover', width: '100%'}}
@@ -62,7 +62,7 @@ function PostedAnimals(props){
             >
             <Meta title={card.name + ": $" + card.price} description={card.address} />
             </Card>
-        </Link>
+       {/* </Link>*/}
 
         { props.isMe? <CloseCircleTwoTone onClick={() => handleRemove(card._id, userId)}/> : null}
 
