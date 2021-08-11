@@ -13,7 +13,7 @@ const CommentCollection = (props) => {
     await getComments(props.commentType, props.id).then(
       res => {    console.log(res);setComments(res)}
     )
-  }, [])
+  }, [props.id])
 
   const onCommentSubmit = async (id, type, commentText) => {
     await postComment(id, type, commentText)
