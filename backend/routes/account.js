@@ -411,4 +411,30 @@ router.post('/api/cur_user/avatar/update', async (req,res) => {
     res.send("hello");
 })
 
+router.post('/api/email/update', async (req, res) => {
+    console.log(req.body.email)
+    const uuid = req.session.uuid
+    const auth = await UserAuth.findOne({
+        'email' : req.body.email,
+        'code' : req.body.code
+    })
+    if(!auth){
+        return res.status(422).send({
+            message: "Verification code is not right! Or it has expired!"
+        })
+    }
+    await UserAuth.deleteOne({
+        'email' : req.body.email,
+        'code' : req.body.code
+    })
+    await UserInfo.updateOne({
+        "uuid" : uuid
+    }, {
+        "email" : req.body.email
+    })
+    res.status(200).send({
+        message: "Email change succefully. Please log in again!"
+    })
+})
+
 module.exports = router;

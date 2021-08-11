@@ -1,5 +1,6 @@
 import backendURL from './backendURL';
 import axios from 'axios';
+import { CodeFilled } from '@ant-design/icons';
 
 axios.defaults.withCredentials = true;
 
@@ -16,7 +17,7 @@ export const login = async (username, password) => {
     }).then(res => res.json());
 }
 
-export const logout = async (username, password) => {
+export const logout = async () => {
     return await axios.get(backendURL + '/api/logout')
     .then(res => res.data);
 }
@@ -101,4 +102,18 @@ export const updateUserInfo = async (userInfo) => {
 export const checkUUID = async (uuid) => {
     return await axios.get(backendURL + '/api/check/'+ uuid)
     .then(res => res.data);
+}
+
+export const changeEmail = async (newEmail, code) => {
+    return await fetch('http://localhost:9999/api/email/update', {
+        method: 'POST',
+        credentials:'include',
+        body: JSON.stringify({
+            "email" : newEmail,
+            "code" : code
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }).then(res => res.json());
 }

@@ -99,7 +99,8 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
             'likes' : c.likes,
             'dislikes' : c.dislikes,
             'disliked' : disliked,
-            'replies' : c.replies
+            'replies' : [],
+            'canReply' : false
         })
     }
 
@@ -107,7 +108,7 @@ router.get('/api/comment/user/:uuid', async (req, res) => {
 
 })
 
-//comments for user
+//comments for animals
 router.get('/api/comment/animal/:uaid', async (req, res) => {
     // console.log(req.params.uaid)
     const animalCommentsFromDB = await Comment.find({
@@ -122,7 +123,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
 
         const repliesFromDB = await Comment.find({
             'fcid' : c.ucid
-        }, 'cmtorid content time likes dislikes')
+        })
 
         var replies = [];
         for(let r of repliesFromDB){
@@ -146,7 +147,7 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
                     break
                 }
             }
-
+            console.log(r.ucid)
             replies.push({
                 'cmtorid' : r.cmtorid,
                 'ucid' : r.ucid,
@@ -157,7 +158,8 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
                 'likes' : r.likes,
                 'liked' : liked,
                 'dislikes' : r.dislikes,
-                'disliked' : disliked
+                'disliked' : disliked,
+                'canReply' : false
             })
         }
 
@@ -189,7 +191,8 @@ router.get('/api/comment/animal/:uaid', async (req, res) => {
             'liked' : liked,
             'dislikes' : c.dislikes,
             'replies' : replies,
-            'disliked' : disliked
+            'disliked' : disliked,
+            'canReply' : true
         })
     }
 
@@ -202,7 +205,7 @@ router.post('/api/comment/like/:type/:ucid', async (req, res) => {
     const comment = await Comment.findOne({
         'ucid' : req.params.ucid
     })
-
+    console.log(req.params.ucid)
     if(req.params.type == "set"){
         await Comment.updateOne({
             'ucid' : req.params.ucid
