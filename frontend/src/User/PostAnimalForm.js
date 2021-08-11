@@ -212,15 +212,18 @@ function PostAnimalForm() {
                             </Input.Group>
                         </Form.Item>
 
-                        <Form.Item label="Location">
-                            <GooglePlacesAutocomplete
-                                apiKey="AIzaSyDnMJlodY_mrnG1k--Ol-Ocm9bWgaJF18k"
-                                selectProps={{
-                                    location,
-                                    onChange: setLocation,
-                                }}
-                            />
-
+                        <Form.Item
+                            label="Location"
+                        >
+                            <div style={{ width: '100%' }}>
+                                <GooglePlacesAutocomplete
+                                    apiKey="AIzaSyDnMJlodY_mrnG1k--Ol-Ocm9bWgaJF18k"
+                                    selectProps={{
+                                        location,
+                                        onChange: setLocation,
+                                    }}
+                                />
+                            </div>
                         </Form.Item>
 
 
