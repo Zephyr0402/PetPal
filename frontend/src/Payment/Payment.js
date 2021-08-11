@@ -16,6 +16,7 @@ const Payment = (props) => {
     const setAllDisplayValues = () => {
         if(paymentSuccess) {
             props.setDisplay(-1);
+            window.location.reload();
         }
 
         props.setDisplayCheckout(false);

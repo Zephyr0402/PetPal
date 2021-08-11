@@ -1,26 +1,26 @@
-import React , {createElement,useEffect,useState} from 'react';
-import { Comment, Tooltip, Avatar, Divider } from 'antd';
+import React , {createElement,useState} from 'react';
+import { Comment, Tooltip } from 'antd';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 import {LikeComment, DislikeComment} from '../Services/commentService'
+import { notifyLike } from '../Services/notificationService';
 import {CommentArea} from './CommentArea'
 import UserAvatar from '../Layout/Avatar';
 
 const SingleComment = (props) => {
     const cmtDetail = props.commentDetail;
-
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(cmtDetail.liked);
     const [likes, setLikes] = useState(cmtDetail.likes.length)
-    const [disliked, setDisliked] = useState(false);
-
+    const [disliked, setDisliked] = useState(cmtDetail.disliked);
+  console.log(cmtDetail)
     const [showCommentArea,setShowCommentArea] = useState(false)
-    console.log(cmtDetail)
+    // console.log(cmtDetail)
 
-    const like = () => {
+    const like = async() => {
       setLiked(true);
       setLikes(likes +1);
       setDisliked(false);
-      console.log(cmtDetail.ucid);
-      LikeComment(cmtDetail.ucid,'set');
+      await notifyLike(cmtDetail.cmtorid, cmtDetail.ucid);
+      await LikeComment(cmtDetail.ucid,'set');
     }
 
     const cancelLike = () => {
@@ -90,7 +90,7 @@ const SingleComment = (props) => {
           {createElement(disliked ? DislikeFilled : DislikeOutlined)}
         </span>
       </Tooltip>,
-      <span key="comment-basic-reply-to" onClick = {showComment}>Reply to</span>,
+      cmtDetail.canReply ? <span key="comment-basic-reply-to" onClick = {showComment}>Reply to</span> : "",
     ];
 
     return(
@@ -98,10 +98,6 @@ const SingleComment = (props) => {
             actions={actions}
             author={<a>{cmtDetail.name}</a>}
             avatar={
-                // <Avatar
-                // src={cmtDetail.avatar}
-                // alt="Username loading..."
-                // />
                 <UserAvatar size = {35} src = {cmtDetail.avatar} uuid = {cmtDetail.cmtorid}/>
             }
             content={

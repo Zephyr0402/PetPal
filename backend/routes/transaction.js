@@ -8,6 +8,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 
 const Transaction = require('../models/transactionModel');
 const AnimalInfo = require('../models/animalinfoModel');
+const { UserInfo } = require('../models/userModel');
 
 //GET all transactions
 router.get("/", cors(), async (req, res) => {
@@ -26,14 +27,40 @@ router.get("/uuid", async (req, res) => {
         console.log("start find transaction history");
         await Transaction.find({
             $or:[ { 'buyerId': req.session.uuid }, { 'sellerId': req.session.uuid } ]
-        }, (err, doc) => {
+        }, async(err, docs) => {
             if(err){
                 res.status(404).send({
                     message: "Something wrong when getting the transaction history"
                 })
             } else {
-                console.log(doc);
-                res.send(doc);
+                // var docForJson;
+                // console.log(docs);
+                var newDocs = [];
+                for(let doc of docs){    
+                    doc = JSON.parse(JSON.stringify(doc))
+
+                    try{
+                        const udoc = await UserInfo.find({'uuid': doc.buyerId}, 'name');
+                        // console.log(doc._id)
+                        // console.log("0 " + udoc[0]);
+                        doc.buyerName = udoc[0].name;
+
+                        const udoc2 = await UserInfo.find({'uuid': doc.sellerId}, 'name');
+                        // console.log("1 " + udoc2[0]);
+                        doc.sellerName = udoc2[0].name;
+
+                        const animalInfo = await AnimalInfo.find({'_id': doc.animalId}, 'name image');
+                        // console.log("2 " + animalInfo[0].name)
+                        doc.animalName = animalInfo[0].name;
+                        doc.animalImg = animalInfo[0].image;
+                        newDocs.push(doc);
+                    }catch(err) {
+                        console.log(err);
+                        return res.status(400).json('Fail to get transaction: ' + err)
+                    }
+                }
+                // console.log(newDocs);
+                res.send(newDocs);
             }
         });
     }

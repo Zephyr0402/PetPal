@@ -3,7 +3,7 @@ const database = require('../database/database');
 const Comment = database.model('Comment', new database.Schema({
     ucid : {type: String},
     cmtorid : {type: String},
-    uaid : {type: Number},
+    uaid : {type: String},
     uuid : {type: String},
     fcid : {type: String},
     content: {type: String, default: ""},
