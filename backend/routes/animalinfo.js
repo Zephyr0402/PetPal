@@ -10,7 +10,6 @@ const { v4: uuidv4 } = require('uuid');
 // request is required to be sent as a specific JSON format
 // (details are on Google Doc)
 router.post('/post', async function (req, res) {
-    console.log('handle animal post');
     try {
         let newEntry = req.body.animalinfo;
         newEntry["id"] = uuidv4();
@@ -18,7 +17,6 @@ router.post('/post', async function (req, res) {
 
         AnimalInfo.create(newEntry, (err, docs) => {
             if (!err) {
-                console.log('Inserted successfully' + docs);
                 res.send(200);
             } else {
                 console.log(err);
@@ -36,7 +34,6 @@ router.post('/post', async function (req, res) {
 
 router.get("/", async function (req, res) {
     try {
-        console.log('handle get animal information');
         const infos = await AnimalInfo.find({ "status": "available" }).populate('userinfo');
         res.send(infos);
     } catch (e) {

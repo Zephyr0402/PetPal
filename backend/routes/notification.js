@@ -30,7 +30,6 @@ router.post('/like', async(req, res) => {
 const cors = require("cors");
 
 router.get('/comment/:dstUserID/:timestamp', async (req, res) => {
-    console.log('Get updated comment notification');
     const dstUserID = req.params.dstUserID;
     const infos = await NotificationInfo.find({ "destinationUserID": dstUserID, "type": "comment" });
     var resInfos = [];

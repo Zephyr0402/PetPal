@@ -22,21 +22,17 @@ const UtilityView = (props) => {
     }
 
     const onSearch = (e) => {
-        console.log(animalInfos);
         var filter = e.target.value.toUpperCase();
         var thumbnails = document.getElementsByClassName('animal-list-item')
         if (animalInfos === undefined) {
             return;
         }
-        console.log(thumbnails);
         let counter = -1;
         for (let thumbnail of thumbnails) {
             counter++;
             if (animalInfos[counter] === undefined) {
-                console.log("Ignoring...", thumbnail.id);
                 continue;
             }
-            console.log(animalInfos[thumbnail.id]);
             if (animalInfos[counter].name.toUpperCase().indexOf(filter) === -1 && filter !== "") {
                 thumbnail.style.display = 'none';
             }
