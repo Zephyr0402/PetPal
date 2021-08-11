@@ -60,7 +60,7 @@ function PostedAnimals(props){
             style={{ height: "97%", objectFit: 'cover', width: '100%'}}
             cover={<img alt={card.name} src={card.image} width="200" height="180"/>}
             >
-            <Meta title={card.name + ": $" + card.price} description={card.description} />
+            <Meta title={card.name + ": $" + card.price} description={card.address} />
             </Card>
         </Link>
 
