@@ -2,7 +2,7 @@ var app = require('./app')
 const { v4: uuidv4 } = require('uuid');
 const {Whisper, Channel} = require('./models/whisperModel');
 const {UserInfo} = require('./models/userModel');
-var chatServer = require('https').createServer(app);
+var chatServer = require('http').createServer(app);
 var io = require("socket.io")(chatServer, {
     cors: {
       origin: "https://petpal-cpsc455.herokuapp.com:3000",
@@ -86,6 +86,6 @@ io.on('connection', (socket) => {
 
 })
 
-chatServer.listen(10043, () => {
+chatServer.listen(3000, () => {
     console.log('chat server listening on localhost:10043');
 });
