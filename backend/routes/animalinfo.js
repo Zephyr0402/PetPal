@@ -35,7 +35,6 @@ router.get("/", async function (req, res) {
         const infos = await AnimalInfo.find({ "status": "available" }).populate('userinfo');
         res.send(infos);
     } catch (e) {
-        console.log(e);
     }
 });
 

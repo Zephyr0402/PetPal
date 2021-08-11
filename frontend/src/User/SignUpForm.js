@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import './forms.css';
-import {Button, Form, Input, Layout, Modal} from 'antd';
+import {Button, Form, Input,  Modal} from 'antd';
 import { register, verify} from '../Services/userService';
 import Header from "../Layout/Header";
 
@@ -38,7 +38,6 @@ const SignUpForm = () => {
         const isNameBlank = nameInput.current.props.value === undefined || nameInput.current.props.value.trim() === "";
         const isEmailBlank = emailInput.current.props.value === undefined || emailInput.current.props.value.trim() === "";
         const isPasswordBlank = passwordInput.current.props.value === undefined || passwordInput.current.props.value.trim() === "";
-        console.log(isNameBlank || isEmailBlank || isPasswordBlank);
         return isNameBlank || isEmailBlank || isPasswordBlank;
     };
 

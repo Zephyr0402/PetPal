@@ -11,7 +11,7 @@ const CommentCollection = (props) => {
 
   useEffect(async () => {
     await getComments(props.commentType, props.id).then(
-      res => {    console.log(res);setComments(res)}
+      res => { setComments(res)}
     )
   }, [props.id])
 

@@ -26,7 +26,6 @@ io.on('connection', (socket) => {
         onlineUsers[curUserId].socketIds.push(socket.id)
     }
 
-    console.log(onlineUsers)
     //receive whisper message
     socket.on('whisper', async whisper => {
         curUserId = socket.handshake.headers.uuid
@@ -64,11 +63,9 @@ io.on('connection', (socket) => {
             if(onlineUsers[receiver] == undefined){
                 //do nothing
             }else{
-                console.log(receiver)
                 c["uuid"] = receiver;
                 onlineUsers[receiver].socketIds.forEach((socketId) =>
                     {   
-                        console.log(socketId)
                         io.to(socketId).emit('forward-whisper', {...(w._doc),...c});
                     }
                 )
@@ -78,7 +75,6 @@ io.on('connection', (socket) => {
 
     //offline (exit chat room)
     socket.on('disconnect', (reason) => {
-        console.log(reason)
         curUserId = socket.handshake.headers.uuid
         var socketLen = onlineUsers[curUserId].length
         onlineUsers[curUserId].socketIds.splice(socketLen-1,1)
