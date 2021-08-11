@@ -72,8 +72,10 @@ function UserInfo(props){
     };
 
     const showVerModal = () => {
-      if(!verModal) {setCanSend(true)}
-      setVerModal(!verModal);
+      if (props.isMe) {
+        if(!verModal) {setCanSend(true)}
+        setVerModal(!verModal);
+      }
     };
 
     const sendVerCode = () => {
@@ -105,7 +107,7 @@ function UserInfo(props){
                         height = {64}
                         width = {64}
                         preview = {false}
-                        onClick = {() => {showUpload(true)}}
+                        onClick = {() => {{props.isMe? showUpload(true): showUpload(false)}}}
                       />}
               />
           </div>

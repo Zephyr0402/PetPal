@@ -410,6 +410,7 @@ router.post('/api/cur_user/avatar/update', async (req,res) => {
         })
     });
     console.log("return")
+    console.log("here")
     res.send("hello");
 })
 
