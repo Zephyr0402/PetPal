@@ -62,16 +62,6 @@ app.use('/api/notify', notificationRouter);
 app.use('/api/message', messageRouter);
 app.use('/', whisperRouter)
 
-
-
-// app.post('/postAnimal', function (req, res) {
-//   console.log('Get post');
-// });
-
-// var listener = app.listen(9999, function () {
-//   console.log('Listening on port ' + listener.address().port); //Listening on port 8888
-// });
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
