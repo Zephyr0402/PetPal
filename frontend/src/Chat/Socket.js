@@ -9,7 +9,7 @@ export const openSocket = (uuid) => {
                     'uuid' : uuid
                 }
             }
-        }
+        },
         rejectUnauthorized: false,
         secure: true, 
         reconnection: true
