@@ -1,7 +1,4 @@
-// const mongoose = require('mongoose');
 const database = require('../database/database');
-
-// database.connect('mongodb://' + database.configs.URL + '/' + database.configs.Name);
 
 const AnimalInfo = database.model('AnimalInfo', new database.Schema({
     id: String,

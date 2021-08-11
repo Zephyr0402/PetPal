@@ -16,3 +16,9 @@
 .filter-type{
     margin: 1%;
 }
+
+.animal-list .ant-input-number {
+    width: 100px;
+    border: 1px solid lightgray;
+    margin-right: 8px;
+}

@@ -294,8 +294,27 @@ router.get('/api/logout', async(req, res) => {
     })
 })
 
-router.get('/api/cur_user/info', async (req,res) => {
-    // console.log(req.session);
+router.get('/api/check/:uuid?', async(req, res) => {
+    uuid = req.params.uuid;
+    console.log(uuid)
+    if(req.session.uuid === undefined){
+        return res.send({
+            message : "Your session has expired. Please log in again!"
+        })  
+    }
+
+    if (uuid === req.session.uuid){
+        res.send(true)
+    } else {
+        res.send(false)
+    }
+})
+
+router.get('/api/info/:uuid?', async (req,res) => {
+    if(req.params.uuid == undefined)
+        uuid = req.session.uuid
+    else
+        uuid = req.params.uuid;
     //not logged in
     if(req.session.uuid === undefined){
         return res.send({
@@ -304,8 +323,8 @@ router.get('/api/cur_user/info', async (req,res) => {
     }
 
     //return user information
-    const user = await UserInfo.findOne({
-        'uuid' : req.session.uuid
+    await UserInfo.findOne({
+        'uuid' : uuid
     }, (err, doc) => {
         if(err){
             res.status(404).send({
@@ -390,6 +409,32 @@ router.post('/api/cur_user/avatar/update', async (req,res) => {
         })
     });
     res.send("hello");
+})
+
+router.post('/api/email/update', async (req, res) => {
+    console.log(req.body.email)
+    const uuid = req.session.uuid
+    const auth = await UserAuth.findOne({
+        'email' : req.body.email,
+        'code' : req.body.code
+    })
+    if(!auth){
+        return res.status(422).send({
+            message: "Verification code is not right! Or it has expired!"
+        })
+    }
+    await UserAuth.deleteOne({
+        'email' : req.body.email,
+        'code' : req.body.code
+    })
+    await UserInfo.updateOne({
+        "uuid" : uuid
+    }, {
+        "email" : req.body.email
+    })
+    res.status(200).send({
+        message: "Email change succefully. Please log in again!"
+    })
 })
 
 module.exports = router;

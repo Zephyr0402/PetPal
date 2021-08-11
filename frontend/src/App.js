@@ -1,4 +1,4 @@
-import {BrowserRouter,Redirect,Route, Switch} from 'react-router-dom'
+import {BrowserRouter,Redirect,Route, Switch, HashRouter} from 'react-router-dom'
 import './App.css';
 import Main from './Layout/Main'
 import LoginForm from './User/LoginForm'
@@ -7,7 +7,8 @@ import SignUpForm from './User/SignUpForm'
 import UserInfoPage from './User/UserInfoPage'
 import "antd/dist/antd.css";
 import ResetPwdForm from './User/ResetPwdForm'
-import UserAvatar from './Layout/Avatar';
+import { WhisperPanel } from './Chat/WhisperPanel';
+import Chat from './Chat/Chat';
 
 function App() {
 
@@ -29,13 +30,20 @@ function App() {
         <Route path = "/register">
           <SignUpForm/>
         </Route>
-        <Route path = "/user">
+        <Route path = "/user/:uuid">
           <UserInfoPage/>
         </Route>
-        <Route path = "/reset_pwd/:token" component = {ResetPwdForm}>
-        </Route>
-        <Route path = "/avatartest">
-          <UserAvatar size = {401} src = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></UserAvatar>
+        <Route path = "/reset_pwd/:token" component = {ResetPwdForm}/>
+        {/* <Route path = "/chat/*" component = {Chat}/> */}
+        <HashRouter
+          basename= '/chat'
+        >
+          <Route path = '/:cid?' component = {Chat}>
+          </Route>
+        </HashRouter>
+        
+        <Route path = "/whisperpanel">
+          <WhisperPanel name = "example" avatar = "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></WhisperPanel>
         </Route>
       </Switch>
     </BrowserRouter>

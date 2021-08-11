@@ -12,8 +12,11 @@ var accountRouter = require('./routes/account');
 var postRouter = require('./routes/animalinfo');
 var transactionRouter = require('./routes/transaction');
 var wishListRouter = require('./routes/wishlist');
+var whisperRouter = require('./routes/whisper')
 
 var updateTransactionStatus = require('./backgroundTasks/updateTransactionStatus');
+var notificationRouter = require('./routes/notification')
+var messageRouter = require('./routes/message')
 
 const cookieMaxAge = 60*60*1000;
 const SECRET = "znhy";
@@ -63,13 +66,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html'));
 })
 
-// app.post('/postAnimal', function (req, res) {
-//   console.log('Get post');
-// });
-
-// var listener = app.listen(9999, function () {
-//   console.log('Listening on port ' + listener.address().port); //Listening on port 8888
-// });
+app.use('/api/notify', notificationRouter);
+app.use('/api/message', messageRouter);
+app.use('/', whisperRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

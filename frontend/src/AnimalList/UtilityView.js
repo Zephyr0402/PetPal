@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Space, Button, AutoComplete, Select } from 'antd';
+import { Input, Space, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import AnimalList from './AnimalList';
 import { PriceFilter, KindFilter } from './Filters';
@@ -37,7 +37,7 @@ const UtilityView = (props) => {
                 continue;
             }
             console.log(animalInfos[thumbnail.id]);
-            if (animalInfos[counter].name.toUpperCase().indexOf(filter) == -1 && filter != "") {
+            if (animalInfos[counter].name.toUpperCase().indexOf(filter) === -1 && filter !== "") {
                 thumbnail.style.display = 'none';
             }
             else {
@@ -47,7 +47,7 @@ const UtilityView = (props) => {
     }
 
     const onFilterClick = (e) => {
-        if ((filter === 0 && e.target.innerText == "Kind") || (filter === 1 && e.target.innerText == "Price")) {
+        if ((filter === 0 && e.target.innerText === "Kind") || (filter === 1 && e.target.innerText === "Price")) {
             setFilter(-1);
             return;
         }
@@ -57,6 +57,8 @@ const UtilityView = (props) => {
                 break;
             case "Price":
                 setFilter(1);
+                break;
+            default:
                 break;
         }
     }

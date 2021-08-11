@@ -16,11 +16,11 @@ export const CommentArea = (props) => {
       getUserInfo().then(res => {
           setAvatar(res.avatar);
           setUserId(res.uuid);
-      }
-      )
+      })
     },[]);
 
     const onCommentSubmit = (values) => {
+        console.log(userId)
         if(userId === "" || userId === undefined) {
             showLoginRequiredModal("Please login to add your comment");
         }else{
@@ -35,11 +35,7 @@ export const CommentArea = (props) => {
     return(
         <Comment
           avatar={
-            <Avatar
-              src={avatar}
-              alt="Han Solo"
-            />
-            //<UserAvatar size = {20} src = {avatar}/>
+            <UserAvatar size = {30} src = {avatar} uuid = {userId}/>
           }
           content={
             <Form

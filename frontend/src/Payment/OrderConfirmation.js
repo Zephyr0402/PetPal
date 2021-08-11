@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {SmileTwoTone, CheckCircleTwoTone} from "@ant-design/icons";
 import {Typography} from "antd";
 import {Link} from 'react-router-dom';
+import {getHeader} from "../Services/userService";
 
 
 const { Title, Text } = Typography;
 
 function OrderConfirmation(props) {
+    const [userId, setUserId] = useState(null);
+
+    useEffect(() => {
+        getHeader()
+            .then(async res => {
+                setUserId(res.uuid);
+            });
+    },[]);
 
     return (
         <div className="order-confirmation">
@@ -24,9 +33,10 @@ function OrderConfirmation(props) {
                 <Text>Have a lovely day <SmileTwoTone /></Text>
             </div>
 
-            <Link to = {{pathname:'/user', state : { key:"3" }}}>
+            <Link to = {{pathname:'/user/'+userId, query : { key:"3" }}}>
                 View your order
             </Link>
+            <p>You may cancel your order within 2 hours after it is processed.</p>
         </div>
     )
 }
