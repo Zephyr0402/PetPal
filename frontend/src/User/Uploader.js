@@ -20,7 +20,7 @@ const Uploader = (props) => {
       shape = 'round'
     >
       <Upload
-        action = {onFileListChange}
+        action = "https://petpal-cpsc455.herokuapp.com/api/cur_user/avatar/update"
         withCredentials = {true}
         listType="picture-card"
         fileList={fileList}
