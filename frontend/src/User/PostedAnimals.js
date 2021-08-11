@@ -9,7 +9,6 @@ import {getUserInfo} from "../Services/userService";
 const { Meta } = Card;
 
 function PostedAnimals(props){
-
     const [animalinfo, setanimalinfo] = useState([]);
     const [userId, setUserId] = useState("");
     const [reload, setReload] = useState(false);
@@ -31,7 +30,7 @@ function PostedAnimals(props){
             .then(res => {
                 setUserId(res.uuid);
             });
-    },[props, reload]);
+    },[props.filter, reload]);
 
     const handleRemove = (animalId, userId) => {
         if(props.filter === "1") {

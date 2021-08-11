@@ -57,7 +57,7 @@ const UserInfoPage = (props) => {
                             <Menu.Item key="1" icon={<UserOutlined />}>
                                 Basic Information
                             </Menu.Item>
-                            <Menu.Item key="2" icon={<BookOutlined />}>My Posted Animals</Menu.Item>
+                            {isMe? <Menu.Item key="2" icon={<BookOutlined />}>My Posted Animals</Menu.Item> : <Menu.Item key="2" icon={<BookOutlined />}>His/Her Posted Animals</Menu.Item>}
                             {isMe? <Menu.Item key="2.5" icon={<HeartOutlined />}>My Wish List</Menu.Item> : null}
                             {isMe? <Menu.Item key="3" icon={<TransactionOutlined />}>Transaction History</Menu.Item> : null}
                         </Menu>
