@@ -397,6 +397,7 @@ router.post('/api/cur_user/info/update', async (req, res) => {
 router.post('/api/cur_user/avatar/update', async (req,res) => {
     var form = new formidable.IncomingForm();
     form.parse(req, async (error, fields, files) => {
+        console.log("files",files)
         let bitmap = fs.readFileSync(files.file.path);
         let base64str = Buffer.from(bitmap, 'binary').toString('base64'); 
         let base64 = 'data:' + files.file.type + ';base64,' + base64str
@@ -406,6 +407,7 @@ router.post('/api/cur_user/avatar/update', async (req,res) => {
             "avatar" : base64
         })
     });
+    console.log("here")
     res.send("hello");
 })
 
