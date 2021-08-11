@@ -79,7 +79,7 @@ const Header = (props) => {
                         <Tooltip title = "Post now!">
                             <Button danger shape="circle" icon={<FormOutlined />} href = "/post"/>
                         </Tooltip>
-                        <Button bo style = {{marginLeft:"5px", marginRight:"5px"}} shape="circle" icon={<CommentOutlined />} href = "/chat/"/>
+                        {/* <Button bo style = {{marginLeft:"5px", marginRight:"5px"}} shape="circle" icon={<CommentOutlined />} href = "/chat/"/> */}
                         <Dropdown
                         arrow = {true}
                             overlay = {optionsOnNameClick}
