@@ -1,4 +1,4 @@
-import {Avatar, Descriptions, Card, Button, Input, Image, Skeleton, message } from 'antd';
+import {Avatar, Descriptions, Card, Button, Input, Image, Skeleton } from 'antd';
 import React, {useState, useEffect, useRef } from 'react';
 import { EditOutlined} from '@ant-design/icons';
 import { getUserInfo, updateUserInfo, changeEmail, verify, logout } from '../Services/userService'
@@ -28,7 +28,6 @@ function UserInfo(props){
     useEffect(() => {
       getUserInfo(props.uuid)
         .then((res) => {
-          console.log(res.uuid);
           setUUid(res.uuid);
           setInputName(res.name);
           setInputPNumber(res.phone);
@@ -84,29 +83,28 @@ function UserInfo(props){
 
     const onEmailChangeRequestSend = async () => {
       const res = await changeEmail(newEmailInput.current.state.value, codeInput.current.state.value)
-      console.log(res)
       await logout()
       window.location.href = "/login"
     }
 
     const createButton = () => {
       return(
-        <Button type="dashed" style={{float: "right"}} onClick={enableEdit}> 
+        <Button type="dashed" style={{float: "right"}} onClick={enableEdit}>
           {edit? "FINISH": "EDIT"}
         </Button>
       );
     };
-        
+
     return(
-        <div>
+        <div className="user-info-content">
           <div className="avatar" >
-              <Avatar  
+              <Avatar
                 size={64}
-                src = {<Image 
-                        src = {avatar} 
-                        height = {64} 
+                src = {<Image
+                        src = {avatar}
+                        height = {64}
                         width = {64}
-                        preview = {false} 
+                        preview = {false}
                         onClick = {() => {showUpload(true)}}
                       />}
               />
@@ -136,7 +134,7 @@ function UserInfo(props){
 
 
           <Card title="Profile" bordered={false}>
-          
+
           <br />
           <Descriptions className='descriptions'
                         bordered
@@ -160,7 +158,7 @@ function UserInfo(props){
           </Card>
           <br />
           <Card title="Comments" bordered = {false}>
-            { comment ? 
+            { comment ?
               <CommentCollection id = {uuid} commentType = "user"/> : <Skeleton active/>
             }
           </Card>

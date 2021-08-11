@@ -20,7 +20,6 @@ const UserInfoPage = (props) => {
 
     // check whether the params.uuid matches current user
     useEffect(() => {
-        console.log('profile rendered');
         setSelectedKey(initialKey);
         checkUUID(props.match.params.uuid)
         .then((res) => {

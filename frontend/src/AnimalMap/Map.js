@@ -22,11 +22,9 @@ const AnimalMap = (props) => {
     const [markerData, setMarkerData] = useState([]);
     const [data, setData] = useState([]);
     var markerEffect = null;
-    //var data = props.animalCardInfo;
 
     useEffect(() => {
         setData(props.animalCardInfo)
-        //data = props.animalCardInfo;
         const mData = [];
         if (props.aid > -1) {
             if (aid2marker.length > props.aid) {
