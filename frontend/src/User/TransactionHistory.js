@@ -11,8 +11,10 @@ function TransactionHistory(){
 
     const [tdata, settdata] = useState([]);
     const [userId, setUserId] = useState("");
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
+        setReload(false);
         getTransactionHistory()
             .then((res) => {
                 settdata(res);
@@ -22,7 +24,7 @@ function TransactionHistory(){
             .then(res => {
                 setUserId(res.uuid);
             });
-    },[]);
+    },[reload]);
 
     return(
         <>
@@ -59,7 +61,8 @@ function TransactionHistory(){
                                 .then(success => {
                                     if(success) {
                                         displaySuccessMessage("Transaction is canceled successfully", 3);
-                                        window.location.reload();
+                                        // window.location.reload();
+                                        setReload(true);
                                     }else{
                                         displayErrorMessage("There an error cancelling your transaction. Please try" +
                                             " again.", 3);

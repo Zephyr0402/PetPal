@@ -14,8 +14,10 @@ function PostedAnimals(props){
 
     const [animalinfo, setanimalinfo] = useState([]);
     const [userId, setUserId] = useState("");
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
+        setReload(false);
         console.log(props);
         props.filter === "1" ? 
         getPostedAnimals(props.uuid)
@@ -34,16 +36,18 @@ function PostedAnimals(props){
             .then(res => {
                 setUserId(res.uuid);
             });
-    },[props]);
+    },[props, reload]);
 
     const handleRemove = (animalId, userId) => {
         if(props.filter === "1") {
             removeAnimal(animalId).then(() => {
-                window.location.reload();
+                // window.location.reload();
+                setReload(true);
             });
         }else if(props.filter === "2"){
             removeFromWishList(animalId, userId).then(() => {
-                window.location.reload();
+                // window.location.reload();
+                setReload(true);
             });
         }
     };
@@ -56,11 +60,11 @@ function PostedAnimals(props){
             style={{ height: "97%", objectFit: 'cover', width: '100%'}}
             cover={<img alt={card.name} src={card.image} width="200" height="180"/>}
             >
-            <Meta title={card.name + ": $" + card.price} description={card.description} />
+            <Meta title={card.name + ": $" + card.price} description={card.address} />
             </Card>
         </Link>
 
-        <CloseCircleTwoTone onClick={() => handleRemove(card._id, userId)}/>
+        { props.isMe? <CloseCircleTwoTone onClick={() => handleRemove(card._id, userId)}/> : null}
 
         {card.status === "sold" ?
             <div className="animal-sold-message"><span>SOLD</span></div> :
