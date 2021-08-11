@@ -16,7 +16,8 @@ const AnimalCard = (props) => {
     const [isTheSameUser, setIsTheSameUser] = useState(true);
 
     let thisCard = props.animalCardInfo;
-
+    console.log(thisCard)
+    
     if (thisCard === undefined) {
         thisCard = {
             name: 'None',
@@ -26,7 +27,10 @@ const AnimalCard = (props) => {
             user: 'None',
             userAvatar: 'None',
             kind: 'None',
-            description: 'None'
+            description: 'None',
+            userinfo: {
+                avatar: '/image-not-found.png'
+            }
         };
     }
 
@@ -73,7 +77,7 @@ const AnimalCard = (props) => {
                     <Button type = 'text' onClick = {() => props.setDisplay(-1)}><ArrowLeftOutlined/></Button>
                     <Meta
                         avatar={<UserAvatar size = {40} src={thisCard.userinfo.avatar} uuid = {thisCard.userinfo.uuid} />}
-                        title={thisCard.user}
+                        title={thisCard.userinfo.name}
                     />
                 </div>
                 <Card
@@ -96,7 +100,7 @@ const AnimalCard = (props) => {
                         <Descriptions.Item label = "Price (CAD)" span={3}>{thisCard.price}</Descriptions.Item>
                         <Descriptions.Item label="Description">{thisCard.description}</Descriptions.Item>
                     </Descriptions>
-                    <CommentCollection commentType = "animal" id = {props.aid}/>
+                    <CommentCollection commentType="animal" id={thisCard.id} />
                 </Card>
             </div>
             <div className={isTheSameUser ? "icon-button-wrapper hidden" : "icon-button-wrapper visible"}>

@@ -40,7 +40,7 @@ router.get("/uuid", async (req, res) => {
                             message: "Something wrong when getting animal info"
                         })
                     }else{
-                        console.log(docs)
+                        // console.log(docs)
                         res.send(docs)
                     }
                 });

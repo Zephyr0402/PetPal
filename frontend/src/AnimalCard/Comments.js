@@ -1,9 +1,8 @@
-import React, { createElement, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SingleComment from './Comment'
 import './Comments.css';
 import {getComments, postComment} from '../Services/commentService'
-import Header from '../Layout/Header'
-import {List, Comment, Avatar, Divider} from 'antd'
+import {List, Divider} from 'antd'
 import { CommentArea } from './CommentArea';
 
 const CommentCollection = (props) => {
@@ -11,17 +10,15 @@ const CommentCollection = (props) => {
   const [comments, setComments] = useState([]);
 
   useEffect(async () => {
-    console.log(props.id);
     await getComments(props.commentType, props.id).then(
-      res => setComments(res)
+      res => {    console.log(res);setComments(res)}
     )
   }, [])
 
   const onCommentSubmit = async (id, type, commentText) => {
-    postComment(id, type, commentText).then(
-      await getComments(props.commentType, props.id).then(
-         res => setComments(res))
-    )
+    await postComment(id, type, commentText)
+    const res = await getComments(props.commentType, props.id)
+    setComments(res)
   }
 
   return (

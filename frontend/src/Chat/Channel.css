@@ -1,0 +1,19 @@
+.channel-list{
+    flex: auto;
+    border-right: 0.1vh solid rgb(210,210,210);
+}
+
+.channel-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3%;
+}
+
+.channel-item:hover{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3%;
+    background-color: rgb(245,245,245);
+}

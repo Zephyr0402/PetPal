@@ -1,8 +1,4 @@
-// const mongoose = require('mongoose');
 const database = require('../database/database');
-// database.connect('mongodb://127.0.0.1:27017/users', {
-//     useNewUrlParser: true
-// })
 
 const User = database.model('User', new database.Schema({
     uuid: {type: String},

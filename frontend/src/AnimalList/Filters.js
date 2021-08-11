@@ -35,10 +35,22 @@ export const KindFilter = (props) => {
     return(
         <div className = "filter-border">
             <div>
-                <Button className = "kind-filter-option" onClick = {onKindChange}>Cat</Button>
-                <Button className = "kind-filter-option" onClick = {onKindChange}>Dog</Button>
-                <Button className = "kind-filter-option" onClick = {onKindChange}>Bird</Button>
-                <Button className = "kind-filter-option" onClick = {onKindChange}>Fish</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Squirrel</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Bird</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Cat</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Chicken</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Dog</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Duck</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Fish</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Guinea Pig</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Hamster</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Horse</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Mouse/Rat</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Rabbit</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Snake</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Spider</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Turtle</Button>
+                <Button className="kind-filter-option" onClick={onKindChange}>Other</Button>
             </div>
         </div>
     )
@@ -103,15 +115,14 @@ export const PriceFilter = (props) => {
             <InputNumber
                 id = "minPriceInput"
                 min = {range.min} max = {curRange.max} defaultValue = {range.min} value = {curRange.min}
-                bordered = {false} size = 'large'
+                bordered = {false} size = 'small'
                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} parser={value => value.replace(/\$\s?|(,*)/g, '')}
                 onChange = {onRangeMinInputChange}/>
             <LineOutlined />
             <InputNumber
-                style = {{marginLeft : "8px"}}
                 id = "maxPriceInput"
                 min = {curRange.min} max = {range.max} defaultValue = {range.max} value = {curRange.max}
-                bordered = {false} size = 'large'
+                bordered={false} size= 'small'
                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} parser={value => value.replace(/\$\s?|(,*)/g, '')}
                 onChange = {onRangeMaxInputChange}/>
             <Slider range min = {range.min} max = {range.max} defaultValue={[range.min, range.max]} value = {[curRange.min, curRange.max]} onChange = {onSliderChange}/>

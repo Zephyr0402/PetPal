@@ -1,52 +1,18 @@
-import { Avatar, Table, Tag, Dropdown, Space, Button } from 'antd';
+import {Table, Tag, Button } from 'antd';
 import React, { useState, useEffect } from 'react';
-import { UserOutlined, DownOutlined } from '@ant-design/icons';
 import { getTransactionHistory, cancelTransaction } from '../Services/transactionService';
 import {displayErrorMessage, displaySuccessMessage} from '../Services/modal';
 import './UserInfoPage.css';
 import {getUserInfo} from "../Services/userService";
 
-const { Column, ColumnGroup } = Table;
-
-// const data = [
-//     {
-//         key: '1',
-//         time:'21/01/2021',
-//         from: 'Julia',
-//         to: 'Samuel',
-//         total: 'CAD15.99',
-//         status: 'Complete',
-//         tags: ['kitten'],
-//         tid: 'dsfjkbjerkl',
-//     },
-//     {
-//         key: '2',
-//         time:'08/01/2021',
-//         from: 'Vincent',
-//         to: 'Julia',
-//         total: 'CAD12.33',
-//         status: 'Complete',
-//         tags: ['goldfish'],
-//         tid: 'kjshehjflk',
-//     },
-//     {
-//         key: '3',
-//         time:'11/02/2021',
-//         from: 'Julia',
-//         to: 'Runze',
-//         total: 'CAD9.11',
-//         status: 'Waiting for payment',
-//         tags: ['bird'],
-//         tid: 'dflgkiejrlfjklas'
-//     },
-//   ];
+const { Column } = Table;
 
 function TransactionHistory(){
 
     const [tdata, settdata] = useState([]);
     const [userId, setUserId] = useState("");
 
-    useEffect(async () => {
+    useEffect(() => {
         getTransactionHistory()
             .then((res) => {
                 settdata(res);
@@ -61,11 +27,14 @@ function TransactionHistory(){
     return(
         <>
         <br />
-        <Table rowKey={record => record.orderNumber} expandable={{expandedRowRender: record =><p>Transaction ID: {record._id}</p>}} dataSource={tdata}>
+        <Table rowKey={record => record.orderNumber} 
+            expandable={{expandedRowRender: record => (<div><img alt='animalImage' src={record.animalImg}/></div>)}} 
+            dataSource={tdata}
+            size='small'>
             <Column title="Order#" dataIndex="orderNumber" key="orderNumber" />
             <Column title="Date" dataIndex="timestamp" key="timestamp" render={timestamp => new Date(timestamp).toLocaleString('en-CA')}/>
-            <Column title="From" dataIndex="sellerId" key="sellerId" />
-            <Column title="Ship to" dataIndex="buyerId" key="buyerId" />
+            <Column title="From" dataIndex="sellerName" key="sellerName" />
+            <Column title="Ship to" dataIndex="buyerName" key="buyerName" />
             <Column title="Total (CAD)" dataIndex="price" key="price" />
             <Column title="Status" dataIndex="status" key="status" />
             <Column

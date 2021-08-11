@@ -17,8 +17,8 @@ function PostedAnimals(props){
 
     useEffect(() => {
         console.log(props);
-        props.filter === "1" ?
-        getPostedAnimals()
+        props.filter === "1" ? 
+        getPostedAnimals(props.uuid)
             .then((res) => {
                 console.log("1");
                 setanimalinfo(res);
@@ -34,7 +34,7 @@ function PostedAnimals(props){
             .then(res => {
                 setUserId(res.uuid);
             });
-    },[props.filter]);
+    },[props]);
 
     const handleRemove = (animalId, userId) => {
         if(props.filter === "1") {
