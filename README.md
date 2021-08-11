@@ -65,15 +65,15 @@ Our application acts as a platform that allows people to adopt, sell and buy ani
 |              | User can make a payment for adopting or purchasing an animal                                          |    ✅       |
 |              | User can cancel the payment within 2 hours after submitting the order                                 |      ✅    |
 |              | Send verification email to verify the user's email address is valid when one tries to sign up         |     ✅      |
-|              | User can submit documentation to confirm his/her identity                                             |           |
-|              | User can see his/her profiles (including basic information, recent transactions, wish lists, comments)|     ✅       |
-|              | User can see other users profiles (including basic information, rating and comments)|           |
-|              | User can make a comment on other users once the transaction is completed |           |
-|              | Buyer can leave comments on each animal info                            |     ✅      |
-| **Stretch**  | Chatroom(between buyer and seller)                                                                    |           |
+|              | User can submit documentation to confirm his/her identity                                             |     ❌      |
+|              | User can see his/her profiles (including basic information, recent transactions, wish lists, comments)|     ✅     |
+|              | User can see other users profiles (including basic information, rating and comments)			|     ✅     |
+|              | User can make a comment on other users 								|    ✅     |
+|              | Buyer can leave comments on each animal info                            				|     ✅    |
+| **Stretch**  | Chatroom(between buyer and seller)                                           | Already works on localhost, but still not compatible with heroku  |
 |              | User can create a personal wish list to store the animals they are interested in                      |   ✅      |
-|              | Buyers can confirm the payment after receiving the animal                                             |           |
-|              | Seller will get a notification when a buyer submits an order                                          |           |
+|              | Buyers can confirm the payment after receiving the animal                                 |     ❌       |
+|              | Seller will get a notification when a buyer submits an order             | Backend is implemented. Frontend UI to be developed in the next step |
 
 Note: Originally one of our requirements is "Administrator actions (add/delete users, manage transactions, verify user identity)", but it seems less important as we move on.
 ## Task Breakdown for minimal requirement:

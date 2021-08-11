@@ -39,7 +39,7 @@ const AnimalMap = (props) => {
                 if (data[props.aid] === undefined) {
                     continue;
                 }
-                if (!'address' in data[i] || !'address' in data[props.aid]) {
+                if (!('address' in data[i]) || !('address' in data[props.aid])) {
                     continue;
                 }
                 try {
