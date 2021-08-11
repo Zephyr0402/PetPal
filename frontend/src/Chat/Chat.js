@@ -46,7 +46,7 @@ const Chat = (props) => {
                 // setUnreadWhisper(newunread);
             //}
         });
-        return () => {console.log("111");closeSocket(socket)}
+        return () => {closeSocket(socket)}
     }, [cid]);
 
     // useEffect(() => {
@@ -69,7 +69,6 @@ const Chat = (props) => {
 
     useEffect(async () => {
         var uw = await getUnreadWhisper()
-        console.log(uw)
         setUnreadWhisper(uw)
     },[])
 

@@ -82,7 +82,7 @@ function UserInfo(props){
     }
 
     const onEmailChangeRequestSend = async () => {
-      const res = await changeEmail(newEmailInput.current.state.value, codeInput.current.state.value)
+      await changeEmail(newEmailInput.current.state.value, codeInput.current.state.value)
       await logout()
       window.location.href = "/login"
     }

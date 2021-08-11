@@ -8,7 +8,7 @@ var imgUrlBase64 = [];
 
 const Uploader = (props) => {
 
-  const [fileList, setFileList] = useState([])
+  const [fileList,] = useState([])
 
   const onFileListChange = (e) => {
     return backendURL + "/api/cur_user/avatar/update"

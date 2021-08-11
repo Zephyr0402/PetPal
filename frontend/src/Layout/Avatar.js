@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import {Avatar, Image} from 'antd'
+import React from 'react'
+import {Avatar} from 'antd'
 
 const UserAvatar = (props) => {
     return( 
