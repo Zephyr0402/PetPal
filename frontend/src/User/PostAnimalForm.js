@@ -42,8 +42,6 @@ function PostAnimalForm() {
 
     const handlePostAnimal = async (e) => {
         e.preventDefault();
-        //TODO: replace with actual handlePostAnimal functionality
-        console.log("handlePostAnimal");
 
         if (category === null || location.value.description === undefined || animalAgeYear === null || animalAgeMonth === null || dateFound === null || description === null || category === null || animalName === null || price === null) {
             warningModal('Please fill in all fields. They cannot be left blank.');
@@ -119,7 +117,6 @@ function PostAnimalForm() {
         }
 
         await postAnimalInfo(req);
-        resetInput();
         successModal('Animal is successfully posted!');
 
         window.location.href = '/';
@@ -134,22 +131,11 @@ function PostAnimalForm() {
         setPreviewImage(file.url || file.preview);
     };
 
-    const handleResetForm = (e) => {
-        e.preventDefault();
-        resetInput();
-    };
-
     const handleSelectBoxChange = (data) => {
         setCategory(data);
     };
 
-    const resetInput = () => {
-        //TODO: replace with actual resetInput functionality
-        console.log("resetInput");
-    };
-
     const onDateChange = (date, dateString) => {
-        //TODO: replace with actual onDateChange functionality
         console.log('onDateChange', dateString);
         setDateFound(dateString);
     };
