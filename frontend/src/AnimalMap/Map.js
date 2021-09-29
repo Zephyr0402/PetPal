@@ -162,5 +162,6 @@ const AnimalMap = (props) => {
 }
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyDnMJlodY_mrnG1k--Ol-Ocm9bWgaJF18k'
+    //apiKey: 'AIzaSyDnMJlodY_mrnG1k--Ol-Ocm9bWgaJF18k'
+    apiKey : 'AIzaSyBgao-aq8zyAUnJUCg335-tYIDAI5AJeAc'
 })(AnimalMap);
