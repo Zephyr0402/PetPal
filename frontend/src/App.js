@@ -34,7 +34,6 @@ function App() {
           <UserInfoPage/>
         </Route>
         <Route path = "/reset_pwd/:token" component = {ResetPwdForm}/>
-        {/* <Route path = "/chat/*" component = {Chat}/> */}
         <HashRouter
           basename= '/chat'
         >
