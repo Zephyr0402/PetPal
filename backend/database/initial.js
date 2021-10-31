@@ -2,6 +2,8 @@ const AnimalInfo = require('../models/animalinfoModel');
 const { User, UserInfo, UserAuth } = require('../models/userModel');
 const database = require('../database/database');
 
+console.log("created");
+
 AnimalInfo.create({
     id: "0",
     name: "Jerry",
