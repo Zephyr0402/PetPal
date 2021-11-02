@@ -60,7 +60,7 @@ router.post('/api/auth',async(req, res) =>{
     //send code
     let code = randomFns()
     transporter.sendMail({
-        from: user,
+        from: 'Petpal Official',
         to: EMAIL,
         subject: 'Verify your Petpal account now!',
         html: `
