@@ -42,6 +42,9 @@ router.post('/api/auth',async(req, res) =>{
         })
     }
 
+    const user = 'runzw0817@gmail.com';
+    const pass = 'Coldnight1-';
+
     //create a transporter
     const transporter = nodeMailer.createTransport(smtpTransport({
         service: 'Gmail',
@@ -49,15 +52,15 @@ router.post('/api/auth',async(req, res) =>{
         secure: true,
         port:465,
         auth: {
-            user: 'petpal455official@gmail.com',
-            pass: '2021petpal455'
+            user: user,
+            pass: pass
         }
     }))
 
     //send code
     let code = randomFns()
     transporter.sendMail({
-        from: 'petpal455official@gmail.com',
+        from: user,
         to: EMAIL,
         subject: 'Verify your Petpal account now!',
         html: `
