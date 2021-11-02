@@ -59,7 +59,7 @@ router.post('/api/auth',async(req, res) =>{
     transporter.sendMail({
         from: 'petpal455official@gmail.com',
         to: EMAIL,
-        subject: 'Verify your Petpal account!',
+        subject: 'Verify your Petpal account now!',
         html: `
             <p>Welcom to Petpal!</p>
             <p>You have tried to register for our app!</p>
