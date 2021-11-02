@@ -67,6 +67,7 @@ router.post('/api/auth',async(req, res) =>{
             <p>***This code is valid for the next one minute***</p>`
     }, function(error, data) {
         if(error){
+            console.log(error);
             transporter.close();
             return res.status(500).send({
                 message: "Error sending verification code"
